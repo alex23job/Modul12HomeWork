@@ -1,0 +1,42 @@
+﻿<Window x:Class="BankWpfApp.PersonEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankWpfApp"
+        mc:Ignorable="d"
+        Title="ПАРАМЕТРЫ КЛИЕНТА" Height="480" Width="500" ResizeMode="NoResize" FontFamily="Times New Roman" FontSize="24" MinWidth="500" MinHeight="480" MaxWidth="500" MaxHeight="500" Icon="MainIcon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="292"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Параметр" Background="LightGray" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5"/>
+        <Label Content="Значение" Background="LightGray" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Column="1" HorizontalContentAlignment="Stretch"/>
+        <Label Content="Фамилия" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="1"/>
+        <Label Content="Имя" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="2"/>
+        <Label Content="Отчество" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="3"/>
+        <Label Content="Паспорт" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="4"/>
+        <Label Content="Телефон" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="5"/>
+        <Label Content="Изменено" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="6"/>
+        <Button x:Name="btnOK" Content="Сохранить" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="1" Width="180" Height="45" IsDefault="True" Click="OnOK_Click"/>
+        <Button x:Name="btnCancel" Content="Отменить" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Width="180" Height="45" IsCancel="True"/>
+        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtFirstName" Grid.Row="2" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtSecondName" Grid.Row="3" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtPasport" Grid.Row="4" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtTlf" Grid.Row="5" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtUpdate" Grid.Row="6" Grid.Column="1" Width="292" Padding="15,5,5,5"
+                 VerticalContentAlignment="Center" IsEnabled="False" TextWrapping="Wrap" FontSize="18"/>
+    </Grid>
+</Window>

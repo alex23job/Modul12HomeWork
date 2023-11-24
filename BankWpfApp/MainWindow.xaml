@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWpfApp"
         mc:Ignorable="d"
-        Title="SIMPLE BANK" Height="450" Width="800" Icon="MainIcon.ico" Background="#FFFFEED0" FontFamily="Times New Roman" FontSize="16">
+        Title="SIMPLE BANK" Height="450" Width="800" Icon="MainIcon.ico" Background="#FFFFEED0" FontFamily="Times New Roman" FontSize="16" Closing="AppClosing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
