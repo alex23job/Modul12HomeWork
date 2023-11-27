@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BankWpfApp
 {
-    class Card
+    [XmlRoot("card")]
+    public class Card : Product, IProductType
     {
+        public int Type { get; set; } = 0;
     }
 }

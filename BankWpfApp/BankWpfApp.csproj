@@ -55,14 +55,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountParamsControl.xaml.cs">
+      <DependentUpon>AccountParamsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DepositParamsControl.xaml.cs">
+      <DependentUpon>DepositParamsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Node.cs" />
     <Compile Include="PersonEditUserControl.xaml.cs">
       <DependentUpon>PersonEditUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs" />
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="UserData.cs" />
+    <Compile Include="ViewProductsWindow.xaml.cs">
+      <DependentUpon>ViewProductsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AccountParamsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepositParamsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewProductsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

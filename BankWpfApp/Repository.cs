@@ -9,12 +9,12 @@ using System.Xml.Serialization;
 
 namespace BankWpfApp
 {
-    interface IId
+    public interface IId
     {
         int UID { get; set; }
     }
 
-    class Repository<T> where T : IId
+    public class Repository<T> where T : IId
     {
         int currentNewUID = 0;
         string savePath = "";
@@ -38,7 +38,7 @@ namespace BankWpfApp
                     maxUID = item.UID;
                 }
             }
-            currentNewUID = maxUID > id ? maxUID + 1 : id;
+            currentNewUID = (maxUID >= id) ? (maxUID + 1) : id;
         }
         /// <summary>
         /// Возвращает экземпляр T, или default(T) если такого экземпляра нет
@@ -106,6 +106,20 @@ namespace BankWpfApp
         {
             // Создаем сериализатор на основе указанного типа 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<T>));
+
+            // Создаем поток для сохранения данных
+            Stream fStream = new FileStream(Path, FileMode.Create, FileAccess.Write);
+
+            // Запускаем процесс сериализации
+            xmlSerializer.Serialize(fStream, arr);
+
+            // Закрываем поток
+            fStream.Close();
+        }
+        public void SaveRepositoryToFileForCusomSerializer(string Path, XmlSerializer xmlSerializer)
+        {
+            // Создаем сериализатор на основе указанного типа 
+            //XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<T>));
 
             // Создаем поток для сохранения данных
             Stream fStream = new FileStream(Path, FileMode.Create, FileAccess.Write);

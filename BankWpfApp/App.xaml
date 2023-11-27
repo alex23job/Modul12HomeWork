@@ -12,7 +12,7 @@
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="myBorder" Background="{TemplateBinding Background}"
                                   BorderBrush="{TemplateBinding BorderBrush}"
-                                  CornerRadius="10">
+                                  CornerRadius="20">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -24,5 +24,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <DataTemplate x:Key="DictionaryDataTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Key}" Width="100"/>
+                <TextBlock Text=" : " Width="30"/>
+                <TextBlock Text="{Binding Value}"/>
+            </StackPanel>
+        </DataTemplate>
     </Application.Resources>
 </Application>

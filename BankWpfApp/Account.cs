@@ -3,10 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BankWpfApp
 {
-    class Account
+    [XmlRoot("account")]
+    public class Account : Product, IBalans, IProductType
     {
+        public static string[] nameTypeAccount = { "расчётный", "депозитный", "кредитный" };
+        /// <summary>
+        /// тип продукта : 3 - счёт
+        /// </summary>
+        public int Type { get; set; } = 3;
+
+        /// <summary>
+        /// Количество денег на счёте
+        /// </summary>
+        public float Balans { get; set; } = 0;
+
+        private int _typeAccount;
+        /// <summary>
+        /// тип счёта : 0 - расчётный, 1 - депозитный, 2 - кредитный
+        /// </summary>
+        public int TypeAccount
+        { 
+            get
+            {
+                return _typeAccount;
+            }
+            set
+            {
+                _typeAccount = (value >= 0 && value < 3) ? value : 0;
+            }
+        }
+
+        public Account() { }
+        public Account(int tp)
+        {
+            TypeAccount = tp;
+            Name = Account.nameTypeAccount[TypeAccount];
+        }
+
+        /// <summary>
+        /// информация о счёте
+        /// </summary>
+        /// <returns>соварь из параметров и их значений</returns>
+        public override Dictionary<string, string> GetProductInfo()
+        {
+            Dictionary<string, string> res = new Dictionary<string, string>();
+            res.Add("Категория", "Счёт");
+            res.Add("Тип", Account.nameTypeAccount[TypeAccount]);
+            res.Add("Номер", UID.ToString());
+            res.Add("Орисание", Description);
+            return res;
+        }
     }
 }

@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BankWpfApp
 {
-    public class Person : IId
+    interface IPersonType
+    {
+        // 0 - simple, 1 - VIP, 2 - legal
+        int Type { get; set; }
+    }
+
+    public class Person : IId, IPersonType
     {
         /// <summary>
         /// Идентификатор-
         /// </summary>
         public int UID { get; set; }
+
+        public int Type { get; set; }
 
         /// <summary>
         /// Фамилия клиента
@@ -51,14 +60,19 @@ namespace BankWpfApp
 
         public LogPersonUpdate updateInfo = null;
 
-        //[XmlIgnore]
+        [XmlIgnore]
         public string Count => (IdProducts != null) ? IdProducts.Count.ToString() : "0";
 
+
+        public string PersonLogin = "";
+
         private UserData user = null;
+        public int UserUID = 0;
 
         public Person()
         {
             IdProducts = new List<int>();
+            Type = 0;
         }
         public Person(string nm1, string nm2, string nm3, string psp, string tlf, string bd)
         {
@@ -69,11 +83,17 @@ namespace BankWpfApp
             BirthDay = bd;
             this.Tlf = tlf;
             IdProducts = new List<int>();
+            Type = 0;
         }
 
         public void SetUserData(UserData ud)
         {
-            if (user == null) user = ud;
+            if (user == null)
+            {
+                user = ud;
+                UserUID = user.UID;
+                PersonLogin = user.UserLogin;
+            }
         }
 
         public void UpdateUserLogin(string login)
@@ -100,6 +120,37 @@ namespace BankWpfApp
         {
             if (user == null) return false;
             return user.UID == id;
+        }
+    }
+
+    public class VipPerson : Person
+    {
+        public VipPerson() : base()
+        {
+            Type = 1;
+        }
+
+        public VipPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd) : base(nm1, nm2, nm3, psp, tlf, bd)
+        {
+            Type = 1;
+        }
+    }
+
+
+    public class LegalPerson : Person
+    {
+        public string LegalName { get; set; }
+        public string LegalAddress { get; set; }
+        public LegalPerson() : base()
+        {
+            Type = 2;
+        }
+
+        public LegalPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd, string legnm, string legad) : base(nm1, nm2, nm3, psp, tlf, bd)
+        {
+            LegalName = legnm;
+            LegalAddress = legad;
+            Type = 2;
         }
     }
 }

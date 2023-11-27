@@ -28,12 +28,12 @@
         <Label Content="Паспорт" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="4"/>
         <Label Content="Дата рождения" Grid.Row="5" VerticalAlignment="Center" Margin="10,0"/>
         <Label Content="Телефон" VerticalAlignment="Center" Height="60" VerticalContentAlignment="Center" Padding="15,5,5,5" Grid.Row="6"/>
-        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
-        <TextBox x:Name="txtFirstName" Grid.Row="2" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
-        <TextBox x:Name="txtSecondName" Grid.Row="3" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
-        <TextBox x:Name="txtPasport" Grid.Row="4" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtName" Grid.Row="1" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtFirstName" Grid.Row="2" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtSecondName" Grid.Row="3" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="txtPasport" Grid.Row="4" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center"/>
         <DatePicker Name="datePickerBirthday" IsDropDownOpen="True" SelectedDateFormat="Short" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center"
                     SelectedDateChanged="OnSelectedDataChanged" Width="292" Padding="15,5,5,5"/>
-        <TextBox x:Name="txtTlf" Grid.Row="6" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center" IsEnabled="False"/>
+        <TextBox x:Name="txtTlf" Grid.Row="6" Grid.Column="1" Width="292" Padding="15,5,5,5" VerticalContentAlignment="Center"/>
     </Grid>
 </UserControl>

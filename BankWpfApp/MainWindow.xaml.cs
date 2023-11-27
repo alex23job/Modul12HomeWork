@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
+using System.Collections.ObjectModel;
 
 namespace BankWpfApp
 {
@@ -26,6 +28,9 @@ namespace BankWpfApp
 
         string pathUserXML = "User.xml";
         Repository<UserData> users = new Repository<UserData>();
+
+        string pathProductXML = "Product.xml";
+        Repository<Product> products = new Repository<Product>();
 
         Person currentPerson = null;
         UserData currentUser = null;
@@ -57,6 +62,13 @@ namespace BankWpfApp
             {
                 users.Add(new UserData("admin", "admin", 3));
             }
+
+            if (File.Exists(pathProductXML))
+            {
+                products = Repository<Product>.LoadRepositoryFromFile(pathProductXML);
+            }
+            products.SetSavePath(pathProductXML);
+            products.SetCurrentNewUID(10);
         }
 
         private void CreateContextMenuLK()
@@ -85,9 +97,10 @@ namespace BankWpfApp
                         {
                             foreach(Person per in persons.AllItems)
                             {
-                                if (per.CheckUserUID(loginUser.UID))
+                                if (per.UserUID == loginUser.UID)
                                 {
                                     currentPerson = per;
+                                    ShowPersonSP();
                                     break;
                                 }
                             }
@@ -111,6 +124,7 @@ namespace BankWpfApp
                     Person per = regWin.GetPerson();
                     per.SetUserData(ud);
                     currentPerson = persons.Add(per);
+                    ShowPersonSP();
                 }
             };
             borderLK.ContextMenu.Items.Add(menuItemRegistration);
@@ -121,6 +135,75 @@ namespace BankWpfApp
                 //borderLK.Background = Brushes.Red;
                 borderLK.ContextMenu.IsOpen = false;
             };
+        }
+
+        private void ShowPersonSP()
+        {
+            namePerson.Content = currentPerson.PersonLogin;
+            borderLK.Visibility = Visibility.Hidden;
+            personSP.Visibility = Visibility.Visible;
+            userSP.Visibility = Visibility.Hidden;
+            borderAdmin.Visibility = Visibility.Visible;
+            currentUser = null;
+            ShowPanel(false);
+        }
+
+        private void ShowPanel(bool isUser)
+        {
+            if (isUser)
+            {
+                pers1.Visibility = Visibility.Hidden;
+                pers2.Visibility = Visibility.Hidden;
+                pers3.Visibility = Visibility.Hidden;
+                pers4.Visibility = Visibility.Hidden;
+                user1.Visibility = Visibility.Visible;
+                user2.Visibility = Visibility.Visible;
+                user3.Visibility = Visibility.Visible;
+                user4.Visibility = Visibility.Visible;
+                UpdateUsersPanels();
+            }
+            else
+            {
+                pers1.Visibility = Visibility.Visible;
+                pers2.Visibility = Visibility.Visible;
+                pers3.Visibility = Visibility.Visible;
+                pers4.Visibility = Visibility.Visible;
+                user1.Visibility = Visibility.Hidden;
+                user2.Visibility = Visibility.Hidden;
+                user3.Visibility = Visibility.Hidden;
+                user4.Visibility = Visibility.Hidden;
+                UpdatePersonsPanels();
+            }
+        }
+
+        private void UpdateUsersPanels()
+        {
+            int[] arrCounters = new int[5];
+            int total = 0;
+            foreach(Person per in persons.AllItems)
+            {
+                arrCounters[per.Type]++;
+            }
+            total = arrCounters[0] + arrCounters[1] + arrCounters[2];
+            txtPerson.Text = $"Всего клиентов : {total}\nОбычные : {arrCounters[0]}\nVIP           : {arrCounters[1]}\nЮр. лицо : {arrCounters[2]}";
+
+            arrCounters[0] = 0;arrCounters[1] = 0; arrCounters[2] = 0;
+            foreach (UserData ud in users.AllItems)
+            {
+                arrCounters[ud.Rule]++;
+            }
+            total = arrCounters[3] + arrCounters[1] + arrCounters[2];
+            txtWorker.Text = $"Всего сотрудников : {total}\nКонсультанты : {arrCounters[1]}\nМенеджеры    : {arrCounters[2]}\nАдминистраторы : {arrCounters[3]}";
+
+            txtLog.Text = $"Всего записей : ";
+
+            arrCounters[0] = 0; arrCounters[1] = 0; arrCounters[2] = 0;arrCounters[3] = 0;
+            txtProduct.Text = $"Всего продуктов : ";
+        }
+
+        private void UpdatePersonsPanels()
+        {
+
         }
 
         private void CreateCurrentUser(UserData ud)
@@ -228,6 +311,13 @@ namespace BankWpfApp
                     if (loginUser.Rule != 0)
                     {
                         CreateCurrentUser(loginUser);
+                        nameUser.Content = currentUser.UserLogin;
+                        userSP.Visibility = Visibility.Visible;
+                        borderAdmin.Visibility = Visibility.Hidden;
+                        personSP.Visibility = Visibility.Hidden;
+                        borderLK.Visibility = Visibility.Visible;
+                        currentPerson = null;
+                        ShowPanel(true);
                     }
                     else
                     {
@@ -235,46 +325,6 @@ namespace BankWpfApp
                     }
                     return;
                 }
-                //for (int i = 0; i < dbUsers.Count; i++)
-                //{
-                //    if ((lw.userLogin == dbUsers[i].UserLogin) && (lw.userPassword == dbUsers[i].Password))
-                //    {
-                //        switch (dbUsers[i].Rule)
-                //        {
-                //            case 1:
-                //                currentUser = new Consultant(dbUsers[i].UserLogin, dbUsers[i].Password);
-                //                break;
-                //            case 2:
-                //                currentUser = new Manager(dbUsers[i].UserLogin, dbUsers[i].Password);
-                //                break;
-                //            case 3:
-                //                currentUser = new Administrator(dbUsers[i].UserLogin, dbUsers[i].Password);
-                //                break;
-                //            default:
-                //                currentUser = dbUsers[i];
-                //                break;
-                //        }
-                //        userName.Content = currentUser.UserLogin;
-                //        IUserRights userRights = currentUser as IUserRights;
-                //        if (userRights != null)
-                //        {
-                //            btnAdd.IsEnabled = userRights.IsAddingPerson();
-                //            btnDel.IsEnabled = userRights.IsAddingPerson();
-                //            btnEdit.IsEnabled = true;
-                //            btnEditUsers.Visibility = userRights.IsEditingUser() ? Visibility.Visible : Visibility.Hidden;
-                //            btnViewLog.Visibility = userRights.IsEditingUser() ? Visibility.Visible : Visibility.Hidden;
-                //        }
-                //        else
-                //        {
-                //            btnAdd.IsEnabled = false;
-                //            btnDel.IsEnabled = false;
-                //            btnEdit.IsEnabled = false;
-                //            btnEditUsers.Visibility = Visibility.Hidden;
-                //            btnViewLog.Visibility = Visibility.Hidden;
-                //        }
-                //        return;
-                //    }
-                //}
                 MessageBox.Show("Ошибка ввода логина и/или пароля !!!");
             }
         }
@@ -294,6 +344,47 @@ namespace BankWpfApp
         {
             users.SaveRepositoryToFile(pathUserXML);
             persons.SaveRepositoryToFile(pathPersonXML);
+            products.SaveRepositoryToFile(pathProductXML);
+            //products.SaveRepositoryToFileForCusomSerializer(pathProductXML, new XmlSerializer(typeof(ObservableCollection<Product>), "account", "deposit", "card", "credit"));
+        }
+
+        private void OnUserExit(object sender, RoutedEventArgs e)
+        {
+            userSP.Visibility = Visibility.Hidden;
+            borderAdmin.Visibility = Visibility.Visible;
+            currentUser = null;
+        }
+
+        private void OnPersonExit(object sender, RoutedEventArgs e)
+        {
+            personSP.Visibility = Visibility.Hidden;
+            borderLK.Visibility = Visibility.Visible;
+            currentPerson = null;
+        }
+
+        private void OnViewLog(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnViewProduct(object sender, RoutedEventArgs e)
+        {
+            ViewProductsWindow vpw = new ViewProductsWindow();
+            vpw.SetProducts(products);
+            if (vpw.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void OnViewWorker(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnViewPerson(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

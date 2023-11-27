@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWpfApp"
         mc:Ignorable="d"
-        Title="SIMPLE BANK" Height="450" Width="800" Icon="MainIcon.ico" Background="#FFFFEED0" FontFamily="Times New Roman" FontSize="16" Closing="AppClosing">
+        Title="SIMPLE BANK" Height="450" Width="800" Icon="MainIcon.ico" Background="#FFFFEED0" FontFamily="Times New Roman" FontSize="16" Closing="AppClosing" MinWidth="800" MinHeight="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
@@ -17,36 +17,72 @@
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,3">
-            <Button x:Name="btnTotal" Content="Главная" Margin="5,0" Width="90" Background="#FFA0A6DE"/>
-            <Button x:Name="btnOperations" Content="Операции" Margin="5,0" Width="90" Background="#FFA0A6DE"/>
-            <Button x:Name="btnPayments" Content="Платежи" Margin="5,0" Width="90" Background="#FFA0A6DE"/>
-            <Button x:Name="btnBonus" Content="Бонусы" Margin="5,0" Width="90" Background="#FFA0A6DE"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Stretch">
+            <Button x:Name="btnTotal" Content="Главная" Margin="10,0,3,0" Background="#FFA0A6DE" MinWidth="90" Padding="10,0"/>
+            <Button x:Name="btnOperations" Content="Операции" Margin="3,0" Width="90" Background="#FFA0A6DE"/>
+            <Button x:Name="btnPayments" Content="Платежи" Margin="3,0" Width="90" Background="#FFA0A6DE"/>
+            <Button x:Name="btnBonus" Content="Бонусы" Margin="3,0,10,0" Width="90" Background="#FFA0A6DE"/>
         </StackPanel>
-        <Border x:Name="borderLK" CornerRadius="10" Grid.Row="0" Grid.Column="3" Background="#FF8DFDB6" Margin="10,7" MouseEnter="OnLK_Enter" MouseLeave="OnLK_Leave" MouseDown="OnLK_Down">
+        <Border x:Name="borderLK" CornerRadius="10" Grid.Row="0" Grid.Column="3" Background="#FF8DFDB6" Margin="7" MouseEnter="OnLK_Enter" MouseLeave="OnLK_Leave" MouseDown="OnLK_Down">
             <Label Content="Личный кабинет" Foreground="#FF035D13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <Border x:Name="borderAdmin" CornerRadius="10" Grid.Row="0" Grid.Column="2" Background="#FF8DFDB6" Margin="10,7" MouseDown="OnAdminDown" MouseEnter="OnAdminEnter" MouseLeave="OnAdminLeave">
+        <StackPanel x:Name="personSP" Orientation="Horizontal" Grid.Column="3" Margin="4,7" Visibility="Hidden" HorizontalAlignment="Right">
+            <Label x:Name="namePerson" Width="100" HorizontalContentAlignment="Right" Margin="3,0"/>
+            <Button x:Name="btnPersonExit" Content="Выйти" Width="70" Click="OnPersonExit" Margin="3,0"/>
+        </StackPanel>
+        <Border x:Name="borderAdmin" CornerRadius="10" Grid.Row="0" Grid.Column="2" Background="#FF8DFDB6" Margin="7" MouseDown="OnAdminDown" MouseEnter="OnAdminEnter" MouseLeave="OnAdminLeave">
             <Label Content="Администрирование" Foreground="#FF035D13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <Border CornerRadius="20" Grid.Row="1" Background="#FFB5DEF5" Margin="5,7">
+        <StackPanel x:Name="userSP" Orientation="Horizontal" Grid.Column="2" Margin="4,7" Visibility="Hidden" HorizontalAlignment="Right">
+            <Label x:Name="nameUser" Width="100" HorizontalContentAlignment="Right" Margin="3,0"/>
+            <Button x:Name="btnUserExit" Content="Выйти" Width="70" Click="OnUserExit" Margin="3,0"/>
+        </StackPanel>
+        <Border x:Name="pers1" CornerRadius="20" Grid.Row="1" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
                 <Label Content="КАРТЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
             </StackPanel>
         </Border>
-        <Border CornerRadius="20" Grid.Row="1" Grid.Column="1" Background="#FFB5DEF5" Margin="5,7">
+        <Border x:Name="user1" CornerRadius="20" Grid.Row="1" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">
+            <StackPanel>
+                <Label Content="КЛИЕНТЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF7909C7"/>
+                <TextBlock x:Name="txtPerson" Height="100" Text="Всего клиентов : " Margin="10"/>
+                <Button x:Name="btnViewPerson" Content="ПОДРОБНЕЕ ..." Height="40" Margin="20,10" Click="OnViewPerson"/>
+            </StackPanel>
+        </Border>
+        <Border x:Name="pers2" CornerRadius="20" Grid.Row="1" Grid.Column="1" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
                 <Label Content="ВКЛАДЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
             </StackPanel>
         </Border>
-        <Border CornerRadius="20" Grid.Row="1" Grid.Column="2" Background="#FFB5DEF5" Margin="5,7">
+        <Border x:Name="user2" CornerRadius="20" Grid.Row="1" Grid.Column="1" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">
+            <StackPanel>
+                <Label Content="СОТРУДНИКИ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF7909C7"/>
+                <TextBlock x:Name="txtWorker" Height="100" Text="Всего сотрудников : " Margin="10"/>
+                <Button x:Name="btnViewWorker" Content="ПОДРОБНЕЕ ..." Height="40" Margin="20,10" Click="OnViewWorker"/>
+            </StackPanel>
+        </Border>
+        <Border x:Name="pers3" CornerRadius="20" Grid.Row="1" Grid.Column="2" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
                 <Label Content="КРЕДИТЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
             </StackPanel>
         </Border>
-        <Border CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFB5DEF5" Margin="5,7">
+        <Border x:Name="user3" CornerRadius="20" Grid.Row="1" Grid.Column="2" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">
+            <StackPanel>
+                <Label Content="ИЗМЕНЕНИЯ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF7909C7"/>
+                <TextBlock x:Name="txtLog" Height="100" Text="Всего записей : " Margin="10"/>
+                <Button x:Name="btnViewLog" Content="ПОДРОБНЕЕ ..." Height="40" Margin="20,10" Click="OnViewLog"/>
+            </StackPanel>
+        </Border>
+        <Border x:Name="pers4" CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
                 <Label Content="СЧЕТА" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
+            </StackPanel>
+        </Border>
+        <Border x:Name="user4" CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">
+            <StackPanel>
+                <Label Content="ПРОДУКТЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF7909C7"/>
+                <TextBlock x:Name="txtProduct" Height="100" Text="Всего продуктов : " Margin="10"/>
+                <Button x:Name="btnViewProduct" Content="ПОДРОБНЕЕ ..." Height="40" Margin="20,10" Click="OnViewProduct"/>
             </StackPanel>
         </Border>
     </Grid>

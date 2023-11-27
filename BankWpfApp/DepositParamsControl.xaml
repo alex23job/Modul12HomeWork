@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="BankWpfApp.DepositParamsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BankWpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="500" Background="#FFF1FBEE" FontFamily="Times New Roman" FontSize="20">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220*"/>
+            <ColumnDefinition Width="250*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Label Content="Наименование" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Срок (дни)" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Процент" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Расчётный период (дни)" Grid.Row="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Пополнение" Grid.Row="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Снятие" Grid.Row="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="C капитализацией" Grid.Row="6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Минимальная сумма" Grid.Row="7" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Описание" Grid.Row="8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="txtDepositName" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnNameDepTextChanged"/>
+        <TextBox x:Name="txtDepositTerm" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnTermDepTextChanged"/>
+        <TextBox x:Name="txtDepositPrc" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnPrcDepTextChanged"/>
+        <TextBox x:Name="txtDepositBPer" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnBPerDepTextChanged"/>
+        <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <RadioButton Content="Да" Name="AddYes" GroupName="Add" IsChecked="false" Width="70" Checked="OnAddYesChecked"/>
+            <RadioButton Content="Нет" Name="AddNo" GroupName="Add" IsChecked="true" Width="70" Checked="OnAddNoChecked"/>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <RadioButton Content="Да" Name="DecYes" GroupName="Dec" IsChecked="false" Width="70" Checked="OnDecYesChecked"/>
+            <RadioButton Content="Нет" Name="DecNo" GroupName="Dec" IsChecked="true" Width="70" Checked="OnDecNoChecked"/>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
+            <RadioButton Content="Да" Name="CapYes" GroupName="Cap" IsChecked="false" Width="70" Checked="OnCapYesChecked"/>
+            <RadioButton Content="Нет" Name="CapNo" GroupName="Cap" IsChecked="true" Width="70" Checked="OnCapNoChecked"/>
+        </StackPanel>
+        <TextBox x:Name="txtDepositBMin" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnBMinDepTextChanged"/>
+        <TextBox x:Name="txtDepositDescr" Grid.Row="8" Grid.Column="1" Margin="0,2,10,5" TextChanged="OnDescrDepTextChanged"/>
+    </Grid>
+</UserControl>
