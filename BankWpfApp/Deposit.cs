@@ -66,6 +66,7 @@ namespace BankWpfApp
             res.Add("Снятие", IsCanWithdraw ? "Да" : "Нет");
             res.Add("C капитализацией", IsCapitalization ? "Да" : "Нет");
             res.Add("Мин. сумма", minBalance.ToString());
+            res.Add("Описание", Description);
             return res;
         }
     }

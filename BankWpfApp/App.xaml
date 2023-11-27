@@ -26,9 +26,9 @@
         </Style>
         <DataTemplate x:Key="DictionaryDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Key}" Width="100"/>
+                <TextBlock Text="{Binding Key}" Width="170"/>
                 <TextBlock Text=" : " Width="30"/>
-                <TextBlock Text="{Binding Value}"/>
+                <TextBlock Text="{Binding Value}" TextWrapping="WrapWithOverflow" Width="300"/>
             </StackPanel>
         </DataTemplate>
     </Application.Resources>

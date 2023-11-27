@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Documents.DocumentStructures;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,8 +24,8 @@ namespace BankWpfApp
         public Deposit dep = null;
         public DepositParamsControl()
         {
-            InitializeComponent();
             dep = new Deposit();
+            InitializeComponent();
         }
 
         private void OnNameDepTextChanged(object sender, TextChangedEventArgs e)
@@ -63,32 +64,32 @@ namespace BankWpfApp
 
         private void OnAddYesChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCanTopUp = true;
         }
 
         private void OnAddNoChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCanTopUp = false;
         }
 
         private void OnDecYesChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCanWithdraw = true;
         }
 
         private void OnDecNoChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCanWithdraw = false;
         }
 
         private void OnCapYesChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCapitalization = true;
         }
 
         private void OnCapNoChecked(object sender, RoutedEventArgs e)
         {
-
+            dep.IsCapitalization = false;
         }
 
         private void OnBMinDepTextChanged(object sender, TextChangedEventArgs e)

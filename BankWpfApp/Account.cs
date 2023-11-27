@@ -54,7 +54,7 @@ namespace BankWpfApp
             res.Add("Категория", "Счёт");
             res.Add("Тип", Account.nameTypeAccount[TypeAccount]);
             res.Add("Номер", UID.ToString());
-            res.Add("Орисание", Description);
+            res.Add("Описание", Description);
             return res;
         }
     }

@@ -179,7 +179,7 @@ namespace BankWpfApp
         private void UpdateUsersPanels()
         {
             int[] arrCounters = new int[5];
-            int total = 0;
+            int total = 0, i;
             foreach(Person per in persons.AllItems)
             {
                 arrCounters[per.Type]++;
@@ -198,7 +198,15 @@ namespace BankWpfApp
             txtLog.Text = $"Всего записей : ";
 
             arrCounters[0] = 0; arrCounters[1] = 0; arrCounters[2] = 0;arrCounters[3] = 0;
-            txtProduct.Text = $"Всего продуктов : ";
+            for (i = 0; i < products.AllItems.Count; i++)
+            {
+                IProductType pt = products.AllItems[i] as IProductType;
+                if (pt != null)
+                {
+                    arrCounters[pt.Type]++;
+                }
+            }
+            txtProduct.Text = $"Всего продуктов : {products.Count}\nКарты     : {arrCounters[0]}\nВклады   : {arrCounters[1]}\nКредиты : {arrCounters[2]}\nСчета      : {arrCounters[3]}";
         }
 
         private void UpdatePersonsPanels()

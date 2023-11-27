@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BankWpfApp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="500" Background="#FFF1FBEE" FontFamily="Times New Roman" FontSize="20">
+             d:DesignHeight="350" d:DesignWidth="500" Background="#FFF1FBEE" FontFamily="Times New Roman" FontSize="20">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220*"/>
@@ -20,7 +20,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
         <Label Content="Наименование" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Label Content="Срок (дни)" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
@@ -48,6 +48,6 @@
             <RadioButton Content="Нет" Name="CapNo" GroupName="Cap" IsChecked="true" Width="70" Checked="OnCapNoChecked"/>
         </StackPanel>
         <TextBox x:Name="txtDepositBMin" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,2,10,0" TextChanged="OnBMinDepTextChanged"/>
-        <TextBox x:Name="txtDepositDescr" Grid.Row="8" Grid.Column="1" Margin="0,2,10,5" TextChanged="OnDescrDepTextChanged"/>
+        <TextBox x:Name="txtDepositDescr" Grid.Row="8" Grid.Column="1"  Margin="0,2,10,5" TextChanged="OnDescrDepTextChanged" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
     </Grid>
 </UserControl>
