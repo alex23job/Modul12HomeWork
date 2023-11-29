@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWpfApp"
         mc:Ignorable="d"
-        Title="БАНКОВСКИЕ ПРОДУКТЫ" Height="550" Width="800" Icon="MainIcon.ico" Background="#FFFBEDD4" FontFamily="Times New Roman" FontSize="20">
+        Title="БАНКОВСКИЕ ПРОДУКТЫ" Height="550" Width="800" Icon="MainIcon.ico" Background="#FFFBEDD4" FontFamily="Times New Roman" FontSize="20" ContextMenuOpening="OnTreeViewContextMenuOpening">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100*" />

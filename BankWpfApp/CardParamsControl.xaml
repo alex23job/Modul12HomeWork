@@ -8,19 +8,34 @@
              d:DesignHeight="350" d:DesignWidth="500" Background="#FFF1FBEE" FontFamily="Times New Roman" FontSize="20">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180*"/>
-            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="290*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="70*"/>
         </Grid.RowDefinitions>
         <Label Content="Наименование" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Label Content="Тип" Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Label Content="Описание" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Код линии карт" Grid.Row="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <CheckBox x:Name="CheckCashback" Grid.Row="3" Content="Кешбек" Margin="5,0"
+                  Click="OnCheckCashbackClick" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="CheckBalPerc" Grid.Row="4" Content="Процент на остаток" Margin="5,0"
+                  Click="OnCheckBalPercClick" VerticalContentAlignment="Center"/>
+        <CheckBox x:Name="CheckLimit" Grid.Row="5" Content="Лимит" Margin="5,0"
+                  Click="OnCheckLimitClick" VerticalContentAlignment="Center"/>
+        <Label Content="Описание" Grid.Row="6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="txtCardName" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,5,10,0" TextChanged="OnNameCardTextChanged"/>
-        <ComboBox x:Name="cmbCardType" Grid.Row="1" Grid.Column="1" SelectedIndex="0" Margin="0,5,10,5" SelectionChanged="OnSelectionTypeCardChanged" StylusUp="cmbCardType_StylusUp"/>
-        <TextBox x:Name="txtCardDescr" Grid.Row="2" Grid.Column="1" Margin="0,0,10,5" TextChanged="OnDescrCardTextChanged" TextWrapping="WrapWithOverflow" AcceptsReturn="True"/>
+        <ComboBox x:Name="cmbCardType" Grid.Row="1" Grid.Column="1" SelectedIndex="0" Margin="0,5,10,5" SelectionChanged="OnSelectionTypeCardChanged"/>
+        <TextBox x:Name="txtCardCode" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,5,10,0" TextChanged="OnCodeCardTextChanged"/>
+        <TextBox x:Name="txtCardCashback" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,5,10,0" TextChanged="OnCashbackCardTextChanged" IsEnabled="False"/>
+        <TextBox x:Name="txtCardBalPerc" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,5,10,0" TextChanged="OnBalPercCardTextChanged" IsEnabled="False"/>
+        <TextBox x:Name="txtCardLimit" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" MinHeight="30" Margin="0,5,10,0" TextChanged="OnLimitCardTextChanged" IsEnabled="False"/>
+        <TextBox x:Name="txtCardDescr" Grid.Row="6" Grid.Column="1" Margin="0,0,10,5" TextChanged="OnDescrCardTextChanged" TextWrapping="WrapWithOverflow" AcceptsReturn="True"/>
     </Grid>
 </UserControl>

@@ -23,6 +23,7 @@ namespace BankWpfApp
         private Dictionary<string, string> dictInfo = new Dictionary<string, string>();
         private Repository<Product> products = null;
 
+        private CardParamsControl myCardCntr = new CardParamsControl();
         private AccountParamsControl myAccCntr = new AccountParamsControl();
         private DepositParamsControl myDepCntr = new DepositParamsControl();
         public ViewProductsWindow()
@@ -66,12 +67,12 @@ namespace BankWpfApp
                         Node curNode = rootNode[category];
                         if (curNode == null)
                         {
-                            curNode = new Node() { Name = category };
+                            curNode = new Node(category, rootNode);
                             rootNode.Children.Add(curNode);
                         }
                         if (curNode != null)
                         {
-                            curNode.Children.Add(new Node() { Name = p.Name });
+                            curNode.Children.Add(new Node(p.Name, curNode));
                         }
                     }
                 }
@@ -84,12 +85,57 @@ namespace BankWpfApp
 
         private void OnMouseRightButtonClick(object sender, MouseButtonEventArgs e)
         {
-
+            TextBlock tb = e.OriginalSource as TextBlock;
+            if (tb != null)
+            {
+                Node curNode = tb.DataContext as Node;
+                if ((curNode != null) && (curNode.Parent != null))
+                {
+                    TreeView tv = sender as TreeView;
+                    TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+                    //tvi.IsSelected = true;
+                    //tv.SelectedItem(tvi);
+                    //MessageBox.Show($"node={curNode.Name}  parent={curNode.Parent.Name} => IsCategory={ProductCategory.IsCategory(curNode.Parent.Name)}");
+                }
+            }
         }
 
         private void OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            //TreeViewItem item = (e.OriginalSource as FrameworkElement).Parent as TreeViewItem;
+            //if (item == null)
+            //{
+            //    item = e.Source as TreeViewItem;
+            //    if (item == null)
+            //    {
+            //        return;
+            //    }
+            //}
+            //item.IsSelected = true;
+            //e.Handled = true;
+            TreeView tv = sender as TreeView;
+            //if (tv != null)
+            //{
+            //    foreach (TreeViewItem tvi in tv.Items)
+            //    {
+            //        if (tvi != null)
+            //        MessageBox.Show(tvi.DataContext.ToString());
+            //    }
+            //}
 
+            TextBlock tb = e.OriginalSource as TextBlock;
+            if (tb != null)
+            {
+                tb.Focus();
+                Node curNode = tb.DataContext as Node;
+                if ((curNode != null) && (curNode.Parent != null))
+                {
+                    tv.Items.MoveCurrentTo(curNode.Parent);
+                    //TreeViewItem selectedItem = treeView.ItemContainerGenerator.ContainerFromItem(curNode) as TreeViewItem;
+                    //if (selectedItem != null) selectedItem.IsSelected = true;
+                    MessageBox.Show($"node={curNode.Name}  parent={curNode.Parent.Name} => IsCategory={ProductCategory.IsCategory(curNode.Parent.Name)}");
+                }
+            }
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -117,7 +163,10 @@ namespace BankWpfApp
             ProductParams.Children.Clear();
             switch(cmbCategory.SelectedIndex)
             {
-                case 0: break;
+                case 0:
+                    myCardCntr = new CardParamsControl();
+                    ProductParams.Children.Add(myCardCntr);
+                    break;
                 case 1:
                     myDepCntr = new DepositParamsControl();
                     ProductParams.Children.Add(myDepCntr);
@@ -134,7 +183,10 @@ namespace BankWpfApp
         {
             switch(cmbCategory.SelectedIndex)
             {
-                case 0: break;
+                case 0: 
+                    products.Add(myCardCntr.card);
+                    myCardCntr.card = new Card();
+                    break;
                 case 1:
                     products.Add(myDepCntr.dep);
                     myDepCntr.dep = new Deposit();
@@ -153,7 +205,9 @@ namespace BankWpfApp
         {
             switch (cmbCategory.SelectedIndex)
             {
-                case 0: break;
+                case 0:
+                    myCardCntr.card = null;
+                    break;
                 case 1:
                     myDepCntr.dep = null;
                     break;
@@ -163,6 +217,16 @@ namespace BankWpfApp
                     break;
             }
             cmbCategory.SelectedIndex = 0;
+        }
+
+        private void OnTreeViewContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            //MessageBox.Show("OnTreeViewContextMenuOpening");
+            //TreeView treeView = e.OriginalSource as TreeView;
+            /*if (treeView.SelectedItem != null)
+            {
+
+            }*/
         }
     }
 
@@ -188,6 +252,11 @@ namespace BankWpfApp
         public static string GetCategory(int index)
         {
             return cats[index];
+        }
+
+        public static bool IsCategory(string ct)
+        {
+            return cats.Contains(ct);
         }
     }
 }

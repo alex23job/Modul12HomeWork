@@ -10,6 +10,8 @@ namespace BankWpfApp
     class Node
     {
         public string Name { get; set; }
+
+        public Node Parent { get; } = null;
         public ObservableCollection<Node> Children { get; } = new ObservableCollection<Node>();
 
         public Node this[string name]
@@ -28,6 +30,13 @@ namespace BankWpfApp
                 }
                 return null;
             }
+        }
+
+        public Node() { }
+        public Node(string nm, Node parent)
+        {
+            Name = nm;
+            Parent = parent;
         }
     }
 }
