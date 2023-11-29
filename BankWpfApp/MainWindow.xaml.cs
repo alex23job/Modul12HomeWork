@@ -387,7 +387,12 @@ namespace BankWpfApp
 
         private void OnViewWorker(object sender, RoutedEventArgs e)
         {
+            UserEditWindow uew = new UserEditWindow();
+            uew.SetUsers(users);
+            if (uew.ShowDialog() == true)
+            {
 
+            }
         }
 
         private void OnViewPerson(object sender, RoutedEventArgs e)
