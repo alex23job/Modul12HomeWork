@@ -93,7 +93,7 @@ namespace BankWpfApp
 
         private void OnCashbackCardTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(txtCardCashback.Text, out int cashback))
+            if (float.TryParse(txtCardCashback.Text, out float cashback))
             {
                 card.CashbackPercent = cashback;
             }
@@ -101,7 +101,7 @@ namespace BankWpfApp
 
         private void OnBalPercCardTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(txtCardBalPerc.Text, out int percent))
+            if (float.TryParse(txtCardBalPerc.Text, out float percent))
             {
                 card.BalancePercent = percent;
             }
@@ -109,7 +109,7 @@ namespace BankWpfApp
 
         private void OnLimitCardTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(txtCardLimit.Text, out int limit))
+            if (float.TryParse(txtCardLimit.Text, out float limit))
             {
                 card.Limit = limit;
             }

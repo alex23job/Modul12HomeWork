@@ -27,7 +27,7 @@ namespace BankWpfApp
 
         private int _typeCard;
         /// <summary>
-        /// тип счёта : 0 - дебетовая, 1 - кредитная, 2 - предоплаченная
+        /// тип карты : 0 - дебетовая, 1 - кредитная, 2 - предоплаченная
         /// </summary>
         public int TypeCard
         {
@@ -93,6 +93,7 @@ namespace BankWpfApp
             Dictionary<string, string> res = new Dictionary<string, string>();
             res.Add("Категория", "Карта");
             res.Add("Тип", Card.nameTypeCard[TypeCard]);
+            res.Add("Название", Name);
             res.Add("Код продукта", CodeProgramm.ToString());
             if (IsCashback) res.Add("Кешбек", CashbackPercent.ToString());
             if (IsBalancePercent) res.Add("Процент на остаток", BalancePercent.ToString());

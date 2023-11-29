@@ -26,6 +26,7 @@ namespace BankWpfApp
         private CardParamsControl myCardCntr = new CardParamsControl();
         private AccountParamsControl myAccCntr = new AccountParamsControl();
         private DepositParamsControl myDepCntr = new DepositParamsControl();
+        private CreditParamsControl myCreditCntr = new CreditParamsControl();
         public ViewProductsWindow()
         {
             InitializeComponent();
@@ -171,7 +172,10 @@ namespace BankWpfApp
                     myDepCntr = new DepositParamsControl();
                     ProductParams.Children.Add(myDepCntr);
                     break;
-                case 2: break;
+                case 2:
+                    myCreditCntr = new CreditParamsControl();
+                    ProductParams.Children.Add(myCreditCntr);
+                    break;
                 case 3:
                     myAccCntr = new AccountParamsControl();
                     ProductParams.Children.Add(myAccCntr);
@@ -191,7 +195,10 @@ namespace BankWpfApp
                     products.Add(myDepCntr.dep);
                     myDepCntr.dep = new Deposit();
                     break;
-                case 2: break;
+                case 2:
+                    products.Add(myCreditCntr.credit);
+                    myCreditCntr.credit = new Credit();
+                    break;
                 case 3:
                     products.Add(myAccCntr.acc);
                     myAccCntr.acc = new Account();
@@ -211,7 +218,9 @@ namespace BankWpfApp
                 case 1:
                     myDepCntr.dep = null;
                     break;
-                case 2: break;
+                case 2:
+                    myCreditCntr.credit = null;
+                    break;
                 case 3:
                     myAccCntr.acc = null;
                     break;
