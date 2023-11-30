@@ -397,7 +397,10 @@ namespace BankWpfApp
 
         private void OnViewPerson(object sender, RoutedEventArgs e)
         {
-
+            PersonsViewWindow psw = new PersonsViewWindow();
+            psw.SetUser(currentUser);
+            psw.SetPersonRepository(persons);
+            psw.ShowDialog();
         }
     }
 }

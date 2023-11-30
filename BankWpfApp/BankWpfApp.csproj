@@ -76,6 +76,9 @@
     <Compile Include="PersonEditUserControl.xaml.cs">
       <DependentUpon>PersonEditUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PersonsViewWindow.xaml.cs">
+      <DependentUpon>PersonsViewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs" />
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PersonEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PersonsViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

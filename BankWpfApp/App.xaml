@@ -18,6 +18,11 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="myBorder" Property="Background" Value="Cyan"/>
+                                <!--" Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect/>
+                                    </Setter.Value>
+                                </Setter-->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
