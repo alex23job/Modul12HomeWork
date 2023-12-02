@@ -23,6 +23,8 @@ namespace BankWpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        string pathUpdateInfo = "UpdateInfoLog.csv";
+
         string pathPersonXML = "Person.xml";
         Repository<Person> persons = new Repository<Person>();
 
@@ -399,7 +401,8 @@ namespace BankWpfApp
         {
             PersonsViewWindow psw = new PersonsViewWindow();
             psw.SetUser(currentUser);
-            psw.SetPersonRepository(persons);
+            psw.SetRepository(persons, users);
+            psw.SetPathUpdateInfoFile(pathUpdateInfo);
             psw.ShowDialog();
         }
     }

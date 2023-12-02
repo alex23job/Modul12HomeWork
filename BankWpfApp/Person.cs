@@ -86,6 +86,18 @@ namespace BankWpfApp
             Type = 0;
         }
 
+        public void CopyEditParams(Person pp)
+        {
+            Name = pp.Name;
+            LastName = pp.LastName;
+            SecondName = pp.SecondName;
+            Pasport = pp.Pasport;
+            BirthDay = pp.BirthDay;
+            this.Tlf = pp.Tlf;
+            Type = pp.Type;
+            updateInfo = pp.updateInfo;
+        }
+
         public void SetUserData(UserData ud)
         {
             if (user == null)

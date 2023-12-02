@@ -68,7 +68,10 @@ namespace BankWpfApp
 
         public void DelItem(T item)
         {
-            arr.Remove(item);
+            if (item != null)
+            {
+                arr.Remove(item);
+            }
         }
 
         public int Count => arr.Count;
