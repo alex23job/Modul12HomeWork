@@ -88,6 +88,9 @@
     <Compile Include="UserEditWindow.xaml.cs">
       <DependentUpon>UserEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewLogWindow.xaml.cs">
+      <DependentUpon>ViewLogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewProductsWindow.xaml.cs">
       <DependentUpon>ViewProductsWindow.xaml</DependentUpon>
     </Compile>
@@ -152,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewLogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

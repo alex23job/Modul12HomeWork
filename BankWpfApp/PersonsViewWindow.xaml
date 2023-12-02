@@ -14,11 +14,12 @@
         <DataGrid x:Name="dataGrid" Background="#FFFFDFE9" Foreground="#FF01089E" IsReadOnly="True" AutoGenerateColumns="False"
                   HorizontalAlignment="Stretch" MouseRightButtonDown="OnDataGridMouseRightButtonDown">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Фамилия" MinWidth="130" Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Имя"  MinWidth="130" Binding="{Binding Path=LastName}"/>
-                <DataGridTextColumn Header="Отчество" MinWidth="130" Binding="{Binding Path=SecondName}"/>
-                <DataGridTextColumn Header="Дата рождения" MinWidth="130" Binding="{Binding Path=BirthDay}"/>
-                <DataGridTextColumn Header="Телефон" MinWidth="130" Binding="{Binding Path=Tlf}"/>
+                <DataGridTextColumn Header="UID" MinWidth="60" Binding="{Binding Path=UID}"/>
+                <DataGridTextColumn Header="Фамилия" MinWidth="120" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Имя"  MinWidth="110" Binding="{Binding Path=LastName}"/>
+                <DataGridTextColumn Header="Отчество" MinWidth="120" Binding="{Binding Path=SecondName}"/>
+                <DataGridTextColumn Header="Дата рождения" MinWidth="120" Binding="{Binding Path=BirthDay}"/>
+                <DataGridTextColumn Header="Телефон" MinWidth="110" Binding="{Binding Path=Tlf}"/>
                 <DataGridTextColumn Header="Продукты" MinWidth="80" Width="*" Binding="{Binding Path=Count}"/>
             </DataGrid.Columns>
         </DataGrid>

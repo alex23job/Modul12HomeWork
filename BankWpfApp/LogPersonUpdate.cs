@@ -13,7 +13,7 @@ namespace BankWpfApp
         public string ModeUpdate { get; set; }
         public string UserLogin { get; set; }
         public string UserPosition { get; set; }
-        public string UpdatingUID { get; set; }
+        public string UpdatingUID { get; set; } = "";
         public MyLogView(string csvStr, string sep = "#")
         {
             string[] s = csvStr.Split(sep[0]);

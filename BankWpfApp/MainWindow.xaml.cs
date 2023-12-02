@@ -197,7 +197,13 @@ namespace BankWpfApp
             total = arrCounters[3] + arrCounters[1] + arrCounters[2];
             txtWorker.Text = $"Всего сотрудников : {total}\nКонсультанты : {arrCounters[1]}\nМенеджеры    : {arrCounters[2]}\nАдминистраторы : {arrCounters[3]}";
 
-            txtLog.Text = $"Всего записей : ";
+            total = 0;
+            if (File.Exists(pathUpdateInfo))
+            {
+                string[] arrStr = File.ReadAllLines(pathUpdateInfo);
+                total = arrStr.Length;
+            }
+            txtLog.Text = $"Всего записей : {total}";
 
             arrCounters[0] = 0; arrCounters[1] = 0; arrCounters[2] = 0;arrCounters[3] = 0;
             for (i = 0; i < products.AllItems.Count; i++)
@@ -374,7 +380,18 @@ namespace BankWpfApp
 
         private void OnViewLog(object sender, RoutedEventArgs e)
         {
-
+            if (File.Exists(pathUpdateInfo))
+            {
+                string[] arrStr = File.ReadAllLines(pathUpdateInfo);
+                List<MyLogView> list = new List<MyLogView>();
+                for (int i = 0; i < arrStr.Length; i++)
+                {
+                    list.Add(new MyLogView(arrStr[i]));
+                }
+                ViewLogWindow vlw = new ViewLogWindow();
+                vlw.SetSource(list);
+                vlw.ShowDialog();
+            }
         }
 
         private void OnViewProduct(object sender, RoutedEventArgs e)

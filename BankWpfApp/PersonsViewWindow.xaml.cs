@@ -74,7 +74,51 @@ namespace BankWpfApp
 
         private void OnDataGridMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
+            TextBlock tb = e.OriginalSource as TextBlock;
+            if (tb != null)
+            {
+                Person pers = tb.DataContext as Person;
+                if (pers != null)
+                {
+                    dataGrid.SelectedItem = pers;
 
+                    ContextMenu contextMenu = new ContextMenu();
+                    MenuItem menuItemEdit = new MenuItem();
+                    menuItemEdit.Header = "Изменить пароль клиента";
+                    menuItemEdit.Click += (send, args) => {
+                        ChangePassword(pers);
+                    };
+                    contextMenu.Items.Add(menuItemEdit);
+                    MenuItem menuItemDel = new MenuItem();
+                    menuItemDel.Header = "Удалить запись клиента";
+                    menuItemDel.Click += (send, args) => {
+                        RemovePerson(pers);
+                    };
+                    contextMenu.Items.Add(menuItemDel);
+                    contextMenu.IsOpen = true;
+                }
+            }
+        }
+
+        private void ChangePassword(Person pers)
+        {
+            ChangePasswordWindow cpw = new ChangePasswordWindow();
+            Person editPers = persons[pers.UID];
+            UserData editUser = users[pers.UserUID];
+            if (editUser != null)
+            {
+                cpw.SetUser(editUser);
+                if (cpw.ShowDialog() == true)
+                {
+                    editPers.UpdateUserPassword(cpw.GetUser().Password);
+                    editUser.Password = cpw.GetUser().Password;
+                    editPers.updateInfo = new LogPersonUpdate("Пароль", "change", user.UserLogin, UserPosition.GetPosition(user.Rule), editPers.UID.ToString());
+                    using (StreamWriter outputFile = new StreamWriter(pathUpdateInfo, true))
+                    {
+                        outputFile.WriteLine(editPers.updateInfo.ToCsvString());
+                    }
+                }
+            }
         }
 
         private void OnAddPerson(object sender, RoutedEventArgs e)
@@ -115,6 +159,11 @@ namespace BankWpfApp
         {
             if (dataGrid.SelectedValue == null) return;
             Person pers = dataGrid.SelectedValue as Person;
+            RemovePerson(pers);
+        }
+
+        private void RemovePerson(Person pers)
+        {
             string info = string.Format("\"Фамилия: {0}   тлф: {1}\"", pers.Name, pers.Tlf);
             if (MessageBox.Show($"Выбрана запись клиента : {info}\n\nУдалить запись ?", "Удаление записи клиента", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {

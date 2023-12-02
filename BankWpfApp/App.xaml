@@ -24,6 +24,10 @@
                                     </Setter.Value>
                                 </Setter-->
                             </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#FF50A858"/>
+                                <Setter Property="Foreground" Value="LightGreen"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
