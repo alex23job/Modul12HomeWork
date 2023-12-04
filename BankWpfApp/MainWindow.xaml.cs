@@ -34,6 +34,9 @@ namespace BankWpfApp
         string pathProductXML = "Product.xml";
         Repository<Product> products = new Repository<Product>();
 
+        string pathBankAccountXML = "BankAccount.xml";
+        Repository<BankAccount> bankAccounts = new Repository<BankAccount>();
+
         Person currentPerson = null;
         UserData currentUser = null;
         Brush backLK = null;
@@ -71,6 +74,13 @@ namespace BankWpfApp
             }
             products.SetSavePath(pathProductXML);
             products.SetCurrentNewUID(10);
+
+            if (File.Exists(pathBankAccountXML))
+            {
+                bankAccounts = Repository<BankAccount>.LoadRepositoryFromFile(pathBankAccountXML);
+            }
+            bankAccounts.SetSavePath(pathBankAccountXML);
+            bankAccounts.SetCurrentNewUID(1000000);
         }
 
         private void CreateContextMenuLK()
@@ -362,6 +372,7 @@ namespace BankWpfApp
             persons.SaveRepositoryToFile(pathPersonXML);
             products.SaveRepositoryToFile(pathProductXML);
             //products.SaveRepositoryToFileForCusomSerializer(pathProductXML, new XmlSerializer(typeof(ObservableCollection<Product>), "account", "deposit", "card", "credit"));
+            bankAccounts.SaveRepositoryToFile(pathBankAccountXML);
         }
 
         private void OnUserExit(object sender, RoutedEventArgs e)
@@ -421,6 +432,15 @@ namespace BankWpfApp
             psw.SetRepository(persons, users);
             psw.SetPathUpdateInfoFile(pathUpdateInfo);
             psw.ShowDialog();
+        }
+
+        private void OnAddBankAccClick(object sender, RoutedEventArgs e)
+        {
+            if (currentPerson == null) return;
+            AddingBankAccWindow abaw = new AddingBankAccWindow();
+            abaw.SetRepositoty(products, bankAccounts);
+            abaw.SetPerson(currentPerson);
+            abaw.ShowDialog();
         }
     }
 }

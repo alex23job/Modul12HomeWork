@@ -75,7 +75,19 @@
         </Border>
         <Border x:Name="pers4" CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
-                <Label Content="СЧЕТА" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
+                <Label Content="СЧЕТА" HorizontalAlignment="Center" Margin="0,18,0,5" FontSize="20" FontWeight="Bold" Foreground="#FF031272" Height="35"/>
+                <ListView x:Name="listViewAcc" Margin="5" MinHeight="240" Background="{x:Null}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Background="#FFD8E8F7" Margin="10,5">
+                                <TextBlock Text="{Binding StrBalance}" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Name}" FontFamily="Times New Roman" FontSize="14"/>
+                                <TextBlock Text="{Binding StrNumber}" FontFamily="Times New Roman" FontSize="16"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button x:Name="addBankAcc" Content="Открыть +" Margin="10,5,10,18" Click="OnAddBankAccClick" Height="40"/>
             </StackPanel>
         </Border>
         <Border x:Name="user4" CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">

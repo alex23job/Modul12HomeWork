@@ -60,6 +60,9 @@
     <Compile Include="AccountParamsControl.xaml.cs">
       <DependentUpon>AccountParamsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddingBankAccWindow.xaml.cs">
+      <DependentUpon>AddingBankAccWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CardParamsControl.xaml.cs">
       <DependentUpon>CardParamsControl.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,7 @@
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="UserEditWindow.xaml.cs">
       <DependentUpon>UserEditWindow.xaml</DependentUpon>
@@ -95,6 +99,10 @@
       <DependentUpon>ViewProductsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AccountParamsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddingBankAccWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

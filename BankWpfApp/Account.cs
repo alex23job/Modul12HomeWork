@@ -11,6 +11,19 @@ namespace BankWpfApp
     public class Account : Product, IBalans, IProductType
     {
         public static string[] nameTypeAccount = { "расчётный", "депозитный", "кредитный" };
+        public static int GetNumType(string nm)
+        {
+            int res = -1;
+            for (int i = 0; i < nameTypeAccount.Length; i++)
+            {
+                if (nameTypeAccount[i] == nm)
+                {
+                    res = i;
+                    break;
+                }
+            }
+            return res;
+        }
         /// <summary>
         /// тип продукта : 3 - счёт
         /// </summary>
@@ -20,6 +33,8 @@ namespace BankWpfApp
         /// Количество денег на счёте
         /// </summary>
         public float Balans { get; set; } = 0;
+
+        public string StrBalance => $"{Balans} Р";
 
         private int _typeAccount;
         /// <summary>
@@ -57,5 +72,12 @@ namespace BankWpfApp
             res.Add("Описание", Description);
             return res;
         }
+    }
+
+    public class BankAccount : Account
+    {
+        public int personUID { get; set; }
+        public long Number { get; set; }
+        public string StrNumber => $"№ {Number}";
     }
 }
