@@ -34,8 +34,8 @@ namespace BankWpfApp
         string pathProductXML = "Product.xml";
         Repository<Product> products = new Repository<Product>();
 
-        string pathBankAccountXML = "BankAccount.xml";
-        Repository<BankAccount> bankAccounts = new Repository<BankAccount>();
+        string pathBankProductXML = "BankProduct.xml";
+        Repository<Product> bankProducts = new Repository<Product>();
 
         Person currentPerson = null;
         UserData currentUser = null;
@@ -75,12 +75,14 @@ namespace BankWpfApp
             products.SetSavePath(pathProductXML);
             products.SetCurrentNewUID(10);
 
-            if (File.Exists(pathBankAccountXML))
+            if (File.Exists(pathBankProductXML))
             {
-                bankAccounts = Repository<BankAccount>.LoadRepositoryFromFile(pathBankAccountXML);
+                bankProducts = Repository<Product>.LoadRepositoryFromFile(pathBankProductXML);
             }
-            bankAccounts.SetSavePath(pathBankAccountXML);
-            bankAccounts.SetCurrentNewUID(1000000);
+            bankProducts.SetSavePath(pathBankProductXML);
+            // TODO
+            bankProducts.SetCurrentNewUID(1000000);
+            Product.SetNextPersonProductNumber(1000000 + bankProducts.Count);
         }
 
         private void CreateContextMenuLK()
@@ -141,7 +143,6 @@ namespace BankWpfApp
             };
             borderLK.ContextMenu.Items.Add(menuItemRegistration);
 
-            //borderLK.ContextMenu.M
             borderLK.ContextMenu.MouseLeave += (send, args) =>
             {
                 //borderLK.Background = Brushes.Red;
@@ -229,7 +230,23 @@ namespace BankWpfApp
 
         private void UpdatePersonsPanels()
         {
+            ObservableCollection<BankAccount> baList = new ObservableCollection<BankAccount>();
 
+            for (int i = 0; i < currentPerson.IdProducts.Count; i++) 
+            {
+                long id = currentPerson.IdProducts[i];
+                for (int j = 0; j < bankProducts.Count; j++)
+                {
+                    BankAccount ba = bankProducts.AllItems[j] as BankAccount;
+                    if (ba != null && ba.PersonProductNumber == id)
+                    {
+                        baList.Add(ba);
+                        break;
+                    }
+                }
+            }
+
+            listViewAcc.ItemsSource = baList;
         }
 
         private void CreateCurrentUser(UserData ud)
@@ -372,7 +389,7 @@ namespace BankWpfApp
             persons.SaveRepositoryToFile(pathPersonXML);
             products.SaveRepositoryToFile(pathProductXML);
             //products.SaveRepositoryToFileForCusomSerializer(pathProductXML, new XmlSerializer(typeof(ObservableCollection<Product>), "account", "deposit", "card", "credit"));
-            bankAccounts.SaveRepositoryToFile(pathBankAccountXML);
+            bankProducts.SaveRepositoryToFile(pathBankProductXML);
         }
 
         private void OnUserExit(object sender, RoutedEventArgs e)
@@ -438,7 +455,7 @@ namespace BankWpfApp
         {
             if (currentPerson == null) return;
             AddingBankAccWindow abaw = new AddingBankAccWindow();
-            abaw.SetRepositoty(products, bankAccounts);
+            abaw.SetRepositoty(products, bankProducts);
             abaw.SetPerson(currentPerson);
             abaw.ShowDialog();
         }

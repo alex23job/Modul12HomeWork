@@ -74,10 +74,11 @@ namespace BankWpfApp
         }
     }
 
-    public class BankAccount : Account
+    public class BankAccount : Account, IPersonProductNumber
     {
         public int personUID { get; set; }
-        public long Number { get; set; }
-        public string StrNumber => $"№ {Number}";
+        public string StrNumber => $"№ {PersonProductNumber}";
+
+        public long PersonProductNumber { get; set; }
     }
 }

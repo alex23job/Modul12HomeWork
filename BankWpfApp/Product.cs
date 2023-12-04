@@ -17,6 +17,11 @@ namespace BankWpfApp
         Dictionary<string, string> GetProductInfo();
     }
 
+    interface IPersonProductNumber
+    {
+        long PersonProductNumber { get; set; }
+    }
+
     /// <summary>
     /// 0 - Card, 1 - Deposit, 2 - Credit, 3 - Account
     /// </summary>
@@ -29,12 +34,23 @@ namespace BankWpfApp
     }
 
     [XmlRoot("root")]
+    [XmlInclude(typeof(BankDeposit))]
+    [XmlInclude(typeof(BankCredit))]
+    [XmlInclude(typeof(BankCard))]
+    [XmlInclude(typeof(BankAccount))]
     [XmlInclude(typeof(Account))]
     [XmlInclude(typeof(Deposit))]
     [XmlInclude(typeof(Card))]
     [XmlInclude(typeof(Credit))]
     public class Product : IId, IDictInfo        
     {
+        static long nextPersonProductNumber = 1000000;
+        public static long GetNextPersonProductNumber() => nextPersonProductNumber++;
+        public static void SetNextPersonProductNumber(long value)
+        {
+            if (value > 0) nextPersonProductNumber = value;
+        }
+
         /// <summary>
         /// наименование продукта
         /// </summary>

@@ -76,14 +76,16 @@
         <Border x:Name="pers4" CornerRadius="20" Grid.Row="1" Grid.Column="3" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
                 <Label Content="СЧЕТА" HorizontalAlignment="Center" Margin="0,18,0,5" FontSize="20" FontWeight="Bold" Foreground="#FF031272" Height="35"/>
-                <ListView x:Name="listViewAcc" Margin="5" MinHeight="240" Background="{x:Null}">
+                <ListView x:Name="listViewAcc" Margin="2,5" MinHeight="240" Background="{x:Null}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Background="#FFD8E8F7" Margin="10,5">
-                                <TextBlock Text="{Binding StrBalance}" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Name}" FontFamily="Times New Roman" FontSize="14"/>
-                                <TextBlock Text="{Binding StrNumber}" FontFamily="Times New Roman" FontSize="16"/>
-                            </StackPanel>
+                            <Border Background="#FFD8E8F7" Margin="2" CornerRadius="10" MinHeight="70" MinWidth="164" Padding="10,5">
+                                <StackPanel Background="#FFD8E8F7">
+                                    <TextBlock Text="{Binding StrBalance}" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" Foreground="Green"/>
+                                    <TextBlock Text="{Binding Name}" FontFamily="Times New Roman" FontSize="14"/>
+                                    <TextBlock Text="{Binding StrNumber}" FontFamily="Times New Roman" FontSize="16"/>
+                                </StackPanel>
+                            </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

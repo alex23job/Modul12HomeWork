@@ -102,4 +102,12 @@ namespace BankWpfApp
             return res;
         }
     }
+
+    public class BankCard : Card, IPersonProductNumber
+    {
+        public int personUID { get; set; }
+        public string StrNumber => $"№ {PersonProductNumber}";
+
+        public long PersonProductNumber { get; set; }
+    }
 }

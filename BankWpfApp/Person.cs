@@ -56,7 +56,7 @@ namespace BankWpfApp
         /// Массив идентификаторов имеющихся у клиента продуктов банка
         /// кредиты, счета, карты хранятся в отдельной базе
         /// </summary>
-        public List<int> IdProducts = null;
+        public List<long> IdProducts = null;
 
         public LogPersonUpdate updateInfo = null;
 
@@ -71,7 +71,7 @@ namespace BankWpfApp
 
         public Person()
         {
-            IdProducts = new List<int>();
+            IdProducts = new List<long>();
             Type = 0;
         }
         public Person(string nm1, string nm2, string nm3, string psp, string tlf, string bd)
@@ -82,7 +82,7 @@ namespace BankWpfApp
             Pasport = psp;
             BirthDay = bd;
             this.Tlf = tlf;
-            IdProducts = new List<int>();
+            IdProducts = new List<long>();
             Type = 0;
         }
 

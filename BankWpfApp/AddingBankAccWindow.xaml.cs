@@ -21,7 +21,7 @@ namespace BankWpfApp
     public partial class AddingBankAccWindow : Window
     {
         Repository<Product> products = null;
-        Repository<BankAccount> bankAccounts = null;
+        Repository<Product> bankAccounts = null;
         Person currPerson = null;
 
         public AddingBankAccWindow()
@@ -38,19 +38,19 @@ namespace BankWpfApp
                 {
                     if (MessageBox.Show($"Будет открыт счёт : {av.Name}\n\nОткрыть счёт ?", $"Открытие счёта для клиента {currPerson.PersonLogin}", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        BankAccount ba = bankAccounts.Add(new BankAccount());
+                        BankAccount ba = bankAccounts.Add(new BankAccount()) as BankAccount;
                         ba.personUID = currPerson.UID;
-                        ba.Number = ba.UID;
+                        ba.PersonProductNumber = Product.GetNextPersonProductNumber();
                         ba.Name = av.Name;
                         ba.TypeAccount = Account.GetNumType(av.NameType);
-                        currPerson.IdProducts.Add(ba.UID);
+                        currPerson.IdProducts.Add(ba.PersonProductNumber);
                     }
                 }
                 DialogResult = true;
             }
         }
 
-        public void SetRepositoty(Repository<Product> prod, Repository<BankAccount> ba)
+        public void SetRepositoty(Repository<Product> prod, Repository<Product> ba)
         {
             bankAccounts = ba;
             products = prod;

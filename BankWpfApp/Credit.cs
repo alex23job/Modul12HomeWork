@@ -96,4 +96,12 @@ namespace BankWpfApp
             return res;
         }
     }
+
+    public class BankCredit : Credit, IPersonProductNumber
+    {
+        public int personUID { get; set; }
+        public string StrNumber => $"№ {PersonProductNumber}";
+
+        public long PersonProductNumber { get; set; }
+    }
 }

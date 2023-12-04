@@ -70,4 +70,13 @@ namespace BankWpfApp
             return res;
         }
     }
+
+
+    public class BankDeposit : Deposit, IPersonProductNumber
+    {
+        public int personUID { get; set; }
+        public string StrNumber => $"№ {PersonProductNumber}";
+
+        public long PersonProductNumber { get; set; }
+    }
 }
