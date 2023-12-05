@@ -119,6 +119,7 @@ namespace BankWpfApp
     {
         public int personUID { get; set; }
         public float CashbackBalance { get; set; } = 0;
+        public float MinBalance { get; set; } = 0;
         public string StrBalance => (CardAccount != null) ? $"{CardAccount.Balans:0.00} Р" : "0 Р";
         public string StrNumber => $"{Card.CodeBank} {CodeProgramm:00}** **** {(UID % 10000):0000}";
 
@@ -139,5 +140,26 @@ namespace BankWpfApp
 
         public long PersonProductNumber { get; set; }
         public bool IsRequest { get; set; }
+
+        public void CopyParamsProduct(Card cd)
+        {
+            Description = cd.Description;
+            CodeProgramm = cd.CodeProgramm;
+            if (cd.IsBalancePercent)
+            {
+                IsBalancePercent = true;
+                BalancePercent = cd.BalancePercent;
+            }
+            if (cd.IsCashback)
+            {
+                IsCashback = true;
+                CashbackPercent = cd.CashbackPercent;
+            }
+            if (cd.IsLimit)
+            {
+                IsLimit = true;
+                Limit = cd.Limit;
+            }
+        }
     }
 }

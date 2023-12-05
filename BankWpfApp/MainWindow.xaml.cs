@@ -477,7 +477,10 @@ namespace BankWpfApp
             AddingBankCardWindow abcw = new AddingBankCardWindow();
             abcw.SetRepositoty(products, bankProducts);
             abcw.SetPerson(currentPerson);
-            abcw.ShowDialog();
+            if (abcw.ShowDialog() == true)
+            {
+                UpdatePersonsPanels();
+            }
         }
     }
 }

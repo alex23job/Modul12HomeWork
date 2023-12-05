@@ -44,6 +44,14 @@ namespace BankWpfApp
                         bp.TypeCard = Card.GetNumType(av.NameType);
                         currPerson.IdProducts.Add(bp.PersonProductNumber);
                         bp.IsRequest = true;
+                        foreach (Product pr in products.AllItems)
+                        {
+                            Card cd = pr as Card;
+                            if (cd != null)
+                            {
+                                bp.CopyParamsProduct(cd);
+                            }
+                        }
                     }
                 }
                 DialogResult = true;
