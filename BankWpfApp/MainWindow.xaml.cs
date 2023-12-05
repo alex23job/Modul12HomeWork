@@ -459,5 +459,14 @@ namespace BankWpfApp
             abaw.SetPerson(currentPerson);
             abaw.ShowDialog();
         }
+
+        private void OnAddBankCardClick(object sender, RoutedEventArgs e)
+        {
+            if (currentPerson == null) return;
+            AddingBankCardWindow abcw = new AddingBankCardWindow();
+            abcw.SetRepositoty(products, bankProducts);
+            abcw.SetPerson(currentPerson);
+            abcw.ShowDialog();
+        }
     }
 }

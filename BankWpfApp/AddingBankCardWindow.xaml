@@ -1,19 +1,19 @@
-﻿<Window x:Class="BankWpfApp.AddingBankAccWindow"
+﻿<Window x:Class="BankWpfApp.AddingBankCardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWpfApp"
         mc:Ignorable="d"
-        Title="ОТКРЫТИЕ НОВОГО СЧЁТА" Height="350" Width="500" Background="#FFF0F9D2" FontFamily="Times New Roman" FontSize="20" Icon="MainIcon.ico" ResizeMode="NoResize">
+        Title="ВЫБОР БАНКОВСКОЙ КАРТЫ" Height="350" Width="500" Background="#FFF0F9D2" FontFamily="Times New Roman" FontSize="20" Icon="MainIcon.ico" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="Выбирите тип счёта и нажмите 'Добавить' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListView x:Name="listViewAcc" Margin="5" MinHeight="240" Background="{x:Null}" Grid.Row="1">
+        <Label Content="Выбирите тип карты и нажмите 'Заявка' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListView x:Name="listViewCard" Margin="5" MinHeight="240" Background="{x:Null}" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="#FFD8E8F7" Margin="10,2" CornerRadius="20" Height="50" Width="440" Padding="30,5">
@@ -27,7 +27,7 @@
         </ListView>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="20,5">
             <Button x:Name="btnCancel" Content="Отменить" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180" Height="45" IsCancel="True" Margin="10,0,70,0"/>
-            <Button x:Name="btnOK" Content="Добавить" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" Height="45" IsDefault="True" Click="OnOK_Click"/>
+            <Button x:Name="btnOK" Content="Заявка" HorizontalAlignment="Right" VerticalAlignment="Center" Width="180" Height="45" IsDefault="True" Click="OnOK_Click"/>
         </StackPanel>
     </Grid>
 </Window>

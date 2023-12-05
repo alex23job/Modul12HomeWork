@@ -19,7 +19,19 @@ namespace BankWpfApp
         /// имена типов карт
         /// </summary>
         public static string[] nameTypeCard = { "дебетовая", "кредитная", "предоплаченная" };
-
+        public static int GetNumType(string nm)
+        {
+            int res = -1;
+            for (int i = 0; i < nameTypeCard.Length; i++)
+            {
+                if (nameTypeCard[i] == nm)
+                {
+                    res = i;
+                    break;
+                }
+            }
+            return res;
+        }
         /// <summary>
         /// тип продукта : 0 - карта
         /// </summary>
@@ -106,7 +118,7 @@ namespace BankWpfApp
     public class BankCard : Card, IPersonProductNumber
     {
         public int personUID { get; set; }
-        public string StrNumber => $"№ {PersonProductNumber}";
+        public string StrNumber => $"{Card.CodeBank} {CodeProgramm:02d}** **** {(UID % 10000):04d}";
 
         public long PersonProductNumber { get; set; }
     }
