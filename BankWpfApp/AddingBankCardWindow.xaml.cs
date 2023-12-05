@@ -43,6 +43,7 @@ namespace BankWpfApp
                         bp.Name = av.Name;
                         bp.TypeCard = Card.GetNumType(av.NameType);
                         currPerson.IdProducts.Add(bp.PersonProductNumber);
+                        bp.IsRequest = true;
                     }
                 }
                 DialogResult = true;

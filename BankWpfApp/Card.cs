@@ -115,11 +115,29 @@ namespace BankWpfApp
         }
     }
 
-    public class BankCard : Card, IPersonProductNumber
+    public class BankCard : Card, IPersonProductNumber, IIsRequest
     {
         public int personUID { get; set; }
-        public string StrNumber => $"{Card.CodeBank} {CodeProgramm:02d}** **** {(UID % 10000):04d}";
+        public float CashbackBalance { get; set; } = 0;
+        public string StrBalance => (CardAccount != null) ? $"{CardAccount.Balans:0.00} Р" : "0 Р";
+        public string StrNumber => $"{Card.CodeBank} {CodeProgramm:00}** **** {(UID % 10000):0000}";
+
+        public string StrInfo
+        {
+            get
+            {
+                if (IsRequest)
+                    return "Заявка";
+                else
+                {
+                    return IsCashback ? $"{CashbackBalance:0.00}" : "";
+                }
+            }
+        }
+
+        public BankAccount CardAccount { get; set; } = null;
 
         public long PersonProductNumber { get; set; }
+        public bool IsRequest { get; set; }
     }
 }

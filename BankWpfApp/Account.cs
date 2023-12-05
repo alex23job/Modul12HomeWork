@@ -34,8 +34,6 @@ namespace BankWpfApp
         /// </summary>
         public float Balans { get; set; } = 0;
 
-        public string StrBalance => $"{Balans} Р";
-
         private int _typeAccount;
         /// <summary>
         /// тип счёта : 0 - расчётный, 1 - депозитный, 2 - кредитный
@@ -78,7 +76,7 @@ namespace BankWpfApp
     {
         public int personUID { get; set; }
         public string StrNumber => $"№ {PersonProductNumber}";
-
+        public string StrBalance => $"{Balans} Р";
         public long PersonProductNumber { get; set; }
     }
 }

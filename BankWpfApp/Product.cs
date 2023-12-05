@@ -33,6 +33,14 @@ namespace BankWpfApp
         int Type { get; set; }
     }
 
+    interface IIsRequest
+    {
+        /// <summary>
+        /// Это заявка ? true - да; false - нет, это уже продукт
+        /// </summary>
+        bool IsRequest { get; set; }
+    }
+
     [XmlRoot("root")]
     [XmlInclude(typeof(BankDeposit))]
     [XmlInclude(typeof(BankCredit))]

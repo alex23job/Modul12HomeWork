@@ -230,7 +230,10 @@ namespace BankWpfApp
 
         private void UpdatePersonsPanels()
         {
-            ObservableCollection<BankAccount> baList = new ObservableCollection<BankAccount>();
+            ObservableCollection<BankAccount> accList = new ObservableCollection<BankAccount>();
+            ObservableCollection<BankCard> cardList = new ObservableCollection<BankCard>();
+            ObservableCollection<BankDeposit> deposList = new ObservableCollection<BankDeposit>();
+            ObservableCollection<BankCredit> creditList = new ObservableCollection<BankCredit>();
 
             for (int i = 0; i < currentPerson.IdProducts.Count; i++) 
             {
@@ -240,13 +243,21 @@ namespace BankWpfApp
                     BankAccount ba = bankProducts.AllItems[j] as BankAccount;
                     if (ba != null && ba.PersonProductNumber == id)
                     {
-                        baList.Add(ba);
+                        accList.Add(ba);
+                        break;
+                    }
+
+                    BankCard bc = bankProducts.AllItems[j] as BankCard;
+                    if (bc != null && bc.PersonProductNumber == id)
+                    {
+                        cardList.Add(bc);
                         break;
                     }
                 }
             }
 
-            listViewAcc.ItemsSource = baList;
+            listViewAcc.ItemsSource = accList;
+            listViewCard.ItemsSource = cardList;
         }
 
         private void CreateCurrentUser(UserData ud)
