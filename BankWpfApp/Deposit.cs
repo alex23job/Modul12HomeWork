@@ -75,8 +75,22 @@ namespace BankWpfApp
     public class BankDeposit : Deposit, IPersonProductNumber
     {
         public int personUID { get; set; }
-        public string StrNumber => $"№ {PersonProductNumber}";
+        public string StrNumber => $"№ {PersonProductNumber}  {percent:0.0}%";
+        public string StrBalance => (DepositAccount != null) ? $"{DepositAccount.Balans:0.00} Р" : "0 Р";
+        public float MinPeriodBalance { get; set; } = 0;
 
         public long PersonProductNumber { get; set; }
+        public BankAccount DepositAccount { get; set; } = null;
+        public void CopyParamsProduct(Deposit cd)
+        {
+            Description = cd.Description;
+            depositTerm = cd.depositTerm;
+            percent = cd.percent;
+            billingPeriod = cd.billingPeriod;
+            IsCanTopUp = cd.IsCanTopUp;
+            IsCanWithdraw = cd.IsCanWithdraw;
+            IsCapitalization = cd.IsCapitalization;
+            minBalance = cd.minBalance;
+        }
     }
 }

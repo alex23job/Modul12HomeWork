@@ -78,5 +78,11 @@ namespace BankWpfApp
         public string StrNumber => $"№ {PersonProductNumber}";
         public string StrBalance => $"{Balans} Р";
         public long PersonProductNumber { get; set; }
+
+        public BankAccount() { }
+        public BankAccount(int tp, int persID) : base(tp)
+        {
+            personUID = persID;
+        }
     }
 }

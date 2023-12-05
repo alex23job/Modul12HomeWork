@@ -253,11 +253,19 @@ namespace BankWpfApp
                         cardList.Add(bc);
                         break;
                     }
+
+                    BankDeposit bd = bankProducts.AllItems[j] as BankDeposit;
+                    if (bd != null && bd.PersonProductNumber == id)
+                    {
+                        deposList.Add(bd);
+                        break;
+                    }
                 }
             }
 
             listViewAcc.ItemsSource = accList;
             listViewCard.ItemsSource = cardList;
+            listViewDeposit.ItemsSource = deposList;
         }
 
         private void CreateCurrentUser(UserData ud)
@@ -468,7 +476,10 @@ namespace BankWpfApp
             AddingBankAccWindow abaw = new AddingBankAccWindow();
             abaw.SetRepositoty(products, bankProducts);
             abaw.SetPerson(currentPerson);
-            abaw.ShowDialog();
+            if (abaw.ShowDialog() == true)
+            {
+                UpdatePersonsPanels();
+            }
         }
 
         private void OnAddBankCardClick(object sender, RoutedEventArgs e)
@@ -478,6 +489,18 @@ namespace BankWpfApp
             abcw.SetRepositoty(products, bankProducts);
             abcw.SetPerson(currentPerson);
             if (abcw.ShowDialog() == true)
+            {
+                UpdatePersonsPanels();
+            }
+        }
+
+        private void OnAddBankDepositClick(object sender, RoutedEventArgs e)
+        {
+            if (currentPerson == null) return;
+            AddingBankDepositWindow abdw = new AddingBankDepositWindow();
+            abdw.SetRepositoty(products, bankProducts);
+            abdw.SetPerson(currentPerson);
+            if (abdw.ShowDialog() == true)
             {
                 UpdatePersonsPanels();
             }

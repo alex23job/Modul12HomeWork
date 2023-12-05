@@ -47,7 +47,7 @@ namespace BankWpfApp
                         foreach (Product pr in products.AllItems)
                         {
                             Card cd = pr as Card;
-                            if (cd != null)
+                            if (cd != null && cd.Name == av.Name)
                             {
                                 bp.CopyParamsProduct(cd);
                             }

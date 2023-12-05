@@ -68,7 +68,21 @@
         </Border>
         <Border x:Name="pers2" CornerRadius="20" Grid.Row="1" Grid.Column="1" Background="#FFB5DEF5" Margin="5,7">
             <StackPanel>
-                <Label Content="ВКЛАДЫ" HorizontalAlignment="Center" Margin="0,18,0,0" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
+                <Label Content="ВКЛАДЫ" HorizontalAlignment="Center" Margin="0,18,0,5" FontSize="20" FontWeight="Bold" Foreground="#FF031272"/>
+                <ListView x:Name="listViewDeposit" Margin="2,5" MinHeight="240" Background="{x:Null}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#FFD8E8F7" Margin="2" CornerRadius="10" MinHeight="70" MinWidth="164" Padding="10,5">
+                                <StackPanel Background="#FFD8E8F7">
+                                    <TextBlock Text="{Binding StrBalance}" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" Foreground="Green"/>
+                                    <TextBlock Text="{Binding Name}" FontFamily="Times New Roman" FontSize="14"/>
+                                    <TextBlock Text="{Binding StrNumber}" FontFamily="Times New Roman" FontSize="16"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button x:Name="addBankDeposit" Content="Открыть +" Margin="10,5,10,18" Click="OnAddBankDepositClick" Height="40"/>
             </StackPanel>
         </Border>
         <Border x:Name="user2" CornerRadius="20" Grid.Row="1" Grid.Column="1" Background="#FFECB5F5" Margin="5,7" Visibility="Hidden">
