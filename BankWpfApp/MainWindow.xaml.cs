@@ -505,5 +505,17 @@ namespace BankWpfApp
                 UpdatePersonsPanels();
             }
         }
+
+        private void OnAddBankCreditClick(object sender, RoutedEventArgs e)
+        {
+            if (currentPerson == null) return;
+            AddingBankCreditWindow abcw = new AddingBankCreditWindow();
+            abcw.SetRepositoty(products, bankProducts);
+            abcw.SetPerson(currentPerson);
+            if (abcw.ShowDialog() == true)
+            {
+                UpdatePersonsPanels();
+            }
+        }
     }
 }

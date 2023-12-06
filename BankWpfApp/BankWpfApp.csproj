@@ -66,6 +66,9 @@
     <Compile Include="AddingBankCardWindow.xaml.cs">
       <DependentUpon>AddingBankCardWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddingBankCreditWindow.xaml.cs">
+      <DependentUpon>AddingBankCreditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddingBankDepositWindow.xaml.cs">
       <DependentUpon>AddingBankDepositWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,9 @@
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Repository.cs" />
+    <Compile Include="RequestCreditWindow.xaml.cs">
+      <DependentUpon>RequestCreditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Transaction.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="UserEditWindow.xaml.cs">
@@ -113,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddingBankCardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddingBankCreditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RequestCreditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

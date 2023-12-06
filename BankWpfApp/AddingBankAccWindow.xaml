@@ -12,7 +12,7 @@
             <RowDefinition Height="100*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="Выбирите тип счёта и нажмите 'Добавить' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Выбeрите тип счёта и нажмите 'Добавить' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <ListView x:Name="listViewAcc" Margin="5" MinHeight="240" Background="{x:Null}" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>

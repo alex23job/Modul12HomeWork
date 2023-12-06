@@ -1,19 +1,19 @@
-﻿<Window x:Class="BankWpfApp.AddingBankCardWindow"
+﻿<Window x:Class="BankWpfApp.AddingBankCreditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankWpfApp"
         mc:Ignorable="d"
-        Title="ВЫБОР БАНКОВСКОЙ КАРТЫ" Height="350" Width="500" Background="#FFF0F9D2" FontFamily="Times New Roman" FontSize="20" Icon="MainIcon.ico" ResizeMode="NoResize">
+        Title="ВЫБОР БАНКОВСКОГО КРЕДИТА" Height="350" Width="500" Background="#FFF0F9D2" FontFamily="Times New Roman" FontSize="20" Icon="MainIcon.ico" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="Выбeрите тип карты и нажмите 'Заявка' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListView x:Name="listViewCard" Margin="5" MinHeight="240" Background="{x:Null}" Grid.Row="1">
+        <Label Content="Выбeрите тип кредита и нажмите 'Заявка' :" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListView x:Name="listViewCredit" Margin="5" MinHeight="240" Background="{x:Null}" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Background="#FFD8E8F7" Margin="10,2" CornerRadius="20" Height="50" Width="440" Padding="30,5">

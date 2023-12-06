@@ -14,7 +14,19 @@ namespace BankWpfApp
         /// имена типов кредитов
         /// </summary>
         public static string[] nameTypeCredit = { "потребительский", "ипотечный", "автомобильный", "на развитие бизнеса" };
-
+        public static int GetNumType(string nm)
+        {
+            int res = -1;
+            for (int i = 0; i < nameTypeCredit.Length; i++)
+            {
+                if (nameTypeCredit[i] == nm)
+                {
+                    res = i;
+                    break;
+                }
+            }
+            return res;
+        }
         /// <summary>
         /// тип продукта : 2 - кредит
         /// </summary>
@@ -97,11 +109,86 @@ namespace BankWpfApp
         }
     }
 
-    public class BankCredit : Credit, IPersonProductNumber
+    public class BankCredit : Credit, IPersonProductNumber, IIsRequest
     {
         public int personUID { get; set; }
         public string StrNumber => $"№ {PersonProductNumber}";
 
+        public string StrBalance => (CreditAccount != null) ? $"{CreditAccount.Balans:0.00} Р" : "0 Р";
+        public string StrInfo
+        {
+            get
+            {
+                if (IsRequest)
+                    return "Заявка";
+                else
+                {
+                    return $"-{NextPayment.Sum:0.00} Р   {NextPayment.DatePayment}";
+                }
+            }
+        }
+
+        public BankAccount CreditAccount { get; set; } = null;
+
+        /// <summary>
+        /// Начальная сумма кредита
+        /// </summary>
+        public float TotalSum { get; set; }
+
+        /// <summary>
+        /// Продолжительность кредита в днях
+        /// </summary>
+        public int Period { get; set; }
+
+        /// <summary>
+        /// День платежа
+        /// </summary>
+        public int DayOfPayment { get; set; } 
+
+        /// <summary>
+        /// Дата оформления кредита
+        /// </summary>
+        public string RegistrationDate { get; set; }
+
         public long PersonProductNumber { get; set; }
+
+        public NextPayment NextPayment { get; set; }
+        /// <summary>
+        /// Статус заявки: true - заявка, false - оформлен
+        /// </summary>
+        public bool IsRequest { get; set; }
+        public void CopyParamsProduct(Credit cd)
+        {
+            Description = cd.Description;
+            Percent = cd.Percent;
+            if (cd.IsCollateral)
+            {
+                IsCollateral = true;
+                Collateral = cd.Collateral;
+            }
+            if (cd.IsSurety)
+            {
+                IsSurety = true;
+                Surety = cd.Surety;
+            }
+            if (cd.IsMaxLimit)
+            {
+                IsMaxLimit = true;
+                MaxLimit = cd.MaxLimit;
+            }
+        }
+    }
+
+    public class NextPayment
+    {
+        public string DatePayment { get; set; }
+        public float Sum { get; set; }
+        public float PercentPayment { get; set; }
+        public float Repayment { get; set; }
+
+        public void ReCalc(float prc, float ost, float cash)
+        {
+
+        }
     }
 }
