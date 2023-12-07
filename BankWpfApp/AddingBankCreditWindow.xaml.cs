@@ -35,31 +35,46 @@ namespace BankWpfApp
                 CreditViewData av = listViewCredit.SelectedItem as CreditViewData;
                 if (av != null)
                 {
-                    if (MessageBox.Show($"Будет оформлена заявка на кредит : {av.Name}\n\nОформить заявку ?", $"Оформление заявки на кпедит для клиента {currPerson.PersonLogin}", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    BankCredit bp = new BankCredit();
+                    bp.Name = av.Name;
+                    bp.TypeCredit = Credit.GetNumType(av.NameType);
+                    foreach (Product pr in products.AllItems)
                     {
-                        BankCredit bp = bankProducts.Add(new BankCredit()) as BankCredit;
+                        Credit cd = pr as Credit;
+                        if (cd != null && cd.Name == av.Name)
+                        {
+                            bp.CopyParamsProduct(cd);
+                        }
+                    }
+                    RequestCreditWindow rcw = new RequestCreditWindow();
+                    rcw.SetCredit(bp);
+                    if (rcw.ShowDialog() == true)
+                    {
+                        bp = bankProducts.Add(bp) as BankCredit;
                         bp.personUID = currPerson.UID;
                         bp.PersonProductNumber = Product.GetNextPersonProductNumber();
-                        bp.Name = av.Name;
-                        bp.TypeCredit = Credit.GetNumType(av.NameType);
                         currPerson.IdProducts.Add(bp.PersonProductNumber);
                         bp.IsRequest = true;
-                        foreach (Product pr in products.AllItems)
-                        {
-                            Credit cd = pr as Credit;
-                            if (cd != null && cd.Name == av.Name)
-                            {
-                                bp.CopyParamsProduct(cd);
-                            }
-                        }
-                        RequestCreditWindow rcw = new RequestCreditWindow();
-                        rcw.SetCredit(bp);
-                        if (rcw.ShowDialog() == true)
-                        {
-
-                        }
-                        else return;
                     }
+                    else return;
+                    //if (MessageBox.Show($"Будет оформлена заявка на кредит : {av.Name}\n\nОформить заявку ?", $"Оформление заявки на кпедит для клиента {currPerson.PersonLogin}", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    //{
+                    //    BankCredit bp = bankProducts.Add(bp) as BankCredit;
+                    //    bp.personUID = currPerson.UID;
+                    //    bp.PersonProductNumber = Product.GetNextPersonProductNumber();
+                    //    bp.Name = av.Name;
+                    //    bp.TypeCredit = Credit.GetNumType(av.NameType);
+                    //    currPerson.IdProducts.Add(bp.PersonProductNumber);
+                    //    bp.IsRequest = true;
+                    //    foreach (Product pr in products.AllItems)
+                    //    {
+                    //        Credit cd = pr as Credit;
+                    //        if (cd != null && cd.Name == av.Name)
+                    //        {
+                    //            bp.CopyParamsProduct(cd);
+                    //        }
+                    //    }
+                    //}
                 }
                 DialogResult = true;
             }

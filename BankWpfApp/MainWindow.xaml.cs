@@ -260,12 +260,20 @@ namespace BankWpfApp
                         deposList.Add(bd);
                         break;
                     }
+
+                    BankCredit bcr = bankProducts.AllItems[j] as BankCredit;
+                    if (bcr != null && bcr.PersonProductNumber == id)
+                    {
+                        creditList.Add(bcr);
+                        break;
+                    }
                 }
             }
 
             listViewAcc.ItemsSource = accList;
             listViewCard.ItemsSource = cardList;
             listViewDeposit.ItemsSource = deposList;
+            listViewCredit.ItemsSource = creditList;
         }
 
         private void CreateCurrentUser(UserData ud)

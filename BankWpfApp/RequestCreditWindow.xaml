@@ -29,9 +29,9 @@
             <Label Content="Срок (месяцы)" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Label Content="День платежа" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <CheckBox Content="Страхование" Grid.Row="3" IsChecked="True" x:Name="Insurance" Click="OnInsuranceClick" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="creditSum" Grid.Column="1" Margin="0,3"/>
-            <TextBox x:Name="creditPeriod" Grid.Column="1" Grid.Row="1" Margin="0,3"/>
-            <TextBox x:Name="creditDay" Grid.Column="1" Grid.Row="2" Margin="0,3"/>
+            <TextBox x:Name="creditSum" Grid.Column="1" Margin="0,3" TextChanged="OnSumChanged"/>
+            <TextBox x:Name="creditPeriod" Grid.Column="1" Grid.Row="1" Margin="0,3" TextChanged="OnPeriodChanged"/>
+            <TextBox x:Name="creditDay" Grid.Column="1" Grid.Row="2" Margin="0,3" TextChanged="OnDayChanged"/>
         </Grid>
         <TextBlock x:Name="txtParamInfo" Grid.Row="2" Margin="10,5" TextWrapping="WrapWithOverflow"/>
         <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="20,5">
