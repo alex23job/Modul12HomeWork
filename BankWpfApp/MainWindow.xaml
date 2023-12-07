@@ -18,10 +18,10 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Stretch">
-            <Button x:Name="btnTotal" Content="Главная" Margin="10,0,3,0" Background="#FFA0A6DE" MinWidth="90" Padding="10,0"/>
-            <Button x:Name="btnOperations" Content="Операции" Margin="3,0" Width="90" Background="#FFA0A6DE"/>
-            <Button x:Name="btnPayments" Content="Платежи" Margin="3,0" Width="90" Background="#FFA0A6DE"/>
-            <Button x:Name="btnBonus" Content="Бонусы" Margin="3,0,10,0" Width="90" Background="#FFA0A6DE"/>
+            <Button x:Name="btnTotal" Content="Главная" Margin="10,0,3,0" Background="#FFA0A6DE" MinWidth="90" Padding="10,0" Click="OnTotalClick"/>
+            <Button x:Name="btnOperations" Content="Операции" Margin="3,0" Width="90" Background="#FFA0A6DE" Click="OnOperationsClick"/>
+            <Button x:Name="btnPayments" Content="Платежи" Margin="3,0" Width="90" Background="#FFA0A6DE" Click="OnPaymentsClick"/>
+            <Button x:Name="btnBonus" Content="Бонусы" Margin="3,0,10,0" Width="90" Background="#FFA0A6DE" Click="OnBonusClick"/>
         </StackPanel>
         <Border x:Name="borderLK" CornerRadius="10" Grid.Row="0" Grid.Column="3" Background="#FF8DFDB6" Margin="7" MouseEnter="OnLK_Enter" MouseLeave="OnLK_Leave" MouseDown="OnLK_Down">
             <Label Content="Личный кабинет" Foreground="#FF035D13" HorizontalAlignment="Center" VerticalAlignment="Center"/>

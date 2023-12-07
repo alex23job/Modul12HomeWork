@@ -84,6 +84,7 @@
     <Compile Include="DepositParamsControl.xaml.cs">
       <DependentUpon>DepositParamsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LogOperations.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="PersonEditUserControl.xaml.cs">
       <DependentUpon>PersonEditUserControl.xaml</DependentUpon>

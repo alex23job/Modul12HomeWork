@@ -111,10 +111,23 @@ namespace BankWpfApp
 
     public class BankCredit : Credit, IPersonProductNumber, IIsRequest
     {
+        /// <summary>
+        /// расчёт ежемесячного платежа по аннуитетной системе выплат
+        /// </summary>
+        /// <param name="s">сумма кредита</param>
+        /// <param name="p">процентная ставка</param>
+        /// <param name="m">число месяцев</param>
+        /// <returns>платеж в месяц</returns>
+        public static float CalcMonthlyPayment(float s, float p, int m)
+        {
+            float cm = p / 1200;
+            float zn = s * cm / (1 - 1 / (float)Math.Pow(1 + cm, m));
+            return zn;
+        }
         public int personUID { get; set; }
         public string StrNumber => $"№ {PersonProductNumber}";
 
-        public string StrBalance => (CreditAccount != null) ? $"{CreditAccount.Balans:0.00} Р" : "0 Р";
+        public string StrBalance => (CreditAccount != null) ? $"{CreditAccount.Balans:0.00} Р" : "0,00 Р";
         public string StrInfo
         {
             get

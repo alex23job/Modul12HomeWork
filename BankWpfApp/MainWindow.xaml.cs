@@ -525,5 +525,25 @@ namespace BankWpfApp
                 UpdatePersonsPanels();
             }
         }
+
+        private void OnOperationsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnTotalClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnPaymentsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnBonusClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

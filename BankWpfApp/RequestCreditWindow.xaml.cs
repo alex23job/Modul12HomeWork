@@ -32,6 +32,10 @@ namespace BankWpfApp
 
         private void OnOK_Click(object sender, RoutedEventArgs e)
         {
+            credit.Percent = currentPercent;
+            credit.Period = currentPeriod;
+            credit.DayOfPayment = currentDay;
+            credit.TotalSum = currentSum;
             DialogResult = true;
         }
 
@@ -122,8 +126,9 @@ namespace BankWpfApp
             string payment = "ERROR";
             if (currentPeriod > 0)
             {
-                float cm = currentPercent / 1200;
-                float zn = currentSum * cm / (1 - 1 / (float)Math.Pow(1 + cm, currentPeriod));
+                //float cm = currentPercent / 1200;
+                //float zn = currentSum * cm / (1 - 1 / (float)Math.Pow(1 + cm, currentPeriod));
+                float zn = BankCredit.CalcMonthlyPayment(currentSum, currentPercent, currentPeriod);
                 payment = $"{zn:0.00}";
             }
             sb.Append($"\nЕжемесячно {payment} Р  {currentDay} числа");

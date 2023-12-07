@@ -120,7 +120,7 @@ namespace BankWpfApp
         public int personUID { get; set; }
         public float CashbackBalance { get; set; } = 0;
         public float MinBalance { get; set; } = 0;
-        public string StrBalance => (CardAccount != null) ? $"{CardAccount.Balans:0.00} Р" : "0 Р";
+        public string StrBalance => (CardAccount != null) ? $"{CardAccount.Balans:0.00} Р" : "0,00 Р";
         public string StrNumber => $"{Card.CodeBank} {CodeProgramm:00}** **** {(UID % 10000):0000}";
 
         public string StrInfo
