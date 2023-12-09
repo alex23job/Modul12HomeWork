@@ -60,6 +60,9 @@
     <Compile Include="AccountParamsControl.xaml.cs">
       <DependentUpon>AccountParamsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ActionsWindow.xaml.cs">
+      <DependentUpon>ActionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddingBankAccWindow.xaml.cs">
       <DependentUpon>AddingBankAccWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <DependentUpon>ViewProductsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AccountParamsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ActionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
