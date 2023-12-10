@@ -14,8 +14,8 @@ namespace BankWpfApp
 
         public List<OneOperation> AllItems => arr;
 
-        LogOperations() { }
-        LogOperations(string path)
+        public LogOperations() { }
+        public LogOperations(string path)
         {
             pathToLog = path;
         }

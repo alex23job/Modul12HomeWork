@@ -24,6 +24,8 @@ namespace BankWpfApp
     public partial class MainWindow : Window
     {
         string pathUpdateInfo = "UpdateInfoLog.csv";
+        string pathLogOperations = "LogOperations.csv";
+        LogOperations logOperations = null;
 
         string pathPersonXML = "Person.xml";
         Repository<Person> persons = new Repository<Person>();
@@ -36,6 +38,9 @@ namespace BankWpfApp
 
         string pathBankProductXML = "BankProduct.xml";
         Repository<Product> bankProducts = new Repository<Product>();
+
+        string pathTransactionXML = "Transaction.xml";
+        Repository<Transaction> transactions = new Repository<Transaction>();
 
         Person currentPerson = null;
         UserData currentUser = null;
@@ -50,6 +55,8 @@ namespace BankWpfApp
 
         private void CreateRepositorys()
         {
+            logOperations = new LogOperations(pathLogOperations);
+
             if (File.Exists(pathPersonXML))
             {
                 persons = Repository<Person>.LoadRepositoryFromFile(pathPersonXML);
@@ -83,6 +90,13 @@ namespace BankWpfApp
             // TODO
             bankProducts.SetCurrentNewUID(1000000);
             Product.SetNextPersonProductNumber(1000000 + bankProducts.Count);
+
+            if (File.Exists(pathTransactionXML))
+            {
+                transactions = Repository<Transaction>.LoadRepositoryFromFile(pathTransactionXML);
+            }
+            transactions.SetSavePath(pathTransactionXML);
+            transactions.SetCurrentNewUID(0);
         }
 
         private void CreateContextMenuLK()
@@ -417,6 +431,7 @@ namespace BankWpfApp
             products.SaveRepositoryToFile(pathProductXML);
             //products.SaveRepositoryToFileForCusomSerializer(pathProductXML, new XmlSerializer(typeof(ObservableCollection<Product>), "account", "deposit", "card", "credit"));
             bankProducts.SaveRepositoryToFile(pathBankProductXML);
+            transactions.SaveRepositoryToFile(pathTransactionXML);
         }
 
         private void OnUserExit(object sender, RoutedEventArgs e)
@@ -538,7 +553,21 @@ namespace BankWpfApp
 
         private void OnPaymentsClick(object sender, RoutedEventArgs e)
         {
-
+            if (currentPerson != null)
+            {
+                ActionsWindow aw = new ActionsWindow();
+                aw.SetPersons(currentPerson, persons.AllItems, bankProducts.AllItems);
+                if (aw.ShowDialog() == true)
+                {
+                    Transaction tr = aw.transaction;
+                    tr.Execute();
+                    string fr = tr.From, to = tr.To;
+                    OneOperation op = new OneOperation(tr.sum.ToString(), tr.NameMode, currentPerson.UserUID.ToString(), "Клиент", currentPerson.UID.ToString(), fr, to);
+                    logOperations.SaveOneOption(op, pathLogOperations);
+                    transactions.Add(tr);
+                    UpdatePersonsPanels();
+                }
+            }
         }
 
         private void OnBonusClick(object sender, RoutedEventArgs e)
