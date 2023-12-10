@@ -39,6 +39,15 @@
                     <TextBox x:Name="txtNewPass2" Width="215" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Padding="5" Margin="30,16,45,16"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Данные о юр. лице" Background="AntiqueWhite">
+                <StackPanel Background="#FFF0F9D2">
+                    <CheckBox x:Name="checkLegalPerson" Content="Юридическое лицо" Click="OnLegalPersonClick" Margin="40,20" FontSize="24"/>
+                    <Label Content="Наименование юридического лица" Margin="40,20"/>
+                    <TextBox x:Name="nameLegalPerson" Margin="20,0,20,20" IsEnabled="False"/>
+                    <Label Content="Адрес юридического лица" Margin="40,20"/>
+                    <TextBox x:Name="adrLegalPerson" Margin="20,0,20,20" IsEnabled="False" Height="70" TextWrapping="WrapWithOverflow"/>
+                </StackPanel>
+            </TabItem>
         </TabControl>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
             <Button x:Name="btnCancel" Content="Отменить" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="45" IsCancel="True" Margin="20,0"/>

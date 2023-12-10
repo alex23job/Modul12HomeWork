@@ -231,7 +231,7 @@ namespace BankWpfApp
                         {
                             if (tba.TypeAccount == 0)
                             {
-                                cmbList.Add($"{tba.PersonProductNumber} {tba.Name}");
+                                cmbList.Add($"{tba.PersonProductNumber} {lps.LegalName}");
                             }
                         }
                     }

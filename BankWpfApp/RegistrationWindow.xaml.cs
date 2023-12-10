@@ -21,6 +21,7 @@ namespace BankWpfApp
     {
         Person pers = null;
         UserData user = null;
+        bool IsLegalPerson = false;
 
         public RegistrationWindow()
         {
@@ -41,8 +42,16 @@ namespace BankWpfApp
         {
             if (TestFields())
             {
-                pers = new Person(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
+                if (IsLegalPerson)
+                {
+                    pers = new LegalPerson(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
+                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text);
+                }
+                else
+                {
+                    pers = new Person(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
                     personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay);
+                }
                 user = new UserData(txtLogin.Text, txtNewPass1.Text, 0);
                 DialogResult = true;
             }
@@ -93,10 +102,23 @@ namespace BankWpfApp
                 res = false;
             }
             else if (txtNewPass1.Text != txtNewPass2.Text)
-                    {
-                        sb.Append("Пароль и подтверждение пароля не совпадают!\n");
-                        res = false;
-                    }
+            {
+                sb.Append("Пароль и подтверждение пароля не совпадают!\n");
+                res = false;
+            }
+            if (IsLegalPerson)
+            {
+                if (nameLegalPerson.Text == "")
+                {
+                    sb.Append("Не указано название юридического лица");
+                    res = false;
+                }
+                if (adrLegalPerson.Text == "")
+                {
+                    sb.Append("Не указан адрес юридического лица");
+                    res = false;
+                }
+            }
             if (!res)
             {
                 sb.Append("\nДля успешной регистрации нужно заполнить все поля. Если значение отсутствует, то напишите слово <нет>");
@@ -104,6 +126,20 @@ namespace BankWpfApp
             }
 
             return res;
+        }
+
+        private void OnLegalPersonClick(object sender, RoutedEventArgs e)
+        {
+            if (IsLegalPerson)
+            {
+                IsLegalPerson = false;
+            }
+            else
+            {
+                IsLegalPerson = true;
+            }
+            nameLegalPerson.IsEnabled = IsLegalPerson;
+            adrLegalPerson.IsEnabled = IsLegalPerson;
         }
     }
 }
