@@ -40,6 +40,8 @@ namespace BankWpfApp
         private void OnDecClick(object sender, RoutedEventArgs e)
         {
             mode = 0;
+            radYou.Visibility = Visibility.Hidden;
+            radOther.Visibility = Visibility.Hidden;
             List<string> cmbList = GetMyAccNumber();
             if (cmbList.Count > 0)
             {
@@ -51,11 +53,17 @@ namespace BankWpfApp
                 txtBox2.Text = "Банкомат";
                 cmb2.Visibility = Visibility.Hidden;
             }
+            else
+            {
+                MessageBox.Show("Нет счетов или соедств на них !");
+            }
         }
 
         private void OnIncClick(object sender, RoutedEventArgs e)
         {
             mode = 1;
+            radYou.Visibility = Visibility.Hidden;
+            radOther.Visibility = Visibility.Hidden;
             List<string> cmbList = new List<string>();
             foreach(long idp in pers.IdProducts)
             {
@@ -112,14 +120,33 @@ namespace BankWpfApp
                 cmb1.Visibility = Visibility.Visible;
                 cmb1.SelectedIndex = 0;
                 txtBox1.Visibility = Visibility.Hidden;
-                txtBox2.Visibility = Visibility.Visible;
-                cmb2.Visibility = Visibility.Hidden;
+                radYou.Visibility = Visibility.Visible;
+                radOther.Visibility = Visibility.Visible;
+                if ((bool)radOther.IsChecked)
+                {
+                    txtBox2.Visibility = Visibility.Visible;
+                    txtBox2.Text = "";
+                    cmb2.Visibility = Visibility.Hidden;
+                }
+                if ((bool)radYou.IsChecked)
+                {
+                    txtBox2.Visibility = Visibility.Hidden;
+                    cmb2.ItemsSource = cmbList;
+                    cmb2.SelectedIndex = 0;
+                    cmb2.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нет счетов или соедств на них !");
             }
         }
 
         private void OnPayClick(object sender, RoutedEventArgs e)
         {
             mode = 3;
+            radYou.Visibility = Visibility.Hidden;
+            radOther.Visibility = Visibility.Hidden;
             List<string> cmbList = GetMyAccNumber();
             if (cmbList.Count > 0)
             {
@@ -127,10 +154,25 @@ namespace BankWpfApp
                 cmb1.Visibility = Visibility.Visible;
                 cmb1.SelectedIndex = 0;
                 txtBox1.Visibility = Visibility.Hidden;
-                txtBox2.Visibility = Visibility.Hidden;
-                cmb2.ItemsSource = GetLegalPersonList();
-                cmb2.SelectedIndex = 0;
-                cmb2.Visibility = Visibility.Hidden;
+                
+                List<string> listLegalPerson = GetLegalPersonList();
+                if (listLegalPerson.Count > 0)
+                {
+                    cmb2.ItemsSource = listLegalPerson;
+                    cmb2.SelectedIndex = 0;
+                    txtBox2.Visibility = Visibility.Hidden;
+                    cmb2.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    cmb2.Visibility = Visibility.Hidden;
+                    txtBox2.Text = "";
+                    txtBox2.Visibility = Visibility.Visible;
+                }                
+            }
+            else
+            {
+                MessageBox.Show("Нет счетов или соедств на них !");
             }
         }
 
@@ -162,12 +204,12 @@ namespace BankWpfApp
                     break;
                 case 2:
                     transaction.accFrom = GetBankAccount((string)cmb1.SelectedItem);
-                    transaction.accTo = GetBankAccount(txtBox2.Text);
+                    transaction.accTo = ((bool)radOther.IsChecked) ? GetBankAccount(txtBox2.Text) : GetBankAccount((string)cmb2.SelectedItem);
                     if (transaction.accTo == null) transaction.To = txtBox2.Text;
                     break;
                 case 3:
                     transaction.accFrom = GetBankAccount((string)cmb1.SelectedItem);
-                    transaction.accTo = GetBankAccount(cmb2.Text);
+                    transaction.accTo = txtBox2.IsVisible ? GetBankAccount(txtBox2.Text) : GetBankAccount((string)cmb2.SelectedItem);
                     if (transaction.accTo == null) transaction.To = cmb2.Text;
                     break;
             }
@@ -239,11 +281,21 @@ namespace BankWpfApp
         private BankAccount GetBankAccount(string strIdAcc)
         {
             long idp = 0;
-            string idAcc = strIdAcc.Split(' ')[0];
+            string[] arrSplit = strIdAcc.Split(' ');
+            string idAcc = arrSplit[0];
             if (!long.TryParse(idAcc, out idp))
             {
-                if (idAcc[0] == '8' || idAcc.StartsWith("+7"))
-                {
+                if (arrSplit.Length >= 4)
+                {   //  а может это номер карты ?
+                    BankAccount ca = GetCardAccount(strIdAcc);
+                    if (ca == null)
+                    {
+                        MessageBox.Show($"Карты с номером {strIdAcc} нет в нашем банке !");
+                    }
+                    return ca;
+                }
+                else if (idAcc[0] == '8' || idAcc.StartsWith("+7"))
+                {   //  а может это номер телефона
                     foreach (Person ps in persons)
                     {
                         if (ps.Tlf == idAcc)
@@ -257,9 +309,11 @@ namespace BankWpfApp
                                         return tba;
                                 }
                             }
-                            break;
+                            MessageBox.Show($"У клиента с номером телефона {idAcc} нет счетов в нашем банке !");
+                            return null;
                         }
                     }
+                    MessageBox.Show($"Клиента с номером телефона {idAcc} нет в нашем банке !");
                 }
                 else
                 {
@@ -299,6 +353,40 @@ namespace BankWpfApp
                 }
             }
             return null;
+        }
+
+        private BankAccount GetCardAccount(string cardNum)
+        {
+            for (int j = 0; j < products.Count; j++)
+            {
+                BankCard bc = products[j] as BankCard;
+                if (bc != null && bc.CheckCardNumber(cardNum))
+                {
+                    return bc.CardAccount;
+                }
+            }
+            return null;
+        }
+
+        private void OnRadioYuoClick(object sender, RoutedEventArgs e)
+        {
+            if ((bool)radYou.IsChecked)
+            {
+                txtBox2.Visibility = Visibility.Hidden;
+                cmb2.ItemsSource = GetMyAccNumber();
+                cmb2.SelectedIndex = 0;
+                cmb2.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void OnRadioOtherClick(object sender, RoutedEventArgs e)
+        {
+            if ((bool)radOther.IsChecked)
+            {
+                txtBox2.Visibility = Visibility.Visible;
+                txtBox2.Text = "";
+                cmb2.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

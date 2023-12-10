@@ -38,11 +38,15 @@
                     <RowDefinition Height="35*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="65*"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="Lab1" Content="Откуда" Foreground="DarkBlue" FontWeight="Bold"/>
-                <Label x:Name="Lab2" Content="Куда" Foreground="DarkBlue" Grid.Row="1" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Label x:Name="Lab2" Content="Куда" Foreground="DarkBlue" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <RadioButton Content="мои" IsChecked="True" x:Name="radYou" GroupName="radTo" FontSize="16" Foreground="#FF065903" VerticalAlignment="Center" Margin="3,0" Click="OnRadioYuoClick"/>
+                    <RadioButton Content="чужие" IsChecked="False" x:Name="radOther" GroupName="radTo" FontSize="16" Foreground="#FF8F0303" VerticalAlignment="Center" Margin="3,0" Click="OnRadioOtherClick"/>
+                </StackPanel>                
                 <Label x:Name="Lab3" Content="Сумма" Foreground="DarkBlue" Grid.Row="2" FontWeight="Bold"/>
                 <TextBox x:Name="txtBox1" Grid.Column="1" Margin="4" Visibility="Hidden"/>
                 <ComboBox Name="cmb1" Grid.Column="1" BorderBrush="#FF32A5E6" Foreground="#FF0D0280" Background="#FFABB3FD" SelectionChanged="OnCMB1SelectionChanged" Margin="4" Visibility="Hidden"/>

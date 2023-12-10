@@ -161,5 +161,11 @@ namespace BankWpfApp
                 Limit = cd.Limit;
             }
         }
+
+        public bool CheckCardNumber(string cardNum)
+        {
+            string CardNumber = $"{Card.CodeBank} {CodeProgramm:00}{((UID / 100000000) % 100):00} {((UID / 10000) % 10000):0000} {(UID % 10000):0000}";
+            return CardNumber == cardNum;
+        }
     }
 }
