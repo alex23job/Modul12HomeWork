@@ -44,14 +44,14 @@
                 <Label x:Name="Lab1" Content="Откуда" Foreground="DarkBlue" FontWeight="Bold"/>
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
                     <Label x:Name="Lab2" Content="Куда" Foreground="DarkBlue" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <RadioButton Content="мои" IsChecked="True" x:Name="radYou" GroupName="radTo" FontSize="16" Foreground="#FF065903" VerticalAlignment="Center" Margin="3,0" Click="OnRadioYuoClick"/>
-                    <RadioButton Content="чужие" IsChecked="False" x:Name="radOther" GroupName="radTo" FontSize="16" Foreground="#FF8F0303" VerticalAlignment="Center" Margin="3,0" Click="OnRadioOtherClick"/>
+                    <RadioButton Content="мои" IsChecked="True" x:Name="radYou" GroupName="radTo" FontSize="16" Foreground="#FF065903" VerticalAlignment="Center" Margin="3,0" Click="OnRadioYuoClick" Visibility="Hidden"/>
+                    <RadioButton Content="чужие" IsChecked="False" x:Name="radOther" GroupName="radTo" FontSize="16" Foreground="#FF8F0303" VerticalAlignment="Center" Margin="3,0" Click="OnRadioOtherClick" Visibility="Hidden"/>
                 </StackPanel>                
                 <Label x:Name="Lab3" Content="Сумма" Foreground="DarkBlue" Grid.Row="2" FontWeight="Bold"/>
                 <TextBox x:Name="txtBox1" Grid.Column="1" Margin="4" Visibility="Hidden"/>
-                <ComboBox Name="cmb1" Grid.Column="1" BorderBrush="#FF32A5E6" Foreground="#FF0D0280" Background="#FFABB3FD" SelectionChanged="OnCMB1SelectionChanged" Margin="4" Visibility="Hidden"/>
+                <ComboBox Name="cmb1" Grid.Column="1" BorderBrush="#FF32A5E6" Foreground="#FF0D0280" Background="#FFABB3FD" SelectionChanged="OnCMB1SelectionChanged" Margin="4" Visibility="Hidden" FontSize="20"/>
                 <TextBox x:Name="txtBox2" Grid.Column="1" Grid.Row="1" Margin="4" Visibility="Hidden"/>
-                <ComboBox Name="cmb2" Grid.Row="1" Grid.Column="1" BorderBrush="#FF32A5E6" Foreground="#FF0D0280" Background="#FFABB3FD" SelectionChanged="OnCMB2SelectionChanged" Margin="4" Visibility="Hidden"/>
+                <ComboBox Name="cmb2" Grid.Row="1" Grid.Column="1" BorderBrush="#FF32A5E6" Foreground="#FF0D0280" Background="#FFABB3FD" SelectionChanged="OnCMB2SelectionChanged" Margin="4" Visibility="Hidden" FontSize="20"/>
                 <TextBox x:Name="txtBox3" Grid.Column="1" Grid.Row="2" Margin="4"/>
             </Grid>
         </Border>

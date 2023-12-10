@@ -131,7 +131,7 @@ namespace BankWpfApp
                 if ((bool)radYou.IsChecked)
                 {
                     txtBox2.Visibility = Visibility.Hidden;
-                    cmb2.ItemsSource = cmbList;
+                    cmb2.ItemsSource = GetMyAccNumber(false);
                     cmb2.SelectedIndex = 0;
                     cmb2.Visibility = Visibility.Visible;
                 }
@@ -239,9 +239,10 @@ namespace BankWpfApp
             }
             return cmbList;
         }
-        private List<string> GetMyAccNumber()
+        private List<string> GetMyAccNumber(bool IsPositiveBalans = true)
         {
             List<string> cmbList = new List<string>();
+            List<long> testProdNum = new List<long>();
             foreach (long idp in pers.IdProducts)
             {
                 for (int j = 0; j < products.Count; j++)
@@ -249,28 +250,47 @@ namespace BankWpfApp
                     BankAccount ba = products[j] as BankAccount;
                     if (ba != null && ba.PersonProductNumber == idp)
                     {
-                        if (ba.Balans > 0) cmbList.Add($"{ba.PersonProductNumber} {ba.Name}");
+                        if (ba.Balans > 0 || !IsPositiveBalans)
+                        {
+                            if (!testProdNum.Contains(idp))
+                            {
+                                testProdNum.Add(idp);
+                                cmbList.Add($"{ba.PersonProductNumber} {ba.Name}");
+                            }
+                        }
                         break;
                     }
 
                     BankCard bc = products[j] as BankCard;
                     if (bc != null && bc.PersonProductNumber == idp)
                     {
-                        if (bc.CardAccount != null && bc.CardAccount.Balans > 0) cmbList.Add($"{bc.CardAccount.PersonProductNumber} {bc.Name}");
+                        if (bc.CardAccount != null && (bc.CardAccount.Balans > 0 || !IsPositiveBalans))
+                        {
+                            cmbList.Add($"{bc.CardAccount.PersonProductNumber} {bc.Name}");
+                            testProdNum.Add(bc.CardAccount.PersonProductNumber);
+                        }
                         break;
                     }
 
                     BankDeposit bd = products[j] as BankDeposit;
                     if (bd != null && bd.PersonProductNumber == idp)
                     {
-                        if (bd.DepositAccount.Balans > 0) cmbList.Add($"{bd.DepositAccount.PersonProductNumber} {bd.Name}");
+                        if (bd.DepositAccount.Balans > 0 || !IsPositiveBalans)
+                        {
+                            cmbList.Add($"{bd.DepositAccount.PersonProductNumber} {bd.Name}");
+                            testProdNum.Add(bd.DepositAccount.PersonProductNumber);
+                        }
                         break;
                     }
 
                     BankCredit bcr = products[j] as BankCredit;
                     if (bcr != null && bcr.PersonProductNumber == idp)
                     {
-                        if (bcr.CreditAccount != null && bcr.CreditAccount.Balans > 0) cmbList.Add($"{bcr.CreditAccount.PersonProductNumber} {bcr.Name}");
+                        if (bcr.CreditAccount != null && (bcr.CreditAccount.Balans > 0 || !IsPositiveBalans))
+                        {
+                            cmbList.Add($"{bcr.CreditAccount.PersonProductNumber} {bcr.Name}");
+                            testProdNum.Add(bcr.CreditAccount.PersonProductNumber);
+                        }
                         break;
                     }
                 }
@@ -373,7 +393,7 @@ namespace BankWpfApp
             if ((bool)radYou.IsChecked)
             {
                 txtBox2.Visibility = Visibility.Hidden;
-                cmb2.ItemsSource = GetMyAccNumber();
+                cmb2.ItemsSource = GetMyAccNumber(false);
                 cmb2.SelectedIndex = 0;
                 cmb2.Visibility = Visibility.Visible;
             }

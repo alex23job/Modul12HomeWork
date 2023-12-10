@@ -90,6 +90,7 @@ namespace BankWpfApp
             // TODO
             bankProducts.SetCurrentNewUID(1000000);
             Product.SetNextPersonProductNumber(1000000 + bankProducts.Count);
+            SynchronizeAccounts();
 
             if (File.Exists(pathTransactionXML))
             {
@@ -99,6 +100,54 @@ namespace BankWpfApp
             transactions.SetCurrentNewUID(0);
         }
 
+        private void SynchronizeAccounts()
+        {
+            int i, j;
+            for (i = 0; i < bankProducts.Count; i++)
+            {
+                BankCard bc = bankProducts.AllItems[i] as BankCard;
+                if (bc != null && bc.CardAccount != null)
+                {
+                    for (j = 0; j < bankProducts.Count; j++)
+                    {
+                        BankAccount ba = bankProducts.AllItems[j] as BankAccount;
+                        if (ba != null && ba.PersonProductNumber == bc.CardAccount.PersonProductNumber)
+                        {
+                            bc.CardAccount = ba;
+                            break;
+                        }
+                    }
+                }
+
+                BankDeposit bd = bankProducts.AllItems[i] as BankDeposit;
+                if (bd != null && bd.DepositAccount != null)
+                {
+                    for (j = 0; j < bankProducts.Count; j++)
+                    {
+                        BankAccount ba = bankProducts.AllItems[j] as BankAccount;
+                        if (ba != null && ba.PersonProductNumber == bd.DepositAccount.PersonProductNumber)
+                        {
+                            bd.DepositAccount = ba;
+                            break;
+                        }
+                    }
+                }
+
+                BankCredit bcr = bankProducts.AllItems[i] as BankCredit;
+                if (bcr != null && bcr.CreditAccount != null)
+                {
+                    for (j = 0; j < bankProducts.Count; j++)
+                    {
+                        BankAccount ba = bankProducts.AllItems[j] as BankAccount;
+                        if (ba != null && ba.PersonProductNumber == bcr.CreditAccount.PersonProductNumber)
+                        {
+                            bcr.CreditAccount = ba;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         private void CreateContextMenuLK()
         {
             borderLK.ContextMenu = new ContextMenu();
