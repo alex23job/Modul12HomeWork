@@ -103,6 +103,9 @@
     <Compile Include="RequestCreditWindow.xaml.cs">
       <DependentUpon>RequestCreditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReviewRequestsWindow.xaml.cs">
+      <DependentUpon>ReviewRequestsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Transaction.cs" />
     <Compile Include="UserData.cs" />
     <Compile Include="UserEditWindow.xaml.cs">
@@ -195,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RequestCreditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReviewRequestsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

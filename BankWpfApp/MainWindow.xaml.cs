@@ -617,6 +617,12 @@ namespace BankWpfApp
                     UpdatePersonsPanels();
                 }
             }
+            if (currentUser != null)
+            {
+                ReviewRequestsWindow rrw = new ReviewRequestsWindow();
+                rrw.SetParams(persons.AllItems, bankProducts.AllItems, currentUser);
+                rrw.ShowDialog();
+            }
         }
 
         private void OnBonusClick(object sender, RoutedEventArgs e)
