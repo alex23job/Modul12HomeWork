@@ -25,7 +25,7 @@ namespace BankWpfApp
     {
         string pathUpdateInfo = "UpdateInfoLog.csv";
         string pathLogOperations = "LogOperations.csv";
-        LogOperations logOperations = null;
+        private LogOperations logOperations = null;
 
         string pathPersonXML = "Person.xml";
         Repository<Person> persons = new Repository<Person>();
@@ -620,7 +620,7 @@ namespace BankWpfApp
             if (currentUser != null)
             {
                 ReviewRequestsWindow rrw = new ReviewRequestsWindow();
-                rrw.SetParams(persons.AllItems, bankProducts.AllItems, currentUser);
+                rrw.SetParams(persons.AllItems, bankProducts, currentUser, logOperations);
                 rrw.ShowDialog();
             }
         }

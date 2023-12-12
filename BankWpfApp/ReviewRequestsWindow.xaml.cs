@@ -21,6 +21,8 @@ namespace BankWpfApp
     public partial class ReviewRequestsWindow : Window
     {
         UserData user = null;
+        LogOperations logOps = null;
+        Repository<Product> bankProducts = null;
         ObservableCollection<Person> persons = null;
         ObservableCollection<Product> products = null;
         public ReviewRequestsWindow()
@@ -28,12 +30,20 @@ namespace BankWpfApp
             InitializeComponent();
         }
 
-        public void SetParams(ObservableCollection<Person> pers, ObservableCollection<Product> prod, UserData us)
+        public void SetParams(ObservableCollection<Person> pers, Repository<Product> prod, UserData us, LogOperations log)
         {
             persons = pers;
-            products = prod;
+            logOps = log;
+            bankProducts = prod;
+            products = bankProducts.AllItems;
+
+            listViewBankProducts.ItemsSource = GetListProduct();
+        }
+
+        private List<RequestsProduct> GetListProduct()
+        {
             List<RequestsProduct> list = new List<RequestsProduct>();
-            foreach(Product pr in products)
+            foreach (Product pr in products)
             {
                 BankCard bc = pr as BankCard;
                 if (bc != null)
@@ -62,7 +72,7 @@ namespace BankWpfApp
                     }
                 }
             }
-            listViewBankProducts.ItemsSource = list;
+            return list;
         }
 
         private Person GetPerson(int id)
@@ -79,17 +89,124 @@ namespace BankWpfApp
 
         private void OnListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (listViewBankProducts.SelectedItem != null)
+            {
+                RequestsProduct rp = listViewBankProducts.SelectedItem as RequestsProduct;
+                if (rp != null)
+                {
+                    //MessageBox.Show($"{rp.PersonName} {rp.ProductType} {rp.ProductUID}");
+                    foreach(Product p in products)
+                    {
+                        if (p.UID == rp.ProductUID)
+                        {
+                            listViewInfo.ItemsSource = p.GetProductInfo();
+                        }
+                    }
+                }
+            }
         }
 
         private void OnEndorseClick(object sender, RoutedEventArgs e)
         {
+            if (listViewBankProducts.SelectedItem != null)
+            {
+                RequestsProduct rp = listViewBankProducts.SelectedItem as RequestsProduct;
+                if (rp != null)
+                {
+                    foreach (Product p in products)
+                    {
+                        if (p.UID == rp.ProductUID)
+                        {
+                            if (rp.ProductType.StartsWith("Кар"))
+                            {
+                                BankCard bc = p as BankCard;
+                                if (bc != null)
+                                {
+                                    Person pers = GetPerson(bc.personUID);
+                                    if (pers != null)
+                                    {
+                                        pers.IdProducts.Remove(bc.PersonProductNumber);
+                                        bc.CardAccount = bankProducts.Add(new BankAccount(bc.TypeCard % 2, pers.UID)) as BankAccount;
+                                        bc.CardAccount.PersonProductNumber = Product.GetNextPersonProductNumber();
+                                        pers.IdProducts.Add(bc.CardAccount.PersonProductNumber);
+                                        bc.IsRequest = false;
+                                        if (bc.TypeCard > 0)
+                                        {
+                                            bc.CardAccount.Balans = bc.Limit;
+                                            logOps.SaveOneOption(new OneOperation(bc.Limit.ToString(), "inc", user.UID.ToString(),
+                                                UserPosition.GetPosition(user.Rule), pers.UID.ToString(), "Банк", bc.CardAccount.PersonProductNumber.ToString()));
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            //if (rp.ProductType.StartsWith("Кре"))
+                            //{
+                            //    BankCredit bcr = p as BankCredit;
+                            //    if (bcr != null)
+                            //    {
+                            //        Person pers = GetPerson(bcr.personUID);
+                            //        if (pers != null)
+                            //        {
+                            //            pers.IdProducts.Remove(bcr.PersonProductNumber);
+                            //        }
+                            //        products.Remove(bcr);
+                            //        break;
+                            //    }
+                            //}
+                        }
+                    }
+                    listViewBankProducts.ItemsSource = GetListProduct();
+                }
+            }
 
         }
 
         private void OnDeflectClick(object sender, RoutedEventArgs e)
         {
-
+            if (listViewBankProducts.SelectedItem != null)
+            {
+                RequestsProduct rp = listViewBankProducts.SelectedItem as RequestsProduct;
+                if (rp != null)
+                {
+                    //MessageBox.Show($"{rp.PersonName} {rp.ProductType} {rp.ProductUID}");
+                    foreach (Product p in products)
+                    {
+                        if (p.UID == rp.ProductUID)
+                        {
+                            if (rp.ProductType.StartsWith("Кар"))
+                            {
+                                BankCard bc = p as BankCard;
+                                if (bc != null)
+                                {
+                                    Person pers = GetPerson(bc.personUID);
+                                    if (pers != null)
+                                    {
+                                        pers.IdProducts.Remove(bc.PersonProductNumber);
+                                    }
+                                    products.Remove(bc);
+                                    break;
+                                }
+                            }
+                            if (rp.ProductType.StartsWith("Кре"))
+                            {
+                                BankCredit bcr = p as BankCredit;
+                                if (bcr != null)
+                                {
+                                    Person pers = GetPerson(bcr.personUID);
+                                    if (pers != null)
+                                    {
+                                        pers.IdProducts.Remove(bcr.PersonProductNumber);
+                                    }
+                                    products.Remove(bcr);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    listViewBankProducts.ItemsSource = GetListProduct();
+                }
+            }
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)

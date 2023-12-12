@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankWpfApp
 {
-    class LogOperations
+    public class LogOperations
     {
         string pathToLog = "LogOperations.csv";
         List<OneOperation> arr = new List<OneOperation>();
@@ -87,7 +87,7 @@ namespace BankWpfApp
         }
     }
 
-    class OneOperation
+    public class OneOperation
     { 
         DateTime DateUpdate { get; set; }
 

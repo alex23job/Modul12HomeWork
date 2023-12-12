@@ -134,7 +134,8 @@ namespace BankWpfApp
                     tv.Items.MoveCurrentTo(curNode.Parent);
                     //TreeViewItem selectedItem = treeView.ItemContainerGenerator.ContainerFromItem(curNode) as TreeViewItem;
                     //if (selectedItem != null) selectedItem.IsSelected = true;
-                    MessageBox.Show($"node={curNode.Name}  parent={curNode.Parent.Name} => IsCategory={ProductCategory.IsCategory(curNode.Parent.Name)}");
+
+                    //MessageBox.Show($"node={curNode.Name}  parent={curNode.Parent.Name} => IsCategory={ProductCategory.IsCategory(curNode.Parent.Name)}");
                 }
             }
         }
