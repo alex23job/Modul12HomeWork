@@ -89,7 +89,8 @@ namespace BankWpfApp
             bankProducts.SetSavePath(pathBankProductXML);
             // TODO
             bankProducts.SetCurrentNewUID(1000000);
-            Product.SetNextPersonProductNumber(1000000 + bankProducts.Count);
+            //Product.SetNextPersonProductNumber(1000000 + bankProducts.Count);
+            Product.SetNextPersonProductNumber(1 + CalcMaxPersonProductNumber(1000000 + bankProducts.Count));
             SynchronizeAccounts();
 
             if (File.Exists(pathTransactionXML))
@@ -100,6 +101,22 @@ namespace BankWpfApp
             transactions.SetCurrentNewUID(0);
         }
 
+        private long CalcMaxPersonProductNumber(long zn)
+        {
+            long maxRes = zn;
+            foreach(Product pr in bankProducts.AllItems)
+            {
+                IPersonProductNumber ipr = pr as IPersonProductNumber;
+                if (ipr != null)
+                {
+                    if (ipr.PersonProductNumber > maxRes)
+                    {
+                        maxRes = ipr.PersonProductNumber;
+                    }
+                }
+            }
+            return maxRes;
+        }
         private void SynchronizeAccounts()
         {
             int i, j;
