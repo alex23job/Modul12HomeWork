@@ -103,7 +103,7 @@
                                     <TextBlock Text="{Binding StrBalance}" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold" Foreground="Green"/>
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}" FontFamily="Times New Roman" FontSize="14"/>
-                                        <TextBlock Margin="30,0,0,0" HorizontalAlignment="Right" Text="{Binding StrInfo}" FontFamily="Times New Roman" FontSize="14" Foreground="#FFCF037B"/>
+                                        <TextBlock Text="{Binding StrInfo}" FontFamily="Times New Roman" FontSize="14" Foreground="#FFCF037B"/>
                                     </StackPanel>
                                     <TextBlock Text="{Binding StrNumber}" FontFamily="Times New Roman" FontSize="16"/>
                                 </StackPanel>

@@ -91,9 +91,9 @@ namespace BankWpfApp
         }
 
         /// <summary>
-        /// информация о счёте
+        /// информация о кредите
         /// </summary>
-        /// <returns>соварь из параметров и их значений</returns>
+        /// <returns>словарь из параметров и их значений</returns>
         public override Dictionary<string, string> GetProductInfo()
         {
             Dictionary<string, string> res = new Dictionary<string, string>();
@@ -109,6 +109,7 @@ namespace BankWpfApp
         }
     }
 
+    //[XmlInclude(typeof(NextPayment))]
     public class BankCredit : Credit, IPersonProductNumber, IIsRequest
     {
         /// <summary>
@@ -136,7 +137,7 @@ namespace BankWpfApp
                     return "Заявка";
                 else
                 {
-                    return $"-{NextPayment.Sum:0.00} Р   {NextPayment.DatePayment}";
+                    return $"-{GetNextPayment():0.00} Р   {NextPayment.DatePayment}";
                 }
             }
         }
@@ -165,6 +166,7 @@ namespace BankWpfApp
 
         public long PersonProductNumber { get; set; }
 
+        [XmlIgnore]
         public NextPayment NextPayment { get; set; }
         /// <summary>
         /// Статус заявки: true - заявка, false - оформлен
@@ -189,15 +191,84 @@ namespace BankWpfApp
                 IsMaxLimit = true;
                 MaxLimit = cd.MaxLimit;
             }
+            NextPayment = new NextPayment(TotalSum, Percent, Period, DayOfPayment);
+        }
+
+        /// <summary>
+        /// информация о кредите
+        /// </summary>
+        /// <returns>словарь из параметров и их значений</returns>
+        public override Dictionary<string, string> GetProductInfo()
+        {
+            Dictionary<string, string> res = new Dictionary<string, string>();
+            res.Add("Категория", "Кредит");
+            res.Add("Тип", Credit.nameTypeCredit[TypeCredit]);
+            res.Add("Название", Name);
+            res.Add("Процент по кредиту", Percent.ToString());
+            res.Add("Сумма", TotalSum.ToString());
+            res.Add("Срок", Period.ToString());
+            res.Add("День платежа", DayOfPayment.ToString());
+            if (IsCollateral) res.Add("Имущество в залог", Collateral);
+            if (IsSurety) res.Add("Поручители", Surety.ToString());
+            if (IsMaxLimit) res.Add("Максимальный лимит", MaxLimit.ToString());
+            res.Add("Описание", Description);
+            return res;
+        }
+
+        public float GetNextPayment()
+        {
+            if (NextPayment == null)
+            {
+                NextPayment = new NextPayment(TotalSum, Percent, Period, DayOfPayment);
+            }
+            return NextPayment.Payment;
         }
     }
 
     public class NextPayment
     {
-        public string DatePayment { get; set; }
+        public string DatePayment
+        { 
+            get
+            {
+                string date = "";
+                DateTime dt = DateTime.Now;
+                if (day <= dt.Day)
+                {
+                    date = $"{dt.Year:0000}.{dt.Month:00}.{day:00}";
+                }
+                else
+                {
+                    DateTime nextPayDate = new DateTime(dt.Year, dt.Month, day);
+                    nextPayDate = nextPayDate.AddMonths(1);
+                    date = $"{nextPayDate.Year:0000}.{nextPayDate.Month:00}.{day:00}";
+                }
+                return date;
+            }
+        }
+
+        public float Payment
+        {
+            get
+            {
+                return BankCredit.CalcMonthlyPayment(Sum, PercentPayment, period);
+            }
+        }
+
         public float Sum { get; set; }
         public float PercentPayment { get; set; }
         public float Repayment { get; set; }
+
+        private int period;
+        private int day;
+        public NextPayment() { }
+        public NextPayment(float s, float pr, int per, int d)
+        {
+            Sum = s;
+            PercentPayment = pr;
+            period = per;
+            day = d;
+        }
 
         public void ReCalc(float prc, float ost, float cash)
         {

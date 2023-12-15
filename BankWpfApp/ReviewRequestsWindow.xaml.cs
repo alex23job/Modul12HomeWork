@@ -36,6 +36,7 @@ namespace BankWpfApp
             logOps = log;
             bankProducts = prod;
             products = bankProducts.AllItems;
+            user = us;
 
             listViewBankProducts.ItemsSource = GetListProduct();
         }
@@ -125,7 +126,7 @@ namespace BankWpfApp
                                     Person pers = GetPerson(bc.personUID);
                                     if (pers != null)
                                     {
-                                        pers.IdProducts.Remove(bc.PersonProductNumber);
+                                        //pers.IdProducts.Remove(bc.PersonProductNumber);
                                         bc.CardAccount = bankProducts.Add(new BankAccount(bc.TypeCard % 2, pers.UID)) as BankAccount;
                                         bc.CardAccount.PersonProductNumber = Product.GetNextPersonProductNumber();
                                         pers.IdProducts.Add(bc.CardAccount.PersonProductNumber);
@@ -133,27 +134,33 @@ namespace BankWpfApp
                                         if (bc.TypeCard > 0)
                                         {
                                             bc.CardAccount.Balans = bc.Limit;
-                                            logOps.SaveOneOption(new OneOperation(bc.Limit.ToString(), "inc", user.UID.ToString(),
+                                            logOps.SaveOneOption(new OneOperation(bc.Limit.ToString(), "incCard", user.UID.ToString(),
                                                 UserPosition.GetPosition(user.Rule), pers.UID.ToString(), "Банк", bc.CardAccount.PersonProductNumber.ToString()));
                                         }
                                     }
                                     break;
                                 }
                             }
-                            //if (rp.ProductType.StartsWith("Кре"))
-                            //{
-                            //    BankCredit bcr = p as BankCredit;
-                            //    if (bcr != null)
-                            //    {
-                            //        Person pers = GetPerson(bcr.personUID);
-                            //        if (pers != null)
-                            //        {
-                            //            pers.IdProducts.Remove(bcr.PersonProductNumber);
-                            //        }
-                            //        products.Remove(bcr);
-                            //        break;
-                            //    }
-                            //}
+                            if (rp.ProductType.StartsWith("Кре"))
+                            {
+                                BankCredit bcr = p as BankCredit;
+                                if (bcr != null)
+                                {
+                                    Person pers = GetPerson(bcr.personUID);
+                                    if (pers != null)
+                                    {
+                                        //pers.IdProducts.Remove(bcr.PersonProductNumber);
+                                        bcr.CreditAccount = bankProducts.Add(new BankAccount(1, pers.UID)) as BankAccount;
+                                        bcr.CreditAccount.PersonProductNumber = Product.GetNextPersonProductNumber();
+                                        pers.IdProducts.Add(bcr.CreditAccount.PersonProductNumber);
+                                        bcr.IsRequest = false;
+                                        bcr.CreditAccount.Balans = bcr.TotalSum;
+                                        logOps.SaveOneOption(new OneOperation(bcr.TotalSum.ToString(), "incCredit", user.UID.ToString(),
+                                            UserPosition.GetPosition(user.Rule), pers.UID.ToString(), "", bcr.CreditAccount.PersonProductNumber.ToString()));
+                                    }
+                                    break;
+                                }
+                            }
                         }
                     }
                     listViewBankProducts.ItemsSource = GetListProduct();
