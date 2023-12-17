@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,17 @@ namespace BankWpfApp
         string pathLogOperations = "LogOperations.csv";
         UserData currentUser = null;
         Person currentPerson = null;
+        ObservableCollection<Person> persons = null;
+        ObservableCollection<Product> bankProducts = null;
         public StatOperationsWindow()
         {
             InitializeComponent();
+        }
+
+        public void SetRepository(ObservableCollection<Person> pers, ObservableCollection<Product> bp)
+        {
+            persons = pers;
+            bankProducts = bp;
         }
 
         public void SetUser(UserData user, string pathLog = "")
@@ -53,11 +62,67 @@ namespace BankWpfApp
             if (log.Load())
             {
                 List<OneOperation> list = log.GetSortedList(2, currentPerson.UID.ToString());
+                List<OperationsInfo> sorce = new List<OperationsInfo>();
                 foreach(OneOperation op in list)
                 {
+                    string pathLogo = "";
+                    string znak = "+";
+                    string nameTo = "";
+                    string nameFr = "";
+                    string cat = "None";
+                    Product bpTo = GetBankProductFromUID(op.ToAccountUID);
+                    Product bpFr = GetBankProductFromUID(op.FromAccountUID);
+                    if (bpFr != null)
+                    {
+                        nameFr = bpFr.Name;
+                    }
+                    else
+                    {
+                        nameFr = op.FromAccountUID;
+                    }
+                    if (op.GetMode() == "pay")
+                    {
+                        znak = "-";
+                        BankAccount ba = bpTo as BankAccount;
+                        if (ba != null)
+                        {
+                            LegalPerson lp = GetPersonFromUID(ba.personUID.ToString()) as LegalPerson;
+                            if (lp != null)
+                            {
+                                nameTo = lp.LegalName;
+                                pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
+                            }
+                        }
+                    }
+                    sorce.Add(new OperationsInfo(pathLogo, nameFr, znak + op.GetSumma(), nameTo, cat));
+                }
+                listViewInfo.ItemsSource = sorce;
+            }
+        }
 
+        private Product GetBankProductFromUID(string id)
+        {
+            foreach(Product p in bankProducts)
+            {
+                IPersonProductNumber ipn = p as IPersonProductNumber;
+                if (ipn != null && ipn.PersonProductNumber.ToString() == id)
+                {
+                    return p;
                 }
             }
+            return null;
+        }
+
+        private Person GetPersonFromUID(string id)
+        {
+            foreach(Person p in persons)
+            {
+                if (p.UID.ToString() == id)
+                {
+                    return p;
+                }
+            }
+            return null;
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

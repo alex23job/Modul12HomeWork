@@ -23,6 +23,8 @@ namespace BankWpfApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string startupPath = AppDomain.CurrentDomain.BaseDirectory;
+        public static string logoImgPath = "LogoImg";
         string pathUpdateInfo = "UpdateInfoLog.csv";
         string pathLogOperations = "LogOperations.csv";
         private LogOperations logOperations = null;
@@ -51,6 +53,7 @@ namespace BankWpfApp
             InitializeComponent();
             CreateContextMenuLK();
             CreateRepositorys();
+            //MessageBox.Show(startupPath);
         }
 
         private void CreateRepositorys()
@@ -609,7 +612,12 @@ namespace BankWpfApp
 
         private void OnOperationsClick(object sender, RoutedEventArgs e)
         {
-
+            if (currentPerson == null && currentUser == null) return;
+            StatOperationsWindow sow = new StatOperationsWindow();
+            sow.SetRepository(persons.AllItems, bankProducts.AllItems);
+            if (currentPerson != null) sow.SetPerson(currentPerson);
+            if (currentUser != null) sow.SetUser(currentUser);
+            sow.ShowDialog();
         }
 
         private void OnTotalClick(object sender, RoutedEventArgs e)

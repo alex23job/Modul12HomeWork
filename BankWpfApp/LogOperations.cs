@@ -98,10 +98,20 @@ namespace BankWpfApp
         /// </summary>
         string AmountOfMoney { get; set; }
 
+        public string GetSumma()
+        {
+            return $"{AmountOfMoney} Р";
+        }
+
         /// <summary>
         /// billingUp, withdraw, transfer (пополнить, снять, перевести)
         /// </summary>
         string ModeUpdate { get; set; }
+
+        public string GetMode()
+        {
+            return ModeUpdate;
+        }
 
         /// <summary>
         /// логин сотрудника

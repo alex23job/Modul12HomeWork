@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace BankWpfApp
         Person pers = null;
         UserData user = null;
         bool IsLegalPerson = false;
+        string onlyFileName = "";
 
         public RegistrationWindow()
         {
@@ -47,7 +49,7 @@ namespace BankWpfApp
                 if (IsLegalPerson)
                 {
                     pers = new LegalPerson(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
-                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text);
+                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text, onlyFileName);
                 }
                 else
                 {
@@ -150,10 +152,12 @@ namespace BankWpfApp
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
+                onlyFileName = System.IO.Path.GetFileName(filePath);
                 // Use the selected file path here...
                 //Bitmap bitmap = new Bitmap("image.jpg");
                 //logo.Source = bitmap as ImageSource;
                 logo.Source = new BitmapImage(new Uri(filePath));
+                File.Copy(filePath, MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + onlyFileName);
             }
         }
     }
