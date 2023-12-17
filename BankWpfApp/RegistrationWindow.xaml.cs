@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,6 +142,19 @@ namespace BankWpfApp
             }
             nameLegalPerson.IsEnabled = IsLegalPerson;
             adrLegalPerson.IsEnabled = IsLegalPerson;
+        }
+
+        private void OnLoadClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                // Use the selected file path here...
+                //Bitmap bitmap = new Bitmap("image.jpg");
+                //logo.Source = bitmap as ImageSource;
+                logo.Source = new BitmapImage(new Uri(filePath));
+            }
         }
     }
 }

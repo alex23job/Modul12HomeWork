@@ -156,7 +156,7 @@ namespace BankWpfApp
                                         bcr.IsRequest = false;
                                         bcr.CreditAccount.Balans = bcr.TotalSum;
                                         logOps.SaveOneOption(new OneOperation(bcr.TotalSum.ToString(), "incCredit", user.UID.ToString(),
-                                            UserPosition.GetPosition(user.Rule), pers.UID.ToString(), "", bcr.CreditAccount.PersonProductNumber.ToString()));
+                                            UserPosition.GetPosition(user.Rule), pers.UID.ToString(), "Банк", bcr.CreditAccount.PersonProductNumber.ToString()));
                                     }
                                     break;
                                 }

@@ -20,7 +20,7 @@ namespace BankWpfApp
             pathToLog = path;
         }
 
-        public void Load(string path = "")
+        public bool Load(string path = "")
         {
             string filePath = path == "" ? pathToLog : path;
             if (File.Exists(filePath))
@@ -31,7 +31,9 @@ namespace BankWpfApp
                 {
                     arr.Add(new OneOperation(arrStr[i]));
                 }
+                return true;
             }
+            return false;
         }
 
         public void SaveOneOption(OneOperation op, string path = "")

@@ -155,15 +155,18 @@ namespace BankWpfApp
     {
         public string LegalName { get; set; }
         public string LegalAddress { get; set; }
+        public string LogoPath { get; set; } = "";
+
         public LegalPerson() : base()
         {
             Type = 2;
         }
 
-        public LegalPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd, string legnm, string legad) : base(nm1, nm2, nm3, psp, tlf, bd)
+        public LegalPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd, string legnm, string legad, string logo="") : base(nm1, nm2, nm3, psp, tlf, bd)
         {
             LegalName = legnm;
             LegalAddress = legad;
+            LogoPath = logo;
             Type = 2;
         }
     }
