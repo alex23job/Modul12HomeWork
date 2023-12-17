@@ -35,7 +35,7 @@
                 <ListView x:Name="listViewInfo">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#FFB5D3FF" Margin="10,2" Padding="10,3" CornerRadius="10" Height="50">
+                            <Border Background="#FFB5D3FF" Margin="10,2" Padding="15,3" CornerRadius="10" Height="54">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="20*"/>
@@ -47,10 +47,10 @@
                                         <ColumnDefinition Width="100*"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Source="{Binding Img}" Grid.RowSpan="2"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding NameProduct}" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Text="{Binding StrSumma}" HorizontalAlignment="Right"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LegalName}" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Category}" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding NameProduct}" HorizontalAlignment="Left" Margin="10,1"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding StrSumma}" HorizontalAlignment="Right" Margin="10,1"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LegalName}" HorizontalAlignment="Left" Margin="10,1" FontSize="16"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Category}" HorizontalAlignment="Right" Margin="10,1" FontSize="16"/>
                                 </Grid> 
                             </Border>
                         </DataTemplate>
