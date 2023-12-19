@@ -91,8 +91,17 @@ namespace BankWpfApp
                             {
                                 nameTo = lp.LegalName;
                                 pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
+                                cat = lp.LegalCategoty;
                             }
                         }
+                    }
+                    if (op.ToAccountUID == "Банк" || op.FromAccountUID == "Банк")
+                    {
+                        pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\Bank.jpg";
+                    }
+                    if (op.ToAccountUID == "Банкомат" || op.FromAccountUID == "Банкомат")
+                    {
+                        pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\BankMachine.jpg";
                     }
                     sorce.Add(new OperationsInfo(pathLogo, nameFr, znak + op.GetSumma(), nameTo, cat));
                 }
@@ -126,6 +135,16 @@ namespace BankWpfApp
         }
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+
+        }
+
+        private void OnIncClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnDecClick(object sender, RoutedEventArgs e)
         {
 
         }

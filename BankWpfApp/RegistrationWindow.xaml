@@ -41,15 +41,19 @@
             </TabItem>
             <TabItem Header="Данные о юр. лице" Background="AntiqueWhite">
                 <StackPanel Background="#FFF0F9D2">
-                    <CheckBox x:Name="checkLegalPerson" Content="Юридическое лицо" Click="OnLegalPersonClick" Margin="40,20" FontSize="24"/>
+                    <CheckBox x:Name="checkLegalPerson" Content="Юридическое лицо" Click="OnLegalPersonClick" Margin="40,20,40,10" FontSize="24"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Логотип" VerticalAlignment="Center" Margin="40,0"/>
                         <Button x:Name="btnLoad" Content="Загрузить" Width="120" Height="40" Click="OnLoadClick"/>
-                        <Image x:Name="logo" Width="50" Height="50" Margin="30,0" HorizontalAlignment="Right"/>
+                        <Image x:Name="logo" Width="50" Height="50" Margin="80,0,0,0" HorizontalAlignment="Right"/>
                     </StackPanel>
-                    <Label Content="Наименование юридического лица" Margin="40,20,40,10"/>
+                    <Label Content="Наименование юридического лица" Margin="40,10,40,5"/>
                     <TextBox x:Name="nameLegalPerson" Margin="20,0,20,10" IsEnabled="False"/>
-                    <Label Content="Адрес юридического лица" Margin="40,20,40,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Категория" Margin="40,10,10,10"/>
+                        <ComboBox x:Name="ComboCategory" Width="300" Margin="10,7"/>
+                    </StackPanel>
+                    <Label Content="Адрес юридического лица" Margin="40,10,40,5"/>
                     <TextBox x:Name="adrLegalPerson" Margin="20,0,20,20" IsEnabled="False" Height="70" TextWrapping="WrapWithOverflow"/>
                 </StackPanel>
             </TabItem>

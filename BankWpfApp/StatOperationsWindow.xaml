@@ -58,6 +58,27 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Статистика">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="34*"/>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="33*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="10*"/>
+                    </Grid.RowDefinitions>
+                    <RadioButton Content="Расходы" IsChecked="True" GroupName="DiagrMode" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Dec" Foreground="#FFEE0000" Click="OnDecClick"/>
+                    <RadioButton Content="Поступления" Grid.Column="1" IsChecked="False" GroupName="DiagrMode" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Inc" Foreground="#FF03CB0C" Click="OnIncClick"/>
+                </Grid>
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" MinHeight="60" Height="60" MinWidth="100" MaxHeight="120">

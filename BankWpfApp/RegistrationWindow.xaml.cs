@@ -30,6 +30,8 @@ namespace BankWpfApp
         public RegistrationWindow()
         {
             InitializeComponent();
+            ComboCategory.ItemsSource = LegalPerson.category;
+            ComboCategory.SelectedItem = "Прочее";
         }
 
         public Person GetPerson()
@@ -49,7 +51,7 @@ namespace BankWpfApp
                 if (IsLegalPerson)
                 {
                     pers = new LegalPerson(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
-                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text, onlyFileName);
+                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text, onlyFileName, ComboCategory.SelectedItem.ToString());
                 }
                 else
                 {

@@ -153,20 +153,23 @@ namespace BankWpfApp
 
     public class LegalPerson : Person
     {
+        public static readonly string[] category = { "Еда", "Авто", "Медицина", "Развлечения", "Обучение", "Дом", "Одежда", "Электроника", "Услуги", "Прочее" };
         public string LegalName { get; set; }
         public string LegalAddress { get; set; }
         public string LogoPath { get; set; } = "";
+        public string LegalCategoty { get; set; } = "Прочее";
 
         public LegalPerson() : base()
         {
             Type = 2;
         }
 
-        public LegalPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd, string legnm, string legad, string logo="") : base(nm1, nm2, nm3, psp, tlf, bd)
+        public LegalPerson(string nm1, string nm2, string nm3, string psp, string tlf, string bd, string legnm, string legad, string logo="", string cat= "Прочее") : base(nm1, nm2, nm3, psp, tlf, bd)
         {
             LegalName = legnm;
             LegalAddress = legad;
             LogoPath = logo;
+            LegalCategoty = cat;
             Type = 2;
         }
     }
