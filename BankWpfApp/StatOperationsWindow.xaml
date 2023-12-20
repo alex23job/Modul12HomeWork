@@ -78,6 +78,33 @@
                     </Grid.RowDefinitions>
                     <RadioButton Content="Расходы" IsChecked="True" GroupName="DiagrMode" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Dec" Foreground="#FFEE0000" Click="OnDecClick"/>
                     <RadioButton Content="Поступления" Grid.Column="1" IsChecked="False" GroupName="DiagrMode" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Inc" Foreground="#FF03CB0C" Click="OnIncClick"/>
+                    <Canvas x:Name="canvasDiagramm" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="6">
+                        <!--Path Stroke="Black" StrokeThickness="8">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="120,0">
+                                        <PathFigure.Segments>
+                                            <PathSegmentCollection>
+                                                <ArcSegment Size="100,100" RotationAngle="0" IsLargeArc="True" SweepDirection="Clockwise" Point="75,75" />
+                                            </PathSegmentCollection>
+                                        </PathFigure.Segments>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path-->
+                    </Canvas>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp1" Grid.Row="1"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp2" Grid.Row="2"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp3" Grid.Row="3"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp4" Grid.Row="4"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp5" Grid.Row="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp6" Grid.Row="6"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp7" Grid.Row="7"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp8" Grid.Row="8"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp9" Grid.Row="9"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp10" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp11" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="sp12" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
         </TabControl>
