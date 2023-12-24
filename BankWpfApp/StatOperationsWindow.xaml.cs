@@ -22,6 +22,7 @@ namespace BankWpfApp
     public partial class StatOperationsWindow : Window
     {
         string pathLogOperations = "LogOperations.csv";
+        LogOperations log = null;
         UserData currentUser = null;
         Person currentPerson = null;
         ObservableCollection<Person> persons = null;
@@ -45,7 +46,7 @@ namespace BankWpfApp
             {
                 pathLogOperations = pathLog;
             }
-            LogOperations log = new LogOperations(pathLogOperations);
+            log = new LogOperations(pathLogOperations);
             if (log.Load())
             {
                 //log.GetSortedList(2)
@@ -59,58 +60,16 @@ namespace BankWpfApp
             {
                 pathLogOperations = pathLog;
             }
-            LogOperations log = new LogOperations(pathLogOperations);
+            log = new LogOperations(pathLogOperations);
 
             if (log.Load())
             {
                 listOperations = log.GetSortedList(2, currentPerson.UID.ToString());
-                List<OperationsInfo> sorce = new List<OperationsInfo>();
-                foreach(OneOperation op in listOperations)
-                {
-                    string pathLogo = "";
-                    string znak = "+";
-                    string nameTo = "";
-                    string nameFr = "";
-                    string cat = "None";
-                    Product bpTo = GetBankProductFromUID(op.ToAccountUID);
-                    Product bpFr = GetBankProductFromUID(op.FromAccountUID);
-                    if (bpFr != null)
-                    {
-                        nameFr = bpFr.Name;
-                    }
-                    else
-                    {
-                        nameFr = op.FromAccountUID;
-                    }
-                    if (op.GetMode() == "pay")
-                    {
-                        znak = "-";
-                        BankAccount ba = bpTo as BankAccount;
-                        if (ba != null)
-                        {
-                            LegalPerson lp = GetPersonFromUID(ba.personUID.ToString()) as LegalPerson;
-                            if (lp != null)
-                            {
-                                nameTo = lp.LegalName;
-                                pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
-                                cat = lp.LegalCategoty;
-                            }
-                        }
-                    }
-                    if (op.ToAccountUID == "Банк" || op.FromAccountUID == "Банк")
-                    {
-                        pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\Bank.jpg";
-                    }
-                    if (op.ToAccountUID == "Банкомат" || op.FromAccountUID == "Банкомат")
-                    {
-                        pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\BankMachine.jpg";
-                    }
-                    sorce.Add(new OperationsInfo(pathLogo, nameFr, znak + op.GetSumma(), nameTo, cat));
-                }
-                listViewInfo.ItemsSource = sorce;
+                ViewListOperations();
 
                 if (listOperations != null)
                 {
+                    CreateTreeItemsForPerson();
                     int mode = 1;
                     if (Inc.IsChecked == true) mode = 2;
                     Dictionary<string, float> dict = GetDictCatOper(listOperations, mode);
@@ -193,6 +152,103 @@ namespace BankWpfApp
             return res;
         }
 
+        private void CreateTreeItemsForPerson()
+        {
+            Node rootNode = new Node() { Name = "Все продукты" };
+            string category = "";
+            foreach(long id in currentPerson.IdProducts)
+            {
+                Product bp = GetBankProductFromUID(id.ToString());
+                if (bp != null)
+                {
+                    IProductType productType = bp as IProductType;
+                    if (productType != null)
+                    {
+                        switch (productType.Type)
+                        {
+                            case 0:
+                                category = "Карты";
+                                break;
+                            case 1:
+                                category = "Вклады";
+                                break;
+                            case 2:
+                                category = "Кредиты";
+                                break;
+                            case 3:
+                                category = "Счета";
+                                break;
+                        }
+                        Node curNode = rootNode[category];
+                        if (curNode == null)
+                        {
+                            curNode = new Node(category, rootNode);
+                            rootNode.Children.Add(curNode);
+                        }
+                        if (curNode != null)
+                        {
+                            curNode.Children.Add(new Node($"{bp.UID} {bp.Name}", curNode));
+                        }
+                    }
+                }
+            }
+
+            if (rootNode != null)
+            {
+                treeView.ItemsSource = new ObservableCollection<Node>() { rootNode };
+            }
+
+        }
+
+        private void ViewListOperations()
+        {
+            List<OperationsInfo> sorce = new List<OperationsInfo>();
+            foreach (OneOperation op in listOperations)
+            {
+                string pathLogo = "";
+                string znak = "+";
+                string nameTo = "";
+                string nameFr = "";
+                string cat = "None";
+                Product bpTo = GetBankProductFromUID(op.ToAccountUID);
+                Product bpFr = GetBankProductFromUID(op.FromAccountUID);
+                if (bpFr != null)
+                {
+                    nameFr = bpFr.Name;
+                }
+                else
+                {
+                    nameFr = op.FromAccountUID;
+                }
+                if (op.GetMode() == "pay")
+                {
+                    znak = "-";
+                    BankAccount ba = bpTo as BankAccount;
+                    if (ba != null)
+                    {
+                        LegalPerson lp = GetPersonFromUID(ba.personUID.ToString()) as LegalPerson;
+                        if (lp != null)
+                        {
+                            nameTo = lp.LegalName;
+                            pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
+                            cat = lp.LegalCategoty;
+                        }
+                    }
+                }
+                if (op.ToAccountUID == "Банк" || op.FromAccountUID == "Банк")
+                {
+                    pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\Bank.jpg";
+                }
+                if (op.ToAccountUID == "Банкомат" || op.FromAccountUID == "Банкомат")
+                {
+                    pathLogo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\BankMachine.jpg";
+                }
+                sorce.Add(new OperationsInfo(pathLogo, nameFr, znak + op.GetSumma(), nameTo, cat));
+            }
+            listViewInfo.ItemsSource = sorce;
+
+        }
+
         private void DrawPieDiagramm(List<float> data, List<string> legend)
         {
             var sum = data.Sum();
@@ -203,7 +259,16 @@ namespace BankWpfApp
             var xyradius = new Size(radius, radius);
             int nBr = 0;
             StackPanel[] aSp = new StackPanel[12] { sp1, sp2, sp3, sp4, sp5, sp6, sp7, sp8, sp9, sp10, sp11, sp12 };
-            for(int i=0;i<aSp.Length;i++) aSp[i].Children.Clear();
+            for (int i = 0; i < aSp.Length; i++) aSp[i].Children.Clear();
+
+            if (data.Count == 0)
+            {
+                Label l = new Label();
+                l.Content = "Нет операций";
+                aSp[0].Children.Add(l);
+                canvasDiagramm.Children.Clear();
+                return;
+            }
 
             if (data.Count == 1)
             {
@@ -226,7 +291,7 @@ namespace BankWpfApp
                 r.Height = 10;
                 aSp[0].Children.Add(r);
                 Label l = new Label();
-                l.Content = legend[0];
+                l.Content = $"{legend[0]} {data[0]:0.00} \x20BD";
                 aSp[0].Children.Add(l);
             }
             else
@@ -273,7 +338,7 @@ namespace BankWpfApp
                     r.Height = 10;
                     aSp[nBr].Children.Add(r);
                     Label l = new Label();
-                    l.Content = legend[nBr];
+                    l.Content = $"{legend[nBr]} {data[nBr]:0.00} \x20BD"; //legend[nBr];
                     aSp[nBr].Children.Add(l);
 
                     startAngle = endAngle;
@@ -309,7 +374,41 @@ namespace BankWpfApp
 
         private void OnTreeViewSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-
+            Node nNode = e.NewValue as Node;
+            if (nNode != null)
+            {
+                string[] arrStr = nNode.Name.Split(' ');
+                if (arrStr.Length > 1)
+                {
+                    Product bp = GetBankProductFromUID(arrStr[0]);
+                    string UID = arrStr[0];
+                    BankCard bc = bp as BankCard;
+                    if (bc != null)
+                    {
+                        UID = bc.CardAccount.PersonProductNumber.ToString();
+                    }
+                    BankDeposit bd = bp as BankDeposit;
+                    if (bd != null)
+                    {
+                        UID = bd.DepositAccount.PersonProductNumber.ToString();
+                    }
+                    BankCredit bcr = bp as BankCredit;
+                    if (bcr != null)
+                    {
+                        UID = bcr.CreditAccount.PersonProductNumber.ToString();
+                    }
+                    listOperations = log.GetSortedList(3, UID);
+                    ViewListOperations();
+                    int mode = 1;
+                    if (Inc.IsChecked == true) mode = 2;
+                    Dictionary<string, float> dict = GetDictCatOper(listOperations, mode);
+                    List<float> data = new List<float>();
+                    List<string> legend = new List<string>();
+                    foreach (var v in dict.Values) data.Add(v);
+                    foreach (var l in dict.Keys) legend.Add(l);
+                    DrawPieDiagramm(data, legend);
+                }
+            }
         }
 
         private void OnIncClick(object sender, RoutedEventArgs e)

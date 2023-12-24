@@ -50,7 +50,7 @@ namespace BankWpfApp
     [XmlInclude(typeof(Deposit))]
     [XmlInclude(typeof(Card))]
     [XmlInclude(typeof(Credit))]
-    public class Product : IId, IDictInfo        
+    public class Product : IId, IDictInfo
     {
         static long nextPersonProductNumber = 1000000;
         public static long GetNextPersonProductNumber() => nextPersonProductNumber++;
