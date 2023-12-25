@@ -49,7 +49,7 @@ namespace BankWpfApp
             log = new LogOperations(pathLogOperations);
             if (log.Load())
             {
-                //log.GetSortedList(2)
+                CreateTreePersons();
             }
         }
 
@@ -133,23 +133,80 @@ namespace BankWpfApp
                 if (op.GetMode() == "transfer")
                 {
                     cat = "Перевод";
-                    if (mode == 1)
+                    Person pers = currentPerson;
+                    if (pers == null)
                     {
-                        if (currentPerson.IdProducts.Contains(bpTo.UID) == false)
-                        {
-                            res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
-                        }
+                        pers = GetPersonFromUID(op.UpdatingUID);
                     }
-                    if (mode == 2)
+                    if (pers != null)
                     {
-                        if (currentPerson.IdProducts.Contains(bpFr.UID) == false)
+                        if (mode == 1)
                         {
-                            res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
+                            if (pers.IdProducts.Contains(bpTo.UID) == false)
+                            {
+                                res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
+                            }
+                        }
+                        if (mode == 2)
+                        {
+                            if (pers.IdProducts.Contains(bpFr.UID) == false)
+                            {
+                                res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
+                            }
                         }
                     }
                 }
             }
             return res;
+        }
+
+        private void CreateTreePersons()
+        {
+            ObservableCollection<Node> tree = new ObservableCollection<Node>();
+            string category = "";
+            foreach (Person pers in persons)
+            {
+                string nm = pers.FIO;
+                Node rootNode = new Node() { Name = nm };
+                foreach (long id in pers.IdProducts)
+                {
+                    Product bp = GetBankProductFromUID(id.ToString());
+                    if (bp != null)
+                    {
+                        IProductType productType = bp as IProductType;
+                        if (productType != null)
+                        {
+                            switch (productType.Type)
+                            {
+                                case 0:
+                                    category = "Карты";
+                                    break;
+                                case 1:
+                                    category = "Вклады";
+                                    break;
+                                case 2:
+                                    category = "Кредиты";
+                                    break;
+                                case 3:
+                                    category = "Счета";
+                                    break;
+                            }
+                            Node curNode = rootNode[category];
+                            if (curNode == null)
+                            {
+                                curNode = new Node(category, rootNode);
+                                rootNode.Children.Add(curNode);
+                            }
+                            if (curNode != null)
+                            {
+                                curNode.Children.Add(new Node($"{bp.UID} {bp.Name}", curNode));
+                            }
+                        }
+                    }
+                }
+                tree.Add(rootNode);
+            }
+            treeView.ItemsSource = tree;
         }
 
         private void CreateTreeItemsForPerson()
@@ -383,7 +440,7 @@ namespace BankWpfApp
                     Product bp = GetBankProductFromUID(arrStr[0]);
                     string UID = arrStr[0];
                     BankCard bc = bp as BankCard;
-                    if (bc != null)
+                    if (bc != null && !bc.IsRequest)
                     {
                         UID = bc.CardAccount.PersonProductNumber.ToString();
                     }
@@ -393,7 +450,7 @@ namespace BankWpfApp
                         UID = bd.DepositAccount.PersonProductNumber.ToString();
                     }
                     BankCredit bcr = bp as BankCredit;
-                    if (bcr != null)
+                    if (bcr != null && !bcr.IsRequest)
                     {
                         UID = bcr.CreditAccount.PersonProductNumber.ToString();
                     }

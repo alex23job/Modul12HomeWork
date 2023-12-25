@@ -71,6 +71,8 @@ namespace BankWpfApp
         private UserData user = null;
         public int UserUID = 0;
 
+        public string FIO => $"{Name} {LastName[0]}.{SecondName[0]}.";
+
         public Person()
         {
             IdProducts = new List<long>();
