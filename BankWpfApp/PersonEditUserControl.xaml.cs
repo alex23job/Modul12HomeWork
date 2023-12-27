@@ -36,5 +36,20 @@ namespace BankWpfApp
                 strBirthDay = string.Format("{0:D04}.{1:D02}.{2:D02}", sdt.Year, sdt.Month, sdt.Day);
             }
         }
+
+        public void SetBirthday(string dt)
+        {
+            strBirthDay = dt;
+            string[] sd = dt.Split('.');
+            DateTime dat = DateTime.Now;
+            if (sd.Length >= 3)
+            {
+                if (int.TryParse(sd[0], out int year) && int.TryParse(sd[1], out int month) && int.TryParse(sd[2], out int day))
+                {
+                    dat = new DateTime(year, month, day);
+                }
+            }
+            datePickerBirthday.SelectedDate = dat;
+        }
     }
 }

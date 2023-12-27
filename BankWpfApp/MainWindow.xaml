@@ -27,7 +27,7 @@
             <Label Content="Личный кабинет" Foreground="#FF035D13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
         <StackPanel x:Name="personSP" Orientation="Horizontal" Grid.Column="3" Margin="4,7" Visibility="Hidden" HorizontalAlignment="Right">
-            <Label x:Name="namePerson" Width="100" HorizontalContentAlignment="Right" Margin="3,0"/>
+            <Label x:Name="namePerson" Width="100" HorizontalContentAlignment="Right" Margin="3,0" MouseUp="OnNamePersonMouseUp"/>
             <Button x:Name="btnPersonExit" Content="Выйти" Width="70" Click="OnPersonExit" Margin="3,0"/>
         </StackPanel>
         <Border x:Name="borderAdmin" CornerRadius="10" Grid.Row="0" Grid.Column="2" Background="#FF8DFDB6" Margin="7" MouseDown="OnAdminDown" MouseEnter="OnAdminEnter" MouseLeave="OnAdminLeave">

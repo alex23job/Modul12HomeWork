@@ -23,9 +23,11 @@ namespace BankWpfApp
     public partial class RegistrationWindow : Window
     {
         Person pers = null;
+        Person editPerson = null;
         UserData user = null;
         bool IsLegalPerson = false;
         string onlyFileName = "";
+        bool IsEdit = false;
 
         public RegistrationWindow()
         {
@@ -44,23 +46,76 @@ namespace BankWpfApp
             return user;
         }
 
+        public void SetPerson(Person p)
+        {
+            IsEdit = true;
+            editPerson = p;
+            personData.txtName.Text = p.Name;
+            personData.txtFirstName.Text = p.LastName;
+            personData.txtSecondName.Text = p.SecondName;
+            personData.txtPasport.Text = p.Pasport;
+            personData.txtTlf.Text = p.Tlf;
+            personData.SetBirthday(p.BirthDay);
+            txtLogin.Text = p.PersonLogin;
+            LegalPerson lp = p as LegalPerson;
+            if (lp != null)
+            {
+                IsLegalPerson = true;
+                nameLegalPerson.IsEnabled = IsLegalPerson;
+                adrLegalPerson.IsEnabled = IsLegalPerson;
+                checkLegalPerson.IsChecked = true;
+                adrLegalPerson.Text = lp.LegalAddress;
+                nameLegalPerson.Text = lp.LegalName;
+                ComboCategory.SelectedItem = lp.LegalCategoty;
+                if (lp.LogoPath != "")
+                {
+                    string logoPath = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
+                    logo.Source = new BitmapImage(new Uri(logoPath));
+                }
+            }
+        }
+
         private void OnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (TestFields())
+            if (IsEdit)
             {
-                if (IsLegalPerson)
-                {
-                    pers = new LegalPerson(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
-                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text, onlyFileName, ComboCategory.SelectedItem.ToString());
-                }
-                else
-                {
-                    pers = new Person(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
-                    personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay);
-                }
-                user = new UserData(txtLogin.Text, txtNewPass1.Text, 0);
-                DialogResult = true;
+                CheckPersonParams();
             }
+            else
+            {
+                if (TestFields())
+                {
+                    if (IsLegalPerson)
+                    {
+                        pers = new LegalPerson(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
+                        personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay, nameLegalPerson.Text, adrLegalPerson.Text, onlyFileName, ComboCategory.SelectedItem.ToString());
+                    }
+                    else
+                    {
+                        pers = new Person(personData.txtName.Text, personData.txtFirstName.Text, personData.txtSecondName.Text,
+                        personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay);
+                    }
+                    user = new UserData(txtLogin.Text, txtNewPass1.Text, 0);
+                    DialogResult = true;
+                }
+            }
+        }
+
+        private bool CheckPersonParams()
+        {
+            bool res = false;
+            if (IsLegalPerson)
+            {
+                LegalPerson lp = editPerson as LegalPerson;
+                if (lp != null)
+                {
+                    if (onlyFileName != "")
+                    {
+                        lp.LogoPath = onlyFileName;
+                    }
+                }
+            }
+            return res;
         }
 
         private bool TestFields()

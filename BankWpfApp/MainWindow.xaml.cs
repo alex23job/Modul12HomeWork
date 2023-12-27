@@ -654,5 +654,19 @@ namespace BankWpfApp
         {
 
         }
+
+        private void OnNamePersonMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            RegistrationWindow regWin = new RegistrationWindow();
+            regWin.SetPerson(currentPerson);
+            if (regWin.ShowDialog() == true)
+            {
+/*                UserData ud = users.Add(regWin.GetUser());
+                Person per = regWin.GetPerson();
+                per.SetUserData(ud);
+                currentPerson = persons.Add(per);
+                ShowPersonSP();*/
+            }
+        }
     }
 }
