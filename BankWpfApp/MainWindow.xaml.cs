@@ -25,6 +25,15 @@ namespace BankWpfApp
     {
         public static string startupPath = AppDomain.CurrentDomain.BaseDirectory;
         public static string logoImgPath = "LogoImg";
+
+        public static void SaveStrUpdateInfo(string csvStr, string path = "UpdateInfoLog.csv")
+        {
+            using (StreamWriter outputFile = new StreamWriter(path, true))
+            {
+                outputFile.WriteLine(csvStr);
+            }
+        }
+
         string pathUpdateInfo = "UpdateInfoLog.csv";
         string pathLogOperations = "LogOperations.csv";
         private LogOperations logOperations = null;
@@ -77,6 +86,7 @@ namespace BankWpfApp
             {
                 users.Add(new UserData("admin", "admin", 3));
             }
+            SynchronizePersonUsers();
 
             if (File.Exists(pathProductXML))
             {
@@ -120,6 +130,25 @@ namespace BankWpfApp
             }
             return maxRes;
         }
+
+        private void SynchronizePersonUsers()
+        {
+            int i, j;
+            for (i = 0; i < persons.Count; i++)
+            {
+                Person p = persons.AllItems[i];
+                for (j = 0; j < users.Count; j++)
+                {
+                    UserData user = users.AllItems[j];
+                    if (p.UserUID == user.UID)
+                    {
+                        p.SetUserData(user);
+                        break;
+                    }
+                }
+            }
+        }
+
         private void SynchronizeAccounts()
         {
             int i, j;

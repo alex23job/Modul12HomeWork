@@ -65,6 +65,7 @@ namespace BankWpfApp
         public LogPersonUpdate()
         {
             DateUpdate = DateTime.Now;
+            Fields = "";
         }
 
         public LogPersonUpdate(string fieldName, string mode, string login, string pos, string id = "")

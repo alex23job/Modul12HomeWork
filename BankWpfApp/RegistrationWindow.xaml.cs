@@ -28,6 +28,7 @@ namespace BankWpfApp
         bool IsLegalPerson = false;
         string onlyFileName = "";
         bool IsEdit = false;
+        string pathLogUpdate = "";
 
         public RegistrationWindow()
         {
@@ -46,8 +47,9 @@ namespace BankWpfApp
             return user;
         }
 
-        public void SetPerson(Person p)
+        public void SetPerson(Person p, string pathLog = "UpdateInfoLog.csv")
         {
+            pathLogUpdate = pathLog;
             IsEdit = true;
             editPerson = p;
             personData.txtName.Text = p.Name;
@@ -80,6 +82,7 @@ namespace BankWpfApp
             if (IsEdit)
             {
                 CheckPersonParams();
+                DialogResult = true;
             }
             else
             {
@@ -96,6 +99,9 @@ namespace BankWpfApp
                         personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay);
                     }
                     user = new UserData(txtLogin.Text, txtNewPass1.Text, 0);
+                    LogPersonUpdate lpu = new LogPersonUpdate("Все поля", "edit", editPerson.PersonLogin, "Клиент", editPerson.UID.ToString());
+                    pers.updateInfo = lpu;
+                    MainWindow.SaveStrUpdateInfo(lpu.ToCsvString(), pathLogUpdate);
                     DialogResult = true;
                 }
             }
@@ -104,6 +110,7 @@ namespace BankWpfApp
         private bool CheckPersonParams()
         {
             bool res = false;
+            LogPersonUpdate lpu = new LogPersonUpdate("", "edit", editPerson.PersonLogin, "Клиент", editPerson.UID.ToString());
             if (IsLegalPerson)
             {
                 LegalPerson lp = editPerson as LegalPerson;
@@ -112,9 +119,70 @@ namespace BankWpfApp
                     if (onlyFileName != "")
                     {
                         lp.LogoPath = onlyFileName;
+                        lpu.AddField("logo");
+                    }
+                    if (lp.LegalAddress != adrLegalPerson.Text)
+                    {
+                        lp.LegalAddress = adrLegalPerson.Text;
+                        lpu.AddField("legalAdr");
+                    }
+                    if (lp.LegalName != nameLegalPerson.Text)
+                    {
+                        lp.LegalName = nameLegalPerson.Text;
+                        lpu.AddField("legalName");
+                    }
+                    if (lp.LegalCategoty != ComboCategory.SelectedItem.ToString())
+                    {
+                        lp.LegalCategoty = ComboCategory.SelectedItem.ToString();
+                        lpu.AddField("legalCategory");
                     }
                 }
             }
+            if (editPerson.Name != personData.txtName.Text)
+            {
+                editPerson.Name = personData.txtName.Text;
+                lpu.AddField("Name");
+            }
+            if (editPerson.LastName != personData.txtFirstName.Text)
+            {
+                editPerson.LastName = personData.txtFirstName.Text;
+                lpu.AddField("LastName");
+            }
+            if (editPerson.SecondName != personData.txtSecondName.Text)
+            {
+                editPerson.SecondName = personData.txtSecondName.Text;
+                lpu.AddField("SecondName");
+            }
+            if (editPerson.Pasport != personData.txtPasport.Text)
+            {
+                editPerson.Pasport = personData.txtPasport.Text;
+                lpu.AddField("Pasport");
+            }
+            if (editPerson.Tlf != personData.txtTlf.Text)
+            {
+                editPerson.Tlf = personData.txtTlf.Text;
+                lpu.AddField("Tlf");
+            }
+            if (editPerson.BirthDay != personData.strBirthDay && personData.strBirthDay != "")
+            {
+                editPerson.BirthDay = personData.strBirthDay;
+                lpu.AddField("BirthDay");
+            }
+            if (editPerson.PersonLogin != txtLogin.Text)
+            {
+                editPerson.UpdateUserLogin(txtLogin.Text);
+                lpu.AddField("Login");
+            }
+            if (txtNewPass1.Text == txtNewPass2.Text && txtNewPass1.Text != "")
+            {
+                if (editPerson.PersonLogin == txtLogin.Text && !editPerson.CheckUser(editPerson.PersonLogin, txtNewPass1.Text))
+                {
+                    editPerson.UpdateUserPassword(txtNewPass1.Text);
+                    lpu.AddField("Password");
+                }
+            }
+            editPerson.updateInfo = lpu;
+            MainWindow.SaveStrUpdateInfo(lpu.ToCsvString(), pathLogUpdate);
             return res;
         }
 
