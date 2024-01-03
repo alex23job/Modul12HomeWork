@@ -23,6 +23,8 @@ namespace BankWpfApp
         Person currentPerson = null;
         LegalPerson legalPers = null;
         ObservableCollection<Person> persons = null;
+        string strBeginPeriod = "";
+        string strEndPeriod = "";
         public BonusWindow()
         {
             InitializeComponent();
@@ -37,6 +39,7 @@ namespace BankWpfApp
             if (legalPers != null)
             {
                 LegalBonus.Visibility = Visibility.Visible;
+                SetActionParams(legalPers);
             }
             else
             {
@@ -60,6 +63,25 @@ namespace BankWpfApp
             }
         }
 
+        private void SetActionParams(LegalPerson lp)
+        {
+            if (lp.MyBonusAction == null)
+            {
+                btn_Add.Content = "Добавить";
+            }
+            else
+            {
+                btn_Add.Content = "Установить";
+                strBeginPeriod = lp.MyBonusAction.BeginPeriod;
+                strEndPeriod = lp.MyBonusAction.EndPeriod;
+                datePickerBegin.SelectedDate = GetDateTime(lp.MyBonusAction.BeginPeriod);
+                datePickerEnd.SelectedDate = GetDateTime(lp.MyBonusAction.EndPeriod);
+                txtCount.Text = lp.MyBonusAction.Count.ToString();
+                txtPercent.Text = lp.MyBonusAction.Percent.ToString();
+                txtMinSum.Text = lp.MyBonusAction.MinSumma.ToString();
+                txtMaxSum.Text = lp.MyBonusAction.MaxSumma.ToString();
+            }
+        }
         private List<BonusInfo> GetListActions()
         {
             List<BonusInfo> res = new List<BonusInfo>();
@@ -128,15 +150,49 @@ namespace BankWpfApp
         {
 
         }
+        private void AllClick(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         private void ClickBtnAdd(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void AllClick(object sender, RoutedEventArgs e)
-        {
 
+        private void OnSelectedBeginDataChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? dt = datePickerBegin.SelectedDate;
+            if (dt != null)
+            {
+                DateTime sdt = (DateTime)dt;
+                strBeginPeriod = string.Format("{0:D04}.{1:D02}.{2:D02}", sdt.Year, sdt.Month, sdt.Day);
+            }
+        }
+
+        private void OnSelectedEndDataChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? dt = datePickerEnd.SelectedDate;
+            if (dt != null)
+            {
+                DateTime sdt = (DateTime)dt;
+                strEndPeriod = string.Format("{0:D04}.{1:D02}.{2:D02}", sdt.Year, sdt.Month, sdt.Day);
+            }
+        }
+
+        public DateTime? GetDateTime(string dt)
+        {
+            string[] sd = dt.Split('.');
+            DateTime dat = DateTime.Now;
+            if (sd.Length >= 3)
+            {
+                if (int.TryParse(sd[0], out int year) && int.TryParse(sd[1], out int month) && int.TryParse(sd[2], out int day))
+                {
+                    dat = new DateTime(year, month, day);
+                }
+            }
+            return dat;
         }
     }
 

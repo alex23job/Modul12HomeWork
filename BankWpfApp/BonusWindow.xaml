@@ -73,7 +73,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="40*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20*"/>
@@ -85,6 +85,20 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="25*"/>
                     </Grid.RowDefinitions>
+                    <Label Content="Кешбек ( % )" Margin="10,5" Grid.Row="1"/>
+                    <Label Content="Число покупок" Margin="10,5" Grid.Row="2"/>
+                    <Label Content="Начало периода" Margin="10,5" Grid.Row="3"/>
+                    <Label Content="Окончание периода" Margin="10,5" Grid.Row="4"/>
+                    <Label Content="Минимальная сумма ( Р )" Margin="10,5" Grid.Row="5"/>
+                    <Label Content="Максимальная сумма ( Р )" Margin="10,5" Grid.Row="6"/>
+                    <TextBox x:Name="txtPercent" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                    <TextBox x:Name="txtCount" Grid.Row="2" Grid.Column="1" Margin="5"/>
+                    <DatePicker Name="datePickerBegin" IsDropDownOpen="True" SelectedDateFormat="Short" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
+                    SelectedDateChanged="OnSelectedBeginDataChanged" Width="200" Padding="5"/>
+                    <DatePicker Name="datePickerEnd" IsDropDownOpen="True" SelectedDateFormat="Short" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"
+                    SelectedDateChanged="OnSelectedEndDataChanged" Width="200" Padding="5"/>
+                    <TextBox x:Name="txtMinSum" Grid.Row="5" Grid.Column="1" Margin="5"/>
+                    <TextBox x:Name="txtMaxSum" Grid.Row="6" Grid.Column="1" Margin="5"/>
                     <Button x:Name="btn_Add" Content="Добавить" Margin="70,7" Grid.Row="7" Grid.ColumnSpan="2" FontSize="24" FontWeight="Bold" Foreground="#FF01420D" Click="ClickBtnAdd"/>
                 </Grid>
             </TabItem>

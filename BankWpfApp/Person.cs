@@ -163,6 +163,9 @@ namespace BankWpfApp
         public string LogoPath { get; set; } = "";
         public string LegalCategoty { get; set; } = "Прочее";
 
+        public Bonus MyBonus { get; set; } = null;
+        public BonusAction MyBonusAction { get; set; } = null;
+
         public LegalPerson() : base()
         {
             Type = 2;
