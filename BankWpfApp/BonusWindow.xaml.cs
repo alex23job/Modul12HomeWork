@@ -20,7 +20,7 @@ namespace BankWpfApp
     /// </summary>
     public partial class BonusWindow : Window
     {
-        Person pers = null;
+        Person currentPerson = null;
         LegalPerson legalPers = null;
         ObservableCollection<Person> persons = null;
         public BonusWindow()
@@ -32,7 +32,7 @@ namespace BankWpfApp
         {
             persons = pers;
             ShowActions();
-            pers = p;
+            currentPerson = p;
             legalPers = p as LegalPerson;
             if (legalPers != null)
             {

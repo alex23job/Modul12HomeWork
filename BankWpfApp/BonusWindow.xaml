@@ -22,7 +22,7 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="20*"/>
-                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="25*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.ColumnSpan="2" Content="Выбирите 3 категории в январе" x:Name="labelTitle" Margin="30,5" FontSize="22"/>
                     <CheckBox Grid.Row="1" Content="Все покупки  1%" Margin="10" Click="AllClick" x:Name="all"/>
@@ -83,7 +83,7 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="20*"/>
-                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="25*"/>
                     </Grid.RowDefinitions>
                     <Button x:Name="btn_Add" Content="Добавить" Margin="70,7" Grid.Row="7" Grid.ColumnSpan="2" FontSize="24" FontWeight="Bold" Foreground="#FF01420D" Click="ClickBtnAdd"/>
                 </Grid>
