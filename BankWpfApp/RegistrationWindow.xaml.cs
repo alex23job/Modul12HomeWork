@@ -99,9 +99,6 @@ namespace BankWpfApp
                         personData.txtPasport.Text, personData.txtTlf.Text, personData.strBirthDay);
                     }
                     user = new UserData(txtLogin.Text, txtNewPass1.Text, 0);
-                    LogPersonUpdate lpu = new LogPersonUpdate("Все поля", "edit", editPerson.PersonLogin, "Клиент", editPerson.UID.ToString());
-                    pers.updateInfo = lpu;
-                    MainWindow.SaveStrUpdateInfo(lpu.ToCsvString(), pathLogUpdate);
                     DialogResult = true;
                 }
             }
@@ -282,7 +279,11 @@ namespace BankWpfApp
                 //Bitmap bitmap = new Bitmap("image.jpg");
                 //logo.Source = bitmap as ImageSource;
                 logo.Source = new BitmapImage(new Uri(filePath));
-                File.Copy(filePath, MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + onlyFileName);
+                string filePathTo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + onlyFileName;
+                if (File.Exists(filePathTo) == false)
+                {
+                    File.Copy(filePath, filePathTo);
+                }
             }
         }
     }

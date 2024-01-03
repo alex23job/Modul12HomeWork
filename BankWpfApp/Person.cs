@@ -13,6 +13,8 @@ namespace BankWpfApp
         int Type { get; set; }
     }
 
+    [XmlInclude(typeof(Bonus))]
+    [XmlInclude(typeof(BonusAction))]
     [XmlInclude(typeof(LegalPerson))]
     [XmlInclude(typeof(VipPerson))]
     public class Person : IId, IPersonType

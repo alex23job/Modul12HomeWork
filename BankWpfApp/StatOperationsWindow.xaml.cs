@@ -101,17 +101,35 @@ namespace BankWpfApp
                 float sum;
                 string strSum = op.GetSumma().Substring(0, op.GetSumma().Length - 2);
                 if (float.TryParse(strSum, out sum) == false) continue;
+                Person pers = currentPerson;
+                if (pers == null)
+                {
+                    pers = GetPersonFromUID(op.UpdatingUID);
+                }
                 if (op.GetMode() == "pay" && mode == 1)
                 {
-                    BankAccount ba = bpTo as BankAccount;
-                    if (ba != null)
+                    BankAccount ba = bpFr as BankAccount;
+                    if (ba != null && pers.IdProducts.Contains(ba.PersonProductNumber))
                     {
-                        LegalPerson lp = GetPersonFromUID(ba.personUID.ToString()) as LegalPerson;
-                        if (lp != null)
+                        ba = bpTo as BankAccount;
+                        if (ba != null)
                         {
-                            cat = lp.LegalCategoty;
-                            res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
+                            LegalPerson lp = GetPersonFromUID(ba.personUID.ToString()) as LegalPerson;
+                            if (lp != null)
+                            {
+                                cat = lp.LegalCategoty;
+                                res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
+                            }
                         }
+                    }
+                }
+                if (op.GetMode() == "pay" && mode == 2)
+                {
+                    cat = "Оплата";
+                    BankAccount ba = bpTo as BankAccount;
+                    if (ba != null && pers.IdProducts.Contains(ba.PersonProductNumber))
+                    {
+                        res[cat] = res.ContainsKey(cat) ? (res[cat] + sum) : sum;
                     }
                 }
                 if (op.GetMode() == "dec" && mode == 1)
@@ -133,11 +151,6 @@ namespace BankWpfApp
                 if (op.GetMode() == "transfer")
                 {
                     cat = "Перевод";
-                    Person pers = currentPerson;
-                    if (pers == null)
-                    {
-                        pers = GetPersonFromUID(op.UpdatingUID);
-                    }
                     if (pers != null)
                     {
                         if (mode == 1)
@@ -419,9 +432,20 @@ namespace BankWpfApp
 
         private Person GetPersonFromUID(string id)
         {
-            foreach(Person p in persons)
+            foreach (Person p in persons)
             {
                 if (p.UID.ToString() == id)
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+        private Person GetPersonFromFIO(string fio)
+        {
+            foreach (Person p in persons)
+            {
+                if (p.FIO == fio)
                 {
                     return p;
                 }
@@ -435,7 +459,18 @@ namespace BankWpfApp
             if (nNode != null)
             {
                 string[] arrStr = nNode.Name.Split(' ');
-                if (arrStr.Length > 1)
+                int mode = 1;
+                if (Inc.IsChecked == true) mode = 2;
+                if (nNode.Name == "Все продукты")
+                {
+                    listOperations = log.GetSortedList(2, currentPerson.UID.ToString());
+                }
+                else if (currentUser != null)
+                {
+                    Person p = GetPersonFromFIO(nNode.Name);
+                    if (p != null) listOperations = log.GetSortedList(2, p.UID.ToString());
+                }
+                if ((arrStr.Length > 1) && (nNode.Parent != null))
                 {
                     Product bp = GetBankProductFromUID(arrStr[0]);
                     string UID = arrStr[0];
@@ -455,16 +490,14 @@ namespace BankWpfApp
                         UID = bcr.CreditAccount.PersonProductNumber.ToString();
                     }
                     listOperations = log.GetSortedList(3, UID);
-                    ViewListOperations();
-                    int mode = 1;
-                    if (Inc.IsChecked == true) mode = 2;
-                    Dictionary<string, float> dict = GetDictCatOper(listOperations, mode);
-                    List<float> data = new List<float>();
-                    List<string> legend = new List<string>();
-                    foreach (var v in dict.Values) data.Add(v);
-                    foreach (var l in dict.Keys) legend.Add(l);
-                    DrawPieDiagramm(data, legend);
                 }
+                ViewListOperations();
+                Dictionary<string, float> dict = GetDictCatOper(listOperations, mode);
+                List<float> data = new List<float>();
+                List<string> legend = new List<string>();
+                foreach (var v in dict.Values) data.Add(v);
+                foreach (var l in dict.Keys) legend.Add(l);
+                DrawPieDiagramm(data, legend);
             }
         }
 

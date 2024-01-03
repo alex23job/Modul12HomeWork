@@ -249,6 +249,9 @@ namespace BankWpfApp
                     UserData ud = users.Add(regWin.GetUser());
                     Person per = regWin.GetPerson();
                     per.SetUserData(ud);
+                    LogPersonUpdate lpu = new LogPersonUpdate("Все поля", "add", per.PersonLogin, "Клиент", per.UID.ToString());
+                    per.updateInfo = lpu;
+                    MainWindow.SaveStrUpdateInfo(lpu.ToCsvString(), pathUpdateInfo);
                     currentPerson = persons.Add(per);
                     ShowPersonSP();
                 }
@@ -681,7 +684,9 @@ namespace BankWpfApp
 
         private void OnBonusClick(object sender, RoutedEventArgs e)
         {
-
+            BonusWindow bw = new BonusWindow();
+            bw.SetPerson(currentPerson, persons.AllItems);
+            bw.ShowDialog();
         }
 
         private void OnNamePersonMouseUp(object sender, MouseButtonEventArgs e)

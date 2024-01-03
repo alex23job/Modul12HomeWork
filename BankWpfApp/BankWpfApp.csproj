@@ -75,6 +75,10 @@
     <Compile Include="AddingBankDepositWindow.xaml.cs">
       <DependentUpon>AddingBankDepositWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bonus.cs" />
+    <Compile Include="BonusWindow.xaml.cs">
+      <DependentUpon>BonusWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CardParamsControl.xaml.cs">
       <DependentUpon>CardParamsControl.xaml</DependentUpon>
     </Compile>
@@ -141,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddingBankDepositWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BonusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

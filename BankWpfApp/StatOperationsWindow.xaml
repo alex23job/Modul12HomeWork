@@ -8,7 +8,7 @@
         Title="СТАТИСТИКА И ИСТОРИЯ ОПЕРАЦИЙ" Height="500" Width="800" MinWidth="800" MinHeight="500" Icon="MainIcon.ico" FontFamily="Times New Roman" FontSize="20">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="135*" />
+            <ColumnDefinition Width="100*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="200*" />
         </Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="34*"/>
                         <ColumnDefinition Width="33*"/>
-                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="15*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10*"/>
