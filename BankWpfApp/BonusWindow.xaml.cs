@@ -25,9 +25,19 @@ namespace BankWpfApp
         ObservableCollection<Person> persons = null;
         string strBeginPeriod = "";
         string strEndPeriod = "";
+        CheckBox[] arrCheckBoxs = null;
+        string[] months = { "январе", "феврале", "марте", "апреле", "мае", "июне", "июле", "августе", "сентябре", "октябре", "ноябре", "декабре" };
         public BonusWindow()
         {
             InitializeComponent();
+            arrCheckBoxs = new CheckBox[] { cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10, all };
+            for (int i = 0; i < 11; i++)
+            {
+                arrCheckBoxs[i].IsEnabled = false;
+                if (i == 10) break;
+                arrCheckBoxs[i].Content = LegalPerson.category[i];
+            }
+            labelTitle.Content = $"Выберите 3 категории в {months[DateTime.Now.Month - 1]}";
         }
 
         public void SetPerson(Person p, ObservableCollection<Person> pers)
@@ -35,6 +45,7 @@ namespace BankWpfApp
             persons = pers;
             ShowActions();
             currentPerson = p;
+            labelCount.Content = $"Выбрано : {CountCheck()}";
             legalPers = p as LegalPerson;
             if (legalPers != null)
             {
@@ -44,6 +55,11 @@ namespace BankWpfApp
             else
             {
                 LegalBonus.Visibility = Visibility.Hidden;
+            }
+            for (int i = 0; i < 11; i++)
+            {
+                arrCheckBoxs[i].IsChecked = (p.BonusCategory & (1 << i)) != 0;
+                arrCheckBoxs[i].IsEnabled = true;
             }
         }
 
@@ -96,63 +112,91 @@ namespace BankWpfApp
             return res;
         }
 
+        private int CountCheck()
+        {
+            if (currentPerson == null) return 0;
+            int res = 0;
+            for (int i = 0; i < 11; i++)
+            {
+                if ((currentPerson.BonusCategory & (1 << i)) != 0) res++;
+            }
+            return res;
+        }
+
+        private void UpdateCheck(int bit)
+        {
+            if ((currentPerson.BonusCategory & (1 << bit)) != 0)
+            {
+                currentPerson.BonusCategory ^= 1 << bit;
+            }
+            else
+            {
+                if (CountCheck() < 3)
+                {
+                    currentPerson.BonusCategory ^= 1 << bit;
+                }
+            }
+            arrCheckBoxs[bit].IsChecked = (currentPerson.BonusCategory & (1 << bit)) != 0;
+            labelCount.Content = $"Выбрано : {CountCheck()}";
+        }
+
         private void ClickBtnOk(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = true;
         }
 
         private void Cat1Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(0);
         }
 
         private void Cat2Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(1);
         }
 
         private void Cat3Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(2);
         }
 
         private void Cat4Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(3);
         }
 
         private void Cat5Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(4);
         }
 
         private void Cat6Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(5);
         }
 
         private void Cat7Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(6);
         }
 
         private void Cat8Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(7);
         }
 
         private void Cat9Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(8);
         }
 
         private void Cat10Click(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(9);
         }
         private void AllClick(object sender, RoutedEventArgs e)
         {
-
+            UpdateCheck(10);
         }
 
         private void ClickBtnAdd(object sender, RoutedEventArgs e)

@@ -64,6 +64,8 @@ namespace BankWpfApp
 
         public LogPersonUpdate updateInfo = null;
 
+        public int BonusCategory = 0;
+
         [XmlIgnore]
         public string Count => (IdProducts != null) ? IdProducts.Count.ToString() : "0";
 
@@ -157,7 +159,7 @@ namespace BankWpfApp
 
     public class LegalPerson : Person
     {
-        public static readonly string[] category = { "Еда", "Авто", "Медицина", "Развлечения", "Обучение", "Дом", "Одежда", "Электроника", "Услуги", "Прочее" };
+        public static readonly string[] category = { "Еда", "Авто", "Медицина", "Развлечения", "Обучение", "Дом", "Одежда", "Электроника", "Услуги", "Транспорт", "Прочее" };
         public string LegalName { get; set; }
         public string LegalAddress { get; set; }
         public string LogoPath { get; set; } = "";

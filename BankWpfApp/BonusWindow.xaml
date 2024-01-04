@@ -24,7 +24,7 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="25*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.ColumnSpan="2" Content="Выбирите 3 категории в январе" x:Name="labelTitle" Margin="30,5" FontSize="22"/>
+                    <Label Grid.ColumnSpan="2" Content="Выберите 3 категории в марте" x:Name="labelTitle" Margin="30,5" FontSize="22"/>
                     <CheckBox Grid.Row="1" Content="Все покупки  1%" Margin="10" Click="AllClick" x:Name="all"/>
                     <Label Content="Выбрано : 0" Grid.Row="1" Grid.Column="1" Margin="10,5" x:Name="labelCount" FontSize="24" Foreground="#FF000461" FontWeight="Bold"/>
                     <CheckBox Grid.Row="2" Content="Категория 1  1%" Margin="10" Click="Cat1Click" x:Name="cat1"/>
