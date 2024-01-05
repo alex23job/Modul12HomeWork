@@ -85,7 +85,14 @@
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="25*"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Кешбек ( % )" Margin="10,5" Grid.Row="1"/>
+                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                        <Label Content="Кешбек в категории :" Margin="10,5,5,5"/>
+                        <RadioButton x:Name="radioStd" GroupName="cashBackCategory" Content="1 %" Margin="3,15,3,1" IsChecked="True" Click="OnRadioStdClick"/>
+                        <RadioButton x:Name="radioCustom" GroupName="cashBackCategory" Content=">>" Margin="8,15,3,1" Click="OnRadioCustomClick"/>
+                        <TextBox x:Name="txtCustomPercent" Margin="3,10,5,5" Width="40"/>
+                        <Label Content="%" Margin="0,10,0,5"/>
+                    </StackPanel>
+                    <Label Content="Кешбек по акции ( % )" Margin="10,5" Grid.Row="1"/>
                     <Label Content="Число покупок" Margin="10,5" Grid.Row="2"/>
                     <Label Content="Начало периода" Margin="10,5" Grid.Row="3"/>
                     <Label Content="Окончание периода" Margin="10,5" Grid.Row="4"/>

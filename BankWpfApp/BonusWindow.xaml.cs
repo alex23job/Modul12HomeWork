@@ -27,6 +27,8 @@ namespace BankWpfApp
         string strEndPeriod = "";
         CheckBox[] arrCheckBoxs = null;
         string[] months = { "январе", "феврале", "марте", "апреле", "мае", "июне", "июле", "августе", "сентябре", "октябре", "ноябре", "декабре" };
+        float bonPrc = 0, bonActionPrc = 0, minSum = 0, maxSum = 0;
+        int cnt = 0;
         public BonusWindow()
         {
             InitializeComponent();
@@ -97,6 +99,28 @@ namespace BankWpfApp
                 txtMinSum.Text = lp.MyBonusAction.MinSumma.ToString();
                 txtMaxSum.Text = lp.MyBonusAction.MaxSumma.ToString();
             }
+            if (lp.MyBonus == null)
+            {
+                txtCustomPercent.IsEnabled = false;
+                radioStd.IsChecked = true;
+                radioCustom.IsChecked = false;
+            }
+            else
+            {
+                if (lp.MyBonus.Percent == 1f)
+                {
+                    txtCustomPercent.IsEnabled = false;
+                    radioStd.IsChecked = true;
+                    radioCustom.IsChecked = false;
+                }
+                else
+                {
+                    txtCustomPercent.IsEnabled = true;
+                    txtCustomPercent.Text = $"{lp.MyBonus.Percent:0.00}";
+                    radioStd.IsChecked = false;
+                    radioCustom.IsChecked = true;
+                }
+            }
         }
         private List<BonusInfo> GetListActions()
         {
@@ -104,9 +128,10 @@ namespace BankWpfApp
             foreach(Person p in persons)
             {
                 LegalPerson lp = p as LegalPerson;
-                if (lp != null)
+                if (lp != null && lp.MyBonusAction != null)
                 {
-
+                    string filePathTo = MainWindow.startupPath + "\\" + MainWindow.logoImgPath + "\\" + lp.LogoPath;
+                    res.Add(new BonusInfo(filePathTo, lp.LegalName, lp.MyBonusAction.GetStrSumma(), lp.MyBonusAction.GetStrPeriod(), lp.MyBonusAction.Count.ToString()));
                 }
             }
             return res;
@@ -145,6 +170,7 @@ namespace BankWpfApp
             DialogResult = true;
         }
 
+        #region Cat Click
         private void Cat1Click(object sender, RoutedEventArgs e)
         {
             UpdateCheck(0);
@@ -198,12 +224,54 @@ namespace BankWpfApp
         {
             UpdateCheck(10);
         }
+        #endregion
 
         private void ClickBtnAdd(object sender, RoutedEventArgs e)
         {
-
+            if (TestParams())
+            {
+                legalPers.MyBonus = new Bonus(bonPrc);
+                legalPers.MyBonusAction = new BonusAction(bonActionPrc, cnt, minSum, maxSum, strBeginPeriod, strEndPeriod);
+            }
+            else
+            {
+                MessageBox.Show("Проверьте заполнены ли все поля и нажмите ещё раз !");
+            }
         }
 
+        private bool TestParams()
+        {
+            bool res = true;
+            if (radioStd.IsChecked == true)
+            {
+                bonPrc = 1f;
+            }
+            if (radioCustom.IsChecked == true)
+            {
+                res = float.TryParse(txtCustomPercent.Text, out bonPrc);
+            }
+            if (txtPercent.Text != "")
+            {
+                res = float.TryParse(txtPercent.Text, out bonActionPrc);
+            }
+            if (txtCount.Text != "")
+            {
+                res = int.TryParse(txtCount.Text, out cnt);
+            }
+            if (txtMinSum.Text != "")
+            {
+                res = float.TryParse(txtMinSum.Text, out minSum);
+            }
+            if (txtMaxSum.Text != "")
+            {
+                res = float.TryParse(txtMaxSum.Text, out maxSum);
+            }
+            if (strBeginPeriod == "" || strEndPeriod == "")
+            {
+                res = false;
+            }
+            return res;
+        }
 
         private void OnSelectedBeginDataChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -237,6 +305,20 @@ namespace BankWpfApp
                 }
             }
             return dat;
+        }
+
+        private void OnRadioStdClick(object sender, RoutedEventArgs e)
+        {
+            txtCustomPercent.IsEnabled = false;
+            radioStd.IsChecked = true;
+            radioCustom.IsChecked = false;
+        }
+
+        private void OnRadioCustomClick(object sender, RoutedEventArgs e)
+        {
+            txtCustomPercent.IsEnabled = true;
+            radioStd.IsChecked = false;
+            radioCustom.IsChecked = true;
         }
     }
 
