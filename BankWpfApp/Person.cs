@@ -15,6 +15,7 @@ namespace BankWpfApp
 
     [XmlInclude(typeof(Bonus))]
     [XmlInclude(typeof(BonusAction))]
+    [XmlInclude(typeof(BonusActionPerson))]
     [XmlInclude(typeof(LegalPerson))]
     [XmlInclude(typeof(VipPerson))]
     public class Person : IId, IPersonType
@@ -62,6 +63,8 @@ namespace BankWpfApp
         /// </summary>
         public List<long> IdProducts = null;
 
+        public List<BonusActionPerson> ArrBonusActions = null;
+
         public LogPersonUpdate updateInfo = null;
 
         public int BonusCategory = 0;
@@ -80,6 +83,7 @@ namespace BankWpfApp
         public Person()
         {
             IdProducts = new List<long>();
+            ArrBonusActions = new List<BonusActionPerson>();
             Type = 0;
         }
         public Person(string nm1, string nm2, string nm3, string psp, string tlf, string bd)
@@ -91,6 +95,7 @@ namespace BankWpfApp
             BirthDay = bd;
             this.Tlf = tlf;
             IdProducts = new List<long>();
+            ArrBonusActions = new List<BonusActionPerson>();
             Type = 0;
         }
 
@@ -160,6 +165,14 @@ namespace BankWpfApp
     public class LegalPerson : Person
     {
         public static readonly string[] category = { "Еда", "Авто", "Медицина", "Развлечения", "Обучение", "Дом", "Одежда", "Электроника", "Услуги", "Транспорт", "Прочее" };
+        public static int GetIndexCategory(string cat)
+        {
+            for (int i = 0; i < category.Length; i++)
+            {
+                if (cat == category[i]) return i;
+            }
+            return -1;
+        }
         public string LegalName { get; set; }
         public string LegalAddress { get; set; }
         public string LogoPath { get; set; } = "";

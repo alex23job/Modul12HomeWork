@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace BankWpfApp
             mode = m;
         }
 
-        public  void Execute()
+        public void Execute()
         {
             if (accFrom != null && accFrom.Balans >= sum)
             {
@@ -66,6 +67,60 @@ namespace BankWpfApp
             if (accTo != null)
             {
                 accTo.Balans += sum;
+            }
+        }
+
+        public void PayExecute(ObservableCollection<Person> persons, ObservableCollection<Product> products)
+        {
+            Execute();
+            Person payPers = null;
+            LegalPerson lp = null;
+            BankCard bc = null;
+            foreach(Product pr in products)
+            {
+                bc = pr as BankCard;
+                if (bc != null)
+                {
+                    if (bc.CardAccount != null && bc.CardAccount.PersonProductNumber == accFrom.PersonProductNumber)
+                    {
+                        break;
+                    }
+                    else bc = null;
+                }
+            }
+            if (accTo != null)
+            {
+                foreach(Person pers in persons)
+                {
+                    if (pers.UID == accTo.personUID)
+                    {
+                        lp = pers as LegalPerson;
+                        if (payPers != null) break;
+                    }
+                    if (pers.UID == accFrom.personUID)
+                    {
+                        payPers = pers;
+                        if (lp != null) break;
+                    }
+                }
+            }
+            if (bc != null && lp != null && payPers != null)
+            {
+                if (lp.MyBonusAction != null)
+                {
+
+                }
+                if (payPers.BonusCategory > 0)
+                {
+                    int indexCat = LegalPerson.GetIndexCategory(lp.LegalCategoty);
+                    if (indexCat >= 0 && indexCat < LegalPerson.category.Length)
+                    {
+                        if ((payPers.BonusCategory & (1 << indexCat)) > 0)
+                        {
+                            bc.CashbackBalance += (float)Math.Round(sum * lp.MyBonus.Percent / 100f, 2);
+                        }
+                    }
+                }
             }
         }
     }

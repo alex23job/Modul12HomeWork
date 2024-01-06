@@ -77,7 +77,7 @@ namespace BankWpfApp
             {
                 listViewInfo.ItemsSource = list;
                 listViewInfo.Visibility = Visibility.Visible;
-                labelNo.Visibility = Visibility.Hidden;
+                labelNo.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -93,7 +93,9 @@ namespace BankWpfApp
                 strBeginPeriod = lp.MyBonusAction.BeginPeriod;
                 strEndPeriod = lp.MyBonusAction.EndPeriod;
                 datePickerBegin.SelectedDate = GetDateTime(lp.MyBonusAction.BeginPeriod);
+                datePickerBegin.IsDropDownOpen = false;
                 datePickerEnd.SelectedDate = GetDateTime(lp.MyBonusAction.EndPeriod);
+                datePickerEnd.IsDropDownOpen = false;
                 txtCount.Text = lp.MyBonusAction.Count.ToString();
                 txtPercent.Text = lp.MyBonusAction.Percent.ToString();
                 txtMinSum.Text = lp.MyBonusAction.MinSumma.ToString();
@@ -232,6 +234,7 @@ namespace BankWpfApp
             {
                 legalPers.MyBonus = new Bonus(bonPrc);
                 legalPers.MyBonusAction = new BonusAction(bonActionPrc, cnt, minSum, maxSum, strBeginPeriod, strEndPeriod);
+                ShowActions();
             }
             else
             {

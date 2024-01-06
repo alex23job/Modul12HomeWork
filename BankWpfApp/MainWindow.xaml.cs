@@ -666,7 +666,11 @@ namespace BankWpfApp
                 if (aw.ShowDialog() == true)
                 {
                     Transaction tr = aw.transaction;
-                    tr.Execute();
+                    if (tr.NameMode == "pay")
+                    {
+                        tr.PayExecute(persons.AllItems, bankProducts.AllItems);
+                    }
+                    else tr.Execute();
                     string fr = tr.From, to = tr.To;
                     OneOperation op = new OneOperation(tr.sum.ToString(), tr.NameMode, currentPerson.UserUID.ToString(), "Клиент", currentPerson.UID.ToString(), fr, to);
                     logOperations.SaveOneOption(op, pathLogOperations);
