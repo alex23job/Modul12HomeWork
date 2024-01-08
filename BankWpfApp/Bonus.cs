@@ -32,6 +32,20 @@ namespace BankWpfApp
 
     public class BonusAction : Bonus
     {
+        public static DateTime? GetDate(string sd)
+        {
+            DateTime dt = DateTime.Now;
+            string[] ss = sd.Split('.');
+            if (ss.Length == 3)
+            {
+                if (int.TryParse(ss[0], out int year) && int.TryParse(ss[1], out int month) && int.TryParse(ss[2], out int day))
+                {
+                    dt = new DateTime(year, month, day);
+                    return dt;
+                }                
+            }
+            return null;            
+        }
         /// <summary>
         /// количество покупок по акции
         /// </summary>
@@ -85,6 +99,17 @@ namespace BankWpfApp
             }
             return res;
         }
+        public bool TestPeriod()
+        {
+            DateTime dt = DateTime.Now;
+            DateTime? begDate = BonusAction.GetDate(BeginPeriod);
+            DateTime? endDate = BonusAction.GetDate(EndPeriod);
+            if (begDate != null && endDate != null)
+            {
+                if (dt >= begDate && dt <= endDate) return true;
+            }
+            return false;
+        }
     }
 
     public class BonusActionPerson : BonusAction
@@ -126,26 +151,6 @@ namespace BankWpfApp
                 return res;
             }
             return res;
-        }
-
-        private bool TestPeriod()
-        {
-            DateTime dt = DateTime.Now;
-            string[] beg = BeginPeriod.Split('.');
-            string[] end = EndPeriod.Split('.');
-            if (beg.Length == 3 && end.Length == 3)
-            {
-                int year = int.Parse(beg[0]);
-                int month = int.Parse(beg[1]);
-                int day = int.Parse(beg[2]);
-                DateTime begDate = new DateTime(year, month, day);
-                year = int.Parse(end[0]);
-                month = int.Parse(end[1]);
-                day = int.Parse(end[2]);
-                DateTime endDate = new DateTime(year, month, day);
-                if (dt >= begDate && dt <= endDate) return true;
-            }
-            return false;
         }
     }
 }

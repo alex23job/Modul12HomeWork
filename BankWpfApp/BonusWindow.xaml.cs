@@ -52,6 +52,7 @@ namespace BankWpfApp
             if (legalPers != null)
             {
                 LegalBonus.Visibility = Visibility.Visible;
+                legalPers.CheckBonusAction();
                 SetActionParams(legalPers);
             }
             else

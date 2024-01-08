@@ -108,7 +108,24 @@ namespace BankWpfApp
             {
                 if (lp.MyBonusAction != null)
                 {
-
+                    BonusActionPerson bap = payPers.GetBonusAction(lp.UID);
+                    if (bap == null)
+                    {
+                        if (lp.MyBonusAction.TestPeriod())
+                        {
+                            bap = new BonusActionPerson(lp.MyBonusAction, lp.UID);
+                            payPers.ArrBonusActions.Add(bap);
+                        }
+                    }
+                    if (bap != null)
+                    {
+                        float cashback = bap.GetCashBack(sum);
+                        if (cashback > 0)
+                        {
+                            bc.CashbackBalance += cashback;
+                            return;
+                        }
+                    }
                 }
                 if (payPers.BonusCategory > 0)
                 {
@@ -118,7 +135,12 @@ namespace BankWpfApp
                         if ((payPers.BonusCategory & (1 << indexCat)) > 0)
                         {
                             bc.CashbackBalance += (float)Math.Round(sum * lp.MyBonus.Percent / 100f, 2);
+                            return;
                         }
+                    }
+                    if (indexCat == -1 && (payPers.BonusCategory & (1 << 10)) > 0)
+                    {   //  установлены все покупки 1%
+                        bc.CashbackBalance += (float)Math.Round(sum / 100f, 2);
                     }
                 }
             }
