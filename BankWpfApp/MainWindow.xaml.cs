@@ -688,6 +688,7 @@ namespace BankWpfApp
 
         private void OnBonusClick(object sender, RoutedEventArgs e)
         {
+            if (currentPerson == null) return;
             BonusWindow bw = new BonusWindow();
             bw.SetPerson(currentPerson, persons.AllItems);
             bw.ShowDialog();
@@ -704,6 +705,54 @@ namespace BankWpfApp
                 per.SetUserData(ud);
                 currentPerson = persons.Add(per);
                 ShowPersonSP();*/
+            }
+        }
+
+        private void OnDelAcc(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show(e.OriginalSource.ToString());
+            Button btn = e.OriginalSource as Button;
+            if (btn != null)
+            { 
+                BankAccount ba = btn.DataContext as BankAccount;
+                if (ba != null)
+                {
+                    if (ba.Balans > 0)
+                    {
+                        MessageBox.Show($"На счёте {ba.StrBalance}. Переведите деньги чтобы закрыть счёт.");
+                        return;
+                    }
+                    if (currentPerson.IdProducts.Count == 1 && currentPerson is LegalPerson)
+                    {
+                        MessageBox.Show("Нельзя закрыть последний расчётный счёт юридического лица. Он будет удалён вместе с удалением юр.лица.");
+                        return;
+                    }
+                    if (ba.TypeAccount == 0)
+                    {
+                        foreach(long id in currentPerson.IdProducts)
+                        {
+                            foreach(Product bp in bankProducts.AllItems)
+                            {
+                                BankCard bc = bp as BankCard;
+                                if (bc != null && bc.CardAccount != null)
+                                {
+                                    if (bc.CardAccount.PersonProductNumber == ba.PersonProductNumber && bc.PersonProductNumber == id)
+                                    {
+                                        MessageBox.Show($"Этот счёт привязан к Вашей банковской карте {bc.StrNumber} и может быть удалён только при её удалении.");
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        if (MessageBox.Show($"Будет удалён расчётный счёт {ba.StrNumber}. Удалить ?", "Удаление расчётного счёта", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            currentPerson.IdProducts.Remove(ba.PersonProductNumber);
+                            bankProducts.DelItem(ba);
+                            UpdatePersonsPanels();
+                        }  
+                    }
+
+                }                
             }
         }
     }
